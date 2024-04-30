@@ -1,7 +1,7 @@
 import React from 'react';
 import FeaturedJobItem from './FeaturedJobItem';
 
-const FeaturedJob = () => {
+const FeaturedJob = ({featured}) => {
     return (
         <div className="featured_job">
             <div className="container">
@@ -12,12 +12,18 @@ const FeaturedJob = () => {
                     </p>
                 </div>
                 <div className="featured_job--wrapper">
-                    <FeaturedJobItem/>
-                    <FeaturedJobItem/>
-                    <FeaturedJobItem/>
-                    <FeaturedJobItem/>
-                    <FeaturedJobItem/>
-                    <FeaturedJobItem/>
+                    {
+                        featured && featured.map((job, i) => (
+                            <FeaturedJobItem 
+                                key={i}
+                                title={job.title}
+                                type={job.type}
+                                company={job.company}
+                                slug={job.slug}
+                                icon={job.icon}
+                            />
+                        ))
+                    }
                 </div>
             </div>
         </div>
