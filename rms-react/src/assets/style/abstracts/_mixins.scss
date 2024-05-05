@@ -23,6 +23,12 @@
     align-items: center;
 }
 
+@mixin flexAround {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
 @mixin container {
     max-width: 1152px;
     padding: 15px 0;
