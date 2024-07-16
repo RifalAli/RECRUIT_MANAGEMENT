@@ -9,5 +9,10 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'icon', 'status', 'job_count', 'period_start', 'period_end'];
+    protected $fillable = ['name', 'slug', 'icon', 'status', 'job_count'];
+
+    // public function jobs() 
+    // {
+    //     return $this->belongsToMany('App\Models\MainJob')->withTimestamps();
+    // }
 }

@@ -108,14 +108,20 @@
     }
 }
 
-.featured_job {
-    background: $color-white !important;
-    padding: 5rem;
-
-    .container {
-        .load-data {
-            display: flex;
-            justify-content: center;
-        }
-    }
+.load-data {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
 }
+
+// .featured_job {
+//     background: $color-white !important;
+//     padding: 5rem;
+
+//     .container {
+//         .load-data {
+//             display: flex;
+//             justify-content: center;
+//         }
+//     }
+// }

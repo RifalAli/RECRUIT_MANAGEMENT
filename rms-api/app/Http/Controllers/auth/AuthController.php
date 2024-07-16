@@ -5,6 +5,8 @@ namespace App\Http\Controllers\auth;
 use App\Http\Controllers\Controller;
 use App\Jobs\PasswordResetJob;
 use App\Jobs\VerifyUserJobs;
+use App\Models\Company;
+use App\Models\Profile;
 use App\Models\User;
 use App\Traits\ApiResponseWithHttpStatus;
 use Illuminate\Http\Request;
@@ -52,23 +54,88 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function register(Request $request) {
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|string|between:2,100',
+        //     'email' => 'required|string|email|max:100|unique:users',
+        //     'password' => 'required|string|confirmed|min:6',
+        // ]);
+        // if($validator->fails()){
+        //     return response()->json($validator->errors()->toJson(), 400);
+        // }
+        // $user = User::create(array_merge(
+        //             $validator->validated(),
+        //             ['password' => bcrypt($request->password),'slug'=>Str::random(15),'token'=>Str::random(20),'status'=>'active', 'image'=>'http://localhost:8000/files/users/default.png']
+        //         ));
+        // if ($user) {
+        //     $details = ['name'=>$user->name, 'email'=>$user->email, 'hashEmail'=>Crypt::encryptString($user->email), 'token'=>$user->token];
+        //     dispatch(new VerifyUserJobs($details));
+        // }
+        // return $this->apiResponse('User succesfully registered',$data=$user,Response::HTTP_OK, true);
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:users',
-            'password' => 'required|string|confirmed|min:6',
+            'password' => 'required|string|min:6',
         ]);
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
+
+        if (!($request['password'] === $request['confirmPassword'])) {
+            return $this->apiResponse('Password and Confirm Password are not same', null, Response::HTTP_BAD_REQUEST, false);
+        }
+
         $user = User::create(array_merge(
                     $validator->validated(),
-                    ['password' => bcrypt($request->password),'slug'=>Str::random(15),'token'=>Str::random(20),'status'=>'active']
+                    ['password' => bcrypt($request->password),
+                    'slug'=>Str::random(15),
+                    'token'=>Str::random(20),
+                    'status'=>'active', 
+                    'image'=>'http://localhost:8000/files/users/default.png',
+                    'role'=>$request['role']]
                 ));
         if ($user) {
             $details = ['name'=>$user->name, 'email'=>$user->email, 'hashEmail'=>Crypt::encryptString($user->email), 'token'=>$user->token];
             dispatch(new VerifyUserJobs($details));
         }
-        return $this->apiResponse('User succesfully registered',$data=$user,Response::HTTP_OK, true);
+
+        $data['user'] = $user;
+        
+        if ($data['user']['role'] === 'job seeker') {
+            $data['profile'] = Profile::create([
+                'slug'=>Str::random(15),
+                'fullname' => 'Guest'.Str::random(5),
+                'age' => 19, 
+                'address' => 'No Address', 
+                'description' => 'No Description', 
+                'last_education' => 'SMA/Sederajat',
+                'image' => 'http://localhost:8000/files/profiles/default.png',
+                'user_id' => $data['user']['id'],
+                'dream_job' => null, 
+                'status' => 'unemploye',
+            ]);
+            
+            $data['profile']->save();
+        }else if ($data['user']['role'] === 'company') {
+            $data['company'] = Company::create([
+                'slug'=>Str::random(15),
+                'name' => 'Company'.Str::random(5),
+                'location' => 'No Location', 
+                'description' => 'No Description',
+                'image' => 'http://localhost:8000/files/companies/default.png',
+                'user_id' => $data['user']['id'],
+                'job_count' => 0,
+            ]);
+
+            $data['company']->save();
+        }
+
+        if (! $token = JWTAuth::attempt($validator->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        return $this->createNewToken($token);
+
+        // return $this->apiResponse('User succesfully registered',$data=$user,Response::HTTP_OK, true);
     }
 
     /**
@@ -111,7 +178,7 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function userProfile() {
-        return $this->apiResponse('Sign out success',$data=auth()->user(),Response::HTTP_OK, true);
+        return $this->apiResponse('User Profile Success',$data=auth()->user(),Response::HTTP_OK, true);
     }
     /**
      * Get the token array structure.

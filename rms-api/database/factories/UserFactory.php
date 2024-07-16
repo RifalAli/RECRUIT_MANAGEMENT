@@ -28,7 +28,7 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llc/.og/at2.uheWG/igi', //password
-            'is_Admin' => false,
+            'role' => 'job seeker',
             'image' => 'http://localhost:8000/files/users/default.png',
         ];
     }

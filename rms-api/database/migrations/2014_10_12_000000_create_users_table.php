@@ -19,10 +19,9 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('verify')->default(0);
             $table->string('token')->nullable();
-            $table->boolean('is_admin')->default(false);
+            $table->enum('role', ['job seeker', 'company', 'admin'])->default('job seeker');
             $table->string('image')->default('default.png');
             $table->enum('status', ['active','inactive'])->default('active');
-            $table->string('about')->nullable();
             $table->timestamps();
         });
     }

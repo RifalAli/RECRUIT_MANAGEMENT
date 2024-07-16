@@ -1,0 +1,610 @@
+.admin {
+    margin: 50px;
+    .container {
+        @include container;
+
+        .category-div {
+            border-radius: 30px;
+            border: 1px solid $form-control-color;
+
+            .category__wrapper {
+                margin: 2rem 1.5rem;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 10px 7px;
+
+                img {
+                    width: 100px;
+                    height: 100px;
+                }
+    
+                &__card {
+                    @include card;
+                    border: 1px solid $border-card;
+                    background: $color-white;
+                    box-shadow: $box-shadow;
+                    position: relative;
+                    border-left: .2rem solid $color-green;
+                    display: flex;
+                    justify-content: space-around;
+    
+                    &--line {
+                        border-right: 1px solid $color-green;
+                        height: 100%;
+                    }
+    
+                    &--left {
+                        width: 25%;
+    
+                        img {
+                            width: 80%;
+                            height: 80%;
+                            padding: 10px;
+                        }
+                    }
+    
+                    &--right {
+                        width: 75%;
+                        height: auto;
+                        text-align: start;
+                        margin-left: 3rem !important;
+                        @include flexBetween;
+    
+                        h1 {
+                            margin-top: 1.2rem;
+                            color: $color-dark !important;
+                        }
+    
+                        p {
+                            margin-left: 0.5rem;
+                        }
+    
+                        // a {
+                        //     margin-top: 1rem;
+                        //     font-size: 14px;
+                        //     display: inline-block;
+                        //     padding: 5px 15px;
+                        //     border-radius: 50px;
+                        //     cursor: pointer;
+                        //     text-transform: uppercase;
+                        //     background: $color-white-light;
+                        //     color: $color-green;
+                        //     font-weight: bolder;
+                        //     transition: all .3s ease-in-out;
+                        // }
+    
+                        &__part-1 {
+                            h1 {
+                                font-size: 20px;
+                                color: #6c757d !important;
+                            }
+                        }
+    
+                        &__part-2 {
+                            margin-top: -7rem;
+    
+                            i {
+                                font-size: 2rem;
+    
+                                &:hover {
+                                    color: $color-danger;
+                                }
+                            }
+                        }
+    
+                        &__dropdown {
+                            display: none;
+                            position: absolute;
+                            width: 110px;
+                            list-style-type: none;
+                            border: 1px solid $form-control-color;
+                            border-radius: 5px;
+                            background: white;
+                            left: 79%;
+                            top: 25%;
+    
+                            &_item {
+                                padding: 5px;
+                                display: flex;
+                                column-gap: 5px;
+                                width: 100%;
+                                height: 30px;
+                                background: white;
+                                border: none;
+                                align-items: center;
+    
+                                &:hover {
+                                    background: $form-control-color;
+                                }
+                            }
+                        }
+                    }
+    
+                    &:hover {
+                        box-shadow: 1px 8px 20px $color-secondary;
+                        transition: box-shadow .6s linear;
+                        // border-left: .4rem solid $color-green;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
+        .company-div {
+            border-radius: 30px;
+            border: 1px solid $form-control-color;
+
+            h1 {
+                text-align: center;
+            }
+
+            .company__wrapper {
+                margin: 2rem 1.5rem;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 10px 7px;
+
+                img {
+                    width: 100px;
+                    height: 100px;
+                }
+    
+                &__card {
+                    @include card;
+                    border: 1px solid $border-card;
+                    background: $color-white;
+                    box-shadow: $box-shadow;
+                    position: relative;
+                    border-left: .2rem solid $color-green;
+                    display: flex;
+                    justify-content: space-around;
+    
+                    &--line {
+                        border-right: 1px solid $color-green;
+                        height: 100%;
+                    }
+    
+                    &--left {
+                        width: 25%;
+    
+                        img {
+                            width: 80%;
+                            height: 80%;
+                            padding: 10px;
+                        }
+                    }
+    
+                    &--right {
+                        width: 75%;
+                        height: auto;
+                        text-align: start;
+                        margin-left: 3rem !important;
+                        @include flexBetween;
+    
+                        h1 {
+                            margin-top: 1.2rem;
+                            color: $color-dark !important;
+                        }
+    
+                        p {
+                            margin-left: 0.5rem;
+                        }
+    
+                        // a {
+                        //     margin-top: 1rem;
+                        //     font-size: 14px;
+                        //     display: inline-block;
+                        //     padding: 5px 15px;
+                        //     border-radius: 50px;
+                        //     cursor: pointer;
+                        //     text-transform: uppercase;
+                        //     background: $color-white-light;
+                        //     color: $color-green;
+                        //     font-weight: bolder;
+                        //     transition: all .3s ease-in-out;
+                        // }
+    
+                        &__part-1 {
+                            h1 {
+                                font-size: 20px;
+                                color: #6c757d !important;
+                            }
+                        }
+    
+                        &__part-2 {
+                            margin-top: -7rem;
+    
+                            i {
+                                font-size: 2rem;
+    
+                                &:hover {
+                                    color: $color-danger;
+                                }
+                            }
+                        }
+    
+                        &__dropdown {
+                            display: none;
+                            position: absolute;
+                            width: 110px;
+                            list-style-type: none;
+                            border: 1px solid $form-control-color;
+                            border-radius: 5px;
+                            background: white;
+                            left: 79%;
+                            top: 25%;
+    
+                            &_item {
+                                padding: 5px;
+                                display: flex;
+                                column-gap: 5px;
+                                width: 100%;
+                                height: 30px;
+                                background: white;
+                                border: none;
+                                align-items: center;
+    
+                                &:hover {
+                                    background: $form-control-color;
+                                }
+                            }
+                        }
+                    }
+    
+                    &:hover {
+                        box-shadow: 1px 8px 20px $color-secondary;
+                        transition: box-shadow .6s linear;
+                        // border-left: .4rem solid $color-green;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
+        .job-div {
+            border-radius: 30px;
+            border: 1px solid $form-control-color;
+
+            h1 {
+                text-align: center;
+            }
+
+            .job__wrapper {
+                margin: 2rem 1.5rem;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 10px 7px;
+
+                img {
+                    width: 100px;
+                    height: 100px;
+                }
+    
+                &__card {
+                    @include card;
+                    border: 1px solid $border-card;
+                    background: $color-white;
+                    box-shadow: $box-shadow;
+                    position: relative;
+                    border-left: .2rem solid $color-green;
+                    display: flex;
+                    justify-content: space-around;
+    
+                    &--line {
+                        border-right: 1px solid $color-green;
+                        height: 100%;
+                    }
+    
+                    &--left {
+                        width: 25%;
+    
+                        img {
+                            width: 80%;
+                            height: 80%;
+                            padding: 10px;
+                        }
+                    }
+    
+                    &--right {
+                        width: 75%;
+                        height: auto;
+                        text-align: start;
+                        margin-left: 3rem !important;
+                        @include flexBetween;
+    
+                        h1 {
+                            margin-top: 1.2rem;
+                            color: $color-dark !important;
+                        }
+    
+                        p {
+                            margin-left: 0.5rem;
+                        }
+    
+                        // a {
+                        //     margin-top: 1rem;
+                        //     font-size: 14px;
+                        //     display: inline-block;
+                        //     padding: 5px 15px;
+                        //     border-radius: 50px;
+                        //     cursor: pointer;
+                        //     text-transform: uppercase;
+                        //     background: $color-white-light;
+                        //     color: $color-green;
+                        //     font-weight: bolder;
+                        //     transition: all .3s ease-in-out;
+                        // }
+    
+                        &__part-1 {
+                            h1 {
+                                font-size: 20px;
+                                color: #6c757d !important;
+                            }
+                        }
+    
+                        &__part-2 {
+                            margin-top: -7rem;
+    
+                            i {
+                                font-size: 2rem;
+    
+                                &:hover {
+                                    color: $color-danger;
+                                }
+                            }
+                        }
+    
+                        &__dropdown {
+                            display: none;
+                            position: absolute;
+                            width: 110px;
+                            list-style-type: none;
+                            border: 1px solid $form-control-color;
+                            border-radius: 5px;
+                            background: white;
+                            left: 79%;
+                            top: 25%;
+    
+                            &_item {
+                                padding: 5px;
+                                display: flex;
+                                column-gap: 5px;
+                                width: 100%;
+                                height: 30px;
+                                background: white;
+                                border: none;
+                                align-items: center;
+    
+                                &:hover {
+                                    background: $form-control-color;
+                                }
+                            }
+                        }
+                    }
+    
+                    &:hover {
+                        box-shadow: 1px 8px 20px $color-secondary;
+                        transition: box-shadow .6s linear;
+                        // border-left: .4rem solid $color-green;
+                        cursor: pointer;
+                    }
+                }
+            }
+            .page__wrapper {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 15px;
+                button {
+                    background: $color-green;
+                    border: none;
+                    width: 30px;
+                    height: 30px;
+                    margin: 2px;
+                }
+
+                button:visited {
+                    background: red;
+                }
+            }
+        }
+
+        .configure-profile-div {
+            @include flexVertical;
+            // margin-left: -50%;
+            // gap: 3rem;
+            border-radius: 30px;
+            border: 1px solid $form-control-color;
+
+            .photo {
+                img {
+                    width: 200px;
+                    height: 200px;
+                    cursor: pointer;
+                }
+            }
+
+            .form {
+                display: flex;
+                flex-direction: column;
+                width: 70vw;
+                height: auto;
+                padding: 2rem;
+                font-size: 12px;
+                border-radius: 30px;
+                // border: 1px solid $form-control-color;
+                transform: all .3s;
+            }
+            
+            .form-row {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            .form-control {
+                @include formControl;
+
+                width: 70%;
+            }
+
+            label {
+                flex: 1;
+            }
+
+            input {
+                flex: 4;
+                // margin-left: 100px;
+            }
+
+            select {
+                flex: 4;
+            }
+
+            .button-div {
+                display: flex;
+                flex-direction: row-reverse;
+            }
+
+            .button {
+                width: 30%;
+            }
+        }
+
+        .job-profile-div {
+            margin-top: 20px;
+            // display: flex;
+            // flex-direction: row;
+            // gap: 20px;
+            border: 1px solid $form-control-color;
+            border-radius: 30px;
+
+            .button-div {
+                .button {
+                    position: absolute;
+                    left: 88.5%;
+                    top: 151%;
+                    margin: 10px;
+                    font-size: 4rem;
+                    border-radius: 40px;
+                    width: 100px;
+                    height: 100px;
+                    background: #a9a9a9;
+                }
+
+                .button:hover {
+                    box-shadow: $box-shadow-2;
+                }
+            }
+        }
+    }
+
+    .modal-category {
+        display: none;
+    }
+
+    .modal-company {
+        display: none;
+    }
+
+    .modal-job {
+        display: none;
+    }
+
+    .modal, .category-child-modal, .company-child-modal, .job-child-modal {
+        z-index: 5;
+        margin: 0;
+        padding: 0;
+        background: white;
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 65vw;
+        height: 38vw;
+        border: 1px solid $form-control-color;
+        border-radius: 35px;
+
+        .modal-container {
+            @include flexVertical;
+            padding: 20px;
+
+            .photo {
+                img {
+                    width: 200px;
+                    height: 200px;
+                }
+            }
+
+            .form {
+                display: flex;
+                flex-direction: column;
+                width: 50vw;
+                height: auto;
+                padding: 2rem;
+                font-size: 12px;
+                border-radius: 30px;
+                // border: 1px solid $form-control-color;
+                transform: all .3s;
+            }
+            
+            .form-row {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            .form-control {
+                @include formControl;
+
+                width: 70%;
+            }
+
+            label {
+                flex: 1;
+            }
+
+            input {
+                flex: 4;
+                // margin-left: 100px;
+            }
+
+            select {
+                flex: 4;
+            }
+
+            .button-div {
+                display: flex;
+                flex-direction: row-reverse;
+                column-gap: 10px;
+            }
+
+            .button {
+                width: 28%;
+            }
+
+            .button-cancel {
+                background: #a9a9a9;
+            }
+        }
+    }
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 30px;
+
+    .button-div {
+
+        .button {
+            margin-top: -5px;
+            background: #a9a9a9;
+        }
+
+        .button:hover {
+            box-shadow: $box-shadow-2;
+        }
+    }
+}

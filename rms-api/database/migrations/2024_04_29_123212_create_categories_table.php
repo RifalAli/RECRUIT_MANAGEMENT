@@ -17,8 +17,6 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('icon')->default('http://localhost:8000/files/category/default.png');
             $table->enum('status',['active', 'inactive'])->default('active');
-            $table->timestamp('period_start')->default(now());
-            $table->timestamp('period_end')->default(now());
             $table->unsignedBigInteger('job_count')->default(0);
             $table->timestamps();
         });

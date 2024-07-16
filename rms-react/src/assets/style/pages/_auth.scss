@@ -5,7 +5,8 @@
             @include flexVertical;
             padding: 3rem 0;
             .form {
-                width: 445px;
+                // width: 445px;
+                width: 500px;
                 height: auto;
                 display: grid;
                 grid-column: 1;
@@ -15,6 +16,59 @@
                 border-radius: 30px;
                 border: 1px solid $form-control-color;
                 transform: all .3s;
+            }
+
+            .form-row-radio {
+                display: flex;
+                flex-direction: column;
+
+                // label input {
+                //     margin-right: 20px;
+                //     // margin-top: -10px;
+                //     border: 2px solid black;
+                // }
+                h3 {
+                    font-weight: normal;
+                    margin: 15px 5px 5px 5px;
+                    text-align: left;
+                }
+
+                .form-row {
+                    display: block;
+                    gap: 0;
+                    margin: 0;
+                    padding: 0;
+                    // align-items: start;
+                    text-align: left;
+                    left: 0;
+                    padding: 5px;
+
+                    input {
+                        margin: 0 10px;
+                    }
+
+                    label {
+                        position: relative;
+                        top: -2px;
+                    }
+
+                }
+            }
+
+            .form-row {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            label {
+                margin-top: 15px;
+                text-align: left;
+                flex: 1;
+            }
+
+            input {
+                flex: 4;
             }
 
             .form-control {

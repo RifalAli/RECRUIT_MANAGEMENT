@@ -32,8 +32,8 @@ import Loader from '../../services/Loader';
             <>
                 <Header cmp="home" />
                 <Category categories={data.categories}/>
-                <FeaturedJob featured={data.featured_job}/>
-                <Jobs latest={data.latest}/>
+                <FeaturedJob featured={data.featured_job} similar='featured'/>
+                {/* <Jobs latest={data.latest}/> */}
                 <Footer/>
             </>
         )}

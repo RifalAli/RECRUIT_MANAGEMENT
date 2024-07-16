@@ -16,10 +16,34 @@ class UserTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             'slug' => Str::slug(Str::random(20)),
-            'name' => "Mahedi Hasan",
-            'email' => "mahedisr@gmail.com",
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llc/.og/at2.uheWG/igi', //password
-            'is_Admin' => true,
+            'name' => "Admin",
+            'email' => "admin@gmail.com",
+            'password' => '$2y$12$oJPfTnyfRh1qLKPIwbwmUuO1To1IQwucPPK0RY7s3RiBbe1Ruvo56', //password: admin123
+            'role' => 'admin',
+            'image' => 'http://localhost:8000/files/users/default.png',
+            'status' => 'active',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        DB::table('users')->insert([
+            'slug' => Str::slug(Str::random(20)),
+            'name' => "Company",
+            'email' => "company@gmail.com",
+            'password' => '$2y$12$Eilaj1G04vWIhfw8PZwtDe4n6inJJ9MPkVw.Wimk5ZWEV9hOdxQRm', //password: company123
+            'role' => 'company',
+            'image' => 'http://localhost:8000/files/users/default.png',
+            'status' => 'active',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        DB::table('users')->insert([
+            'slug' => Str::slug(Str::random(20)),
+            'name' => "Fahri",
+            'email' => "bizreave@gmail.com",
+            'password' => '$2y$12$kuhfR4YQTQH6/wxhU0PcKueofBTJOGsUyk5yn1nsW85rPJTbm3Wbm', //password: bizreril
+            'role' => 'job seeker',
             'image' => 'http://localhost:8000/files/users/default.png',
             'status' => 'active',
             'created_at' => now(),
