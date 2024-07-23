@@ -37,4 +37,82 @@
             }
         }
     }
+    .modal, .category-child-modal, .company-child-modal, .job-child-modal {
+        z-index: 5;
+        margin: 0;
+        padding: 0;
+        background: white;
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 65vw;
+        height: 38vw;
+        border: 1px solid $form-control-color;
+        border-radius: 35px;
+
+        .modal-container {
+            @include flexVertical;
+            padding: 20px;
+
+            .photo {
+                img {
+                    width: 200px;
+                    height: 200px;
+                }
+            }
+
+            .form {
+                display: flex;
+                flex-direction: column;
+                width: 50vw;
+                height: auto;
+                padding: 2rem;
+                font-size: 12px;
+                border-radius: 30px;
+                // border: 1px solid $form-control-color;
+                transform: all .3s;
+            }
+            
+            .form-row {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            .form-control {
+                @include formControl;
+
+                width: 70%;
+            }
+
+            label {
+                flex: 1;
+            }
+
+            input {
+                flex: 4;
+                // margin-left: 100px;
+            }
+
+            select {
+                flex: 4;
+            }
+
+            .button-div {
+                display: flex;
+                flex-direction: row-reverse;
+                column-gap: 10px;
+            }
+
+            .button {
+                width: 28%;
+            }
+
+            .button-cancel {
+                background: #a9a9a9;
+            }
+        }
+    }
 }

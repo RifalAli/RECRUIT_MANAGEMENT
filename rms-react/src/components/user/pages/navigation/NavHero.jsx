@@ -3,6 +3,7 @@ import Search from '../../header/Search'
 import defaultImg from '../../../../assets/images/default.png'
 
 const NavHero = ({ hero, job }) => {
+    console.log(job);
     return (
         <div className='hero_section'>
             <>
@@ -39,7 +40,7 @@ const NavHero = ({ hero, job }) => {
                                                 </div>
                                                 <div className="date">
                                                     <i className="fa fa-calendar"></i>
-                                                    <span>Posted: 2nd Feb, 2022</span>
+                                                    <span>Posted: {new Date(job.created_at).toISOString().slice(0, 10)}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -47,7 +48,7 @@ const NavHero = ({ hero, job }) => {
                                     <div className="right">
                                         <div className="amount">
                                             <h2>Monthly Salary</h2>
-                                            <h2>{job.salary}</h2>
+                                            <h2>{Number(job.salary).toLocaleString("id", {currency: "IDR", style: "currency"})}</h2>
                                         </div>
                                     </div>
                                 </div>

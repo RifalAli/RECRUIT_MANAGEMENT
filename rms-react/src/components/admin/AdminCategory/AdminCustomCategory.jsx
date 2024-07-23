@@ -30,7 +30,7 @@ const AdminCustomCategory = () => {
     useEffect(() => {
         setFetchState(false);
         fetchCategory()
-        console.log(categoryData)
+        // console.log(categoryData)
     }, [fetchState])
 
     const postCategory = () => {

@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ApplicationAnswerController;
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\MainJobController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
@@ -59,4 +61,9 @@ Route::group([
     Route::post('/adminEditCompany/{company_id}', [CompanyController::class, 'adminEditCompany']);
     Route::post('/adminDeleteCompany/{user_id}/{company_id}', [CompanyController::class, 'adminDeleteCompany']);
     Route::post('/adminCreateJob', [MainJobController::class, 'adminCreateJob']);
+    Route::post('/adminEditJob/{job_id}', [MainJobController::class, 'adminEditJob']);
+    Route::post('/adminDeleteJob/{job_id}', [MainJobController::class, 'adminDeleteJob']);
+    Route::post('/applyJob', [JobApplicationController::class, 'applyJob']);
+    Route::get('/companyViewApplier/{company_id}', [JobApplicationController::class, 'companyViewApplier']);
+    Route::post('/answerJobApplication/{jobApplication_id}', [ApplicationAnswerController::class, 'answerJobApplication']);
 });

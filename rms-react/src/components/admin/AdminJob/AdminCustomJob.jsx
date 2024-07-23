@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import sampleIcon from '../../../assets/images/default.png'
 import AdminJobItem from '../AdminJob/AdminJobItem'
-import { fetchApiData } from "../../../api/api";
+import { fetchApiData, storeApiData } from "../../../api/api";
 
 const openModal = () => {
     let modal = document.getElementsByClassName('modal-job')[0];
@@ -14,37 +14,62 @@ const closeModal = () => {
 }
 
 const AdminCustomJob = () => {
-    const [type, setType] = useState('full time');
-    const [category, setCategory] = useState('');
-
     const [categoryData, setCategoryData] = useState([]);
     const [companyData, setCompanyData] = useState([]);
 
     const iniateData = async () => {
+        // const getCategory = async () => {
+        //     await fetchApiData(`loadCategory`)
+        //     .then((response) => console.log(response.data.category))
+        //     .then((response) => setCategoryData(response.data.category))
+        //     .catch((response) => console.log(response))
+        // }
+
+        // const getCompany = async () => {
+        //     await fetchApiData(`loadCompany`)
+        //     .then((response) => console.log(response.data.company))
+        //     .then((response) => setCompanyData(response.data.company))
+        //     .catch((response) => console.log(response))
+        // }
         const getCategory = async () => {
-            await fetchApiData(`loadCategory`)
-            .then((response) => console.log(response.data.category))
-            .then((response) => setCategoryData(response.data.category))
-            .catch((response) => console.log(response))
+            const categoryResponse = await fetchApiData(`loadCategory`)
+            setCategoryData(categoryResponse.data.category)
         }
 
         const getCompany = async () => {
-            await fetchApiData(`loadCompany`)
-            .then((response) => console.log(response.data.company))
-            .then((response) => setCompanyData(response.data.company))
-            .catch((response) => console.log(response))
+            const companyResponse = await fetchApiData(`loadCompany`)
+            setCompanyData(companyResponse.data.company)
         }
 
         getCategory()
         getCompany()
     }
 
-    // useEffect(() => {
-    //     iniateData()
-    // }, [categoryData, companyData])
+    useEffect(() => {
+        iniateData()
+    }, [])
 
     const [company_id, setCompany_id] = useState('')
     const [category_id, setCategory_id] = useState('')
+    const [jobTitle, setJobTitle] = useState('')
+    const [jobCloseDate, setJobCloseDate] = useState('')
+    const [jobType, setJobType] = useState('')
+    const [jobCount, setJobCount] = useState('')
+    const [jobTag, setJobTag] = useState('')
+    const [jobSalary, setJobSalary] = useState('')
+    const [jobDescription, setJobDescription] = useState('')
+    const [jobStatus, setJobStatus] = useState('active')
+
+    const postJob = () => {
+        const createJob = async () => {
+            await storeApiData(`adminCreateJob`, { company_id, category_id, jobTitle, jobCloseDate, jobType, jobCount, jobTag, jobSalary, jobDescription, jobStatus })
+            .then((response)=>console.log(response.data))
+            .catch((response)=>console.log(response.data))
+        }
+
+        createJob()
+        closeModal()
+    }
 
     const [fetchState, setFetchState] = useState(true);
     const [jobData, setJobData] = useState([]);
@@ -60,7 +85,7 @@ const AdminCustomJob = () => {
     useEffect(() => {
         setFetchState(false);
         fetchJob()
-        iniateData()
+        // iniateData()
         // console.log(jobData)
     }, [fetchState])
 
@@ -119,7 +144,6 @@ const AdminCustomJob = () => {
     //     calculateToLoadData()
     //     console.log(toLoadData)
     // }, [jobData])
-
     return (
         <section className="admin">
             <div className="container">
@@ -145,7 +169,7 @@ const AdminCustomJob = () => {
                         }
                         {
                             toLoadData && toLoadData.map((item, i) => (
-                                <AdminJobItem key={i} index={i} id={item.id} title={item.title} type={item.type} slug={item.slug} icon={item.icon} status={item.status} company={item.company[0]}/>
+                                <AdminJobItem key={i} index={i} id={item.id} title={item.title} closeDate={item.closeDate} type={item.type} count={item.count} tag={item.tag} salary={item.salary} description={item.description} slug={item.slug} icon={item.icon} status={item.status} company={item.company[0]} cat_id={item.cat_id}/>
                             ))
                         }
                     </div>
@@ -192,27 +216,27 @@ const AdminCustomJob = () => {
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="title">Title: </label>
-                                <input type="text" className='form-control' name="title" placeholder='Job Title'/>
+                                <input type="text" value={jobTitle} onChange={(e)=>setJobTitle(e.target.value)} className='form-control' name="title" placeholder='Job Title'/>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="tag">Tag: </label>
-                                <input type="text" className='form-control' name="tag" placeholder='Job Tag'/>
+                                <input type="text" value={jobTag} onChange={(e)=>setJobTag(e.target.value)} className='form-control' name="tag" placeholder='Job Tag'/>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="count">Count: </label>
-                                <input type="number" className='form-control' name="count"  placeholder='People Needed'/>
+                                <input type="number" value={jobCount} onChange={(e)=>setJobCount(e.target.value)} className='form-control' name="count"  placeholder='People Needed'/>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="salary">Salary: </label>
-                                <input type="text" className='form-control' name="salary" placeholder='Job Salary'/>
+                                <input type="text" value={jobSalary} onChange={(e)=>setJobSalary(e.target.value)} className='form-control' name="salary" placeholder='Job Salary'/>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="close_date">Close Date: </label>
-                                <input type="date" className='form-control' name="close_date" placeholder='close date'/>
+                                <input type="date" value={jobCloseDate} onChange={(e)=>setJobCloseDate(e.target.value)} className='form-control' name="close_date" placeholder='close date'/>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="description">Description: </label>
-                                <input type="text" className='form-control' name="address" placeholder='Job Description'/>
+                                <input type="text" value={jobDescription} onChange={(e)=>setJobDescription(e.target.value)} className='form-control' name="address" placeholder='Job Description'/>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="category">Category: </label>
@@ -227,14 +251,22 @@ const AdminCustomJob = () => {
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="type">Type: </label>
-                                <select className='form-control' value={type} onChange={(e)=>setType(e.target.value)}>
+                                <select className='form-control' value={jobType} onChange={(e)=>setJobType(e.target.value)}>
+                                    <option value=''>Select an Option</option>
                                     <option value='full time'>full time</option>
                                     <option value='part time'>part time</option>
                                     <option value='half time'>half time</option>
                                 </select>
                             </div>
+                            {/* <div className='form-row'>
+                                <label htmlFor="status">Status: </label>
+                                <select className='form-control' value={jobStatus} onChange={(e)=>setJobStatus(e.target.value)}>
+                                    <option value='active'>active</option>
+                                    <option value='inactive'>inactive</option>
+                                </select>
+                            </div> */}
                             <div className='button-div'>
-                                <button type='button' className="button">
+                                <button type='button' onClick={postJob} className="button">
                                     <div>
                                         {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Create Job</span>

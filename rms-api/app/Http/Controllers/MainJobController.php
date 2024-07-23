@@ -118,7 +118,8 @@ class MainJobController extends Controller
             'tag' => $request['jobTag'],
             'salary' => $request['jobSalary'],
             'close_date' => $request['jobCloseDate'],
-            'cat_id' => $request['jobCategory'],
+            // 'cat_id' => $request['jobCategory'],
+            'cat_id' => $request['category_id'],
             'company_id' => $data['company']['id'], 
             'icon'=>'http://localhost:8000/files/users/default.png',
             'description' => $request['jobDescription'],
@@ -131,8 +132,8 @@ class MainJobController extends Controller
         return $this->apiResponse('Success create job', $data, Response::HTTP_OK, true);
     }
 
-    public function adminEditJob(Request $request) {
-        // $data['job'] = MainJob::where([['company_id', $reque], ['id', $job_id]])->first();
+    public function adminEditJob($job_id, Request $request) {
+        $data['job'] = MainJob::where([['id', $job_id]])->first();
 
         $validator = Validator::make($request->all(), [
             'jobTitle' => 'required|string', 
@@ -149,12 +150,18 @@ class MainJobController extends Controller
         $data['job']['tag'] = $request['jobTag'];
         $data['job']['salary'] = $request['jobSalary'];
         $data['job']['close_date'] = $request['jobCloseDate'];
-        $data['job']['cat_id'] = $request['jobCategory'];
+        $data['job']['company_id'] = $request['company_id'];
+        $data['job']['cat_id'] = $request['category_id'];
         $data['job']['description'] = $request['jobDescription'];
         $data['job']['type'] = $request['jobType'];
 
         $data['job']->save();
         
         return $this->apiResponse('Success edit job', $data, Response::HTTP_OK, true);
+    }
+    
+    public function adminDeleteJob($job_id) {
+        $data['job'] = MainJob::where([['id', $job_id]])->delete();
+        return $this->apiResponse('Success delete job', $data, Response::HTTP_OK, true);
     }
 }

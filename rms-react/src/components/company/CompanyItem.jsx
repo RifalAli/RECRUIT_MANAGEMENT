@@ -3,6 +3,7 @@ import sampleIcon from '../../assets/images/default.png'
 import CompanyJob from './CompanyJob';
 import axios from 'axios';
 import { fetchApiData, storeApiData } from '../../api/api';
+import CompanyApplier from './CompanyApplier';
 
 const openModal = () => {
     let modal = document.getElementsByClassName('modal')[0];
@@ -147,13 +148,29 @@ const CompanyItem = () => {
         setAllJobs(response.data.job)
     }
 
+    
+    //Fetch Applier
+    const [allAppliers, setAllAppliers] = useState([])
+
+    const fetchAllAppliers = async () => {
+        const response = await fetchApiData(`companyViewApplier/${companyData.id}`)
+        setAllAppliers(response.data.applier)
+    }
+    
     useEffect(() => {
         if (companyData) {
             fetchAllJobs()
         }
     }, [companyData])
 
+    useEffect(() => {
+        if (companyData) {
+            fetchAllAppliers()
+        }
+    }, [companyData])
+
     console.log(allJobs)
+    console.log(allAppliers)
 
     return (
         <section className='company'>
@@ -208,6 +225,15 @@ const CompanyItem = () => {
                         <CompanyJob allJobs={allJobs} category={category} />
                         {/* <JobItem title='Check' slug='a' type='full time' company='PT Tes' icon='http://localhost:8000/files/jobs/default.png'/> */}
                         {/* <FeaturedJobItem title='Check' slug='a' type='full time' company='PT Tes' icon='http://localhost:8000/files/jobs/default.png'/> */}
+                    </>
+                </div>
+                <div className="job-applier-div">
+                    <div className="info">
+                        <h1>Job Applier</h1>
+                    </div>
+                    <>
+                        {/* <CompanyJob allJobs={allJobs} category={category} /> */}
+                        <CompanyApplier allAppliers={allAppliers} />
                     </>
                 </div>
             </div>

@@ -62,12 +62,14 @@ class HomeController extends Controller
         $query['similar'] = MainJob::where([['status', 'active'], ['cat_id', $query['job']->cat_id]])->get()->take(3);
         $query['job_company'] = Company::where([['id', $query['job']['company_id']]])->get();
 
+        $data['job']['id'] = $query['job']['id'];
         $data['job']['title'] = $query['job']['title'];
         $data['job']['icon'] = $query['job']['icon'];
         $data['job']['salary'] = $query['job']['salary'];
         $data['job']['description'] = $query['job']['description'];
         $data['job']['company'] = $query['job_company'];
         $data['job']['category'] = $query['job']['category'];
+        $data['job']['created_at'] = $query['job']['created_at'];
 
         for ($i = 0; $i < count($query['similar']); $i++) {
             $query['company'][$i] = Company::where([['id', $query['similar'][$i]['company_id']]])->get();

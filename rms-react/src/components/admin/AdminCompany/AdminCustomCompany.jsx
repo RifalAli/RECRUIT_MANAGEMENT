@@ -26,7 +26,7 @@ const AdminCustomCompany = () => {
     useEffect(() => {
         setFetchState(false);
         fetchCategory()
-        console.log(companyData)
+        // console.log(companyData)
     }, [fetchState])
 
     const [name, setName] = useState('');
