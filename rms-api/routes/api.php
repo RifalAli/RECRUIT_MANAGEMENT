@@ -66,4 +66,6 @@ Route::group([
     Route::post('/applyJob', [JobApplicationController::class, 'applyJob']);
     Route::get('/companyViewApplier/{company_id}', [JobApplicationController::class, 'companyViewApplier']);
     Route::post('/answerJobApplication/{jobApplication_id}', [ApplicationAnswerController::class, 'answerJobApplication']);
+    Route::get('/getAppliedJobs/{profile_id}', [JobApplicationController::class, 'getProfileJobApplication']);
+    Route::post('/filterJobs/{count}', [MainJobController::class, 'filterJobs']);
 });

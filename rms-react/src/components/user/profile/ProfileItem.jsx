@@ -2,8 +2,13 @@ import React, { useEffect, useState } from 'react'
 import sampleIcon from '../../../assets/images/default.png'
 import axios from 'axios'
 import { fetchApiData, storeApiData } from '../../../api/api'
+import ProfileApplied from './ProfileApplied'
+import Loader from '../../../services/Loader'
 
 const ProfileItem = () => {
+    const [loader, setLoader] = useState(true)
+    const [doRefresh, setDoRefresh] = useState(false)
+
     const [categoryData, setCategoryData] = useState([])
     const [userData, setUserData] = useState('')
     const [profileData, setProfileData] = useState('')
@@ -52,11 +57,12 @@ const ProfileItem = () => {
             setAge(profileData.age)
             setAddress(profileData.address)
             setLastEducation(profileData.last_education)
+            setDreamJob(profileData.dream_job)
             setStatus(profileData.status)
-
-            if (profileData.dream_job !== null) {
-                setDreamJob(categoryData[profileData.dream_job-1].name)
-            }
+            
+            // if (profileData.dream_job !== null) {
+                // setDreamJob(categoryData[profileData.dream_job-1].name)
+            // }
         }
     }
 
@@ -76,15 +82,21 @@ const ProfileItem = () => {
 
     useEffect(() => {
         setProfile()
+        setTimeout(() => {
+            setLoader(false);
+        }, 3000);
     }, [profileData])
 
-    console.log(profileData)
-    console.log(userData)
-    console.log(categoryData)
+    // console.log(profileData)
+    // console.log(userData)
+    // console.log(categoryData)
+    // console.log(dreamJob)
+    // console.log(profileData.dream_job)
 
     const requestChanges = async () => {
         await storeApiData(`changeProfile/${profileData.id}`, { fullname, email, age, address, lastEducation, dreamJob, status })
             .then((response)=>console.log(response.data))
+            .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
     }
 
@@ -92,8 +104,38 @@ const ProfileItem = () => {
         requestChanges()
     }
 
+    const [allAppliedJobs, setAllAppliedJobs] = useState([])
+
+    const fetchAllAppliedJobs = async () => {
+        const response = await fetchApiData(`getAppliedJobs/${profileData.id}`)
+        setAllAppliedJobs(response.data.jobApplication)
+    }
+    
+    useEffect(() => {
+        if (profileData) {
+            fetchAllAppliedJobs()
+        }
+    }, [profileData])
+
+    // console.log(allAppliedJobs)
+    useEffect(() => {
+        if (doRefresh) {
+            setTimeout(() => {
+                window.location.reload()
+                setDoRefresh(!doRefresh)
+            }, 2000)
+        }
+
+    }, [doRefresh])
+
     return (
-        <section className='profile'>
+        <>
+            {
+                loader ? (
+                    <Loader />
+                ) : (
+                    <>
+                        <section className='profile'>
             <div className="container">
                 <div className="configure-div">
                     <div className="photo">
@@ -135,7 +177,7 @@ const ProfileItem = () => {
                                     <option value=''>Select an Option</option>
                                     {
                                         categoryData.map((item) => (
-                                            <option key={item.id} value={item.name}>{item.name}</option>
+                                            <option key={item.id} value={item.id}>{item.name}</option>
                                         ))
                                     }
                                 </select>
@@ -158,8 +200,20 @@ const ProfileItem = () => {
                         </div>
                     </form>
                 </div>
+                <div className="job-applied-div">
+                    <div className="info">
+                        <h1>Applied Job</h1>
+                    </div>
+                    <>
+                        <ProfileApplied allAppliedJobs = {allAppliedJobs} />
+                    </>
+                </div>
             </div>
         </section>
+                    </>
+                )
+            }
+        </>
     )
 }
 

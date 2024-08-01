@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import sampleIcon from '../../../assets/images/default.png'
 import AdminCategoryItem from "./AdminCategoryItem";
 import { fetchApiData, storeApiData } from "../../../api/api";
+import Loader from "../../../services/Loader"
 
 const openModal = () => {
     let modal = document.getElementsByClassName('modal-category')[0];
@@ -9,6 +10,9 @@ const openModal = () => {
 }
 
 const AdminCustomCategory = () => {
+    const [loader, setLoader] = useState(true)
+    const [doRefresh, setDoRefresh] = useState(false)
+
     const closeModal = () => {
         let modal = document.getElementsByClassName('modal-category')[0];
         modal.style.display = 'none';
@@ -31,12 +35,16 @@ const AdminCustomCategory = () => {
         setFetchState(false);
         fetchCategory()
         // console.log(categoryData)
+        setTimeout(() => {
+            setLoader(false);
+        }, 4000);
     }, [fetchState])
 
     const postCategory = () => {
         const createCateg = async () => {
             await storeApiData(`adminCreateCategory`, { categoryName, categoryStatus })
             .then((response)=>console.log(response.data))
+            .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
         }
 
@@ -44,8 +52,26 @@ const AdminCustomCategory = () => {
         closeModal()
     }
 
+    useEffect(() => {
+        if (doRefresh) {
+            setTimeout(() => {
+                window.location.reload()
+                setDoRefresh(!doRefresh)
+            }, 2000)
+        }
+
+    }, [doRefresh])
+
     return (
-        <section className="admin">
+        <>
+            {
+                loader ? (
+                    <>
+                        <Loader />
+                    </>
+                ) : (
+                    <>
+                        <section className="admin">
             <div className="container">
                 <div className='category-div'>
                     <div className="info">
@@ -53,23 +79,18 @@ const AdminCustomCategory = () => {
                     <div className='button-div'>
                         <button type='button' onClick={openModal} className="button">
                             <div>
-                                {/* <img src='' alt='' height='15px' width='15px'/> */}
                                 <span>Add Category</span>
                             </div>
                         </button>
                     </div>
                     </div>
                     <div className="category__wrapper">
-                        {/* <AdminCategoryItem index={0} />
-                        <AdminCategoryItem index={1} />
-                        <AdminCategoryItem index={2} /> */}
                         {
                             categoryData.map((item, i) => (
                                 <AdminCategoryItem key={i} index={i} id={item.id} name={item.name} slug={item.slug} icon={item.icon} status={item.status} job_count={item.job_count}/>
                             ))
                         }
                     </div>
-                    {/*  */}
                 </div>
             </div>
 
@@ -94,13 +115,11 @@ const AdminCustomCategory = () => {
                             <div className='button-div'>
                                 <button type='button' className="button" onClick={postCategory}>
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Create Category</span>
                                     </div>
                                 </button>
                                 <button type='button' onClick={closeModal} className="button button-cancel">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Cancel</span>
                                     </div>
                                 </button>
@@ -110,6 +129,10 @@ const AdminCustomCategory = () => {
                 </div>
             </div>
         </section>
+                    </>
+                )
+            }
+        </>
     )
 }
 

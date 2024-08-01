@@ -19,16 +19,7 @@ class CategorySeeder extends Seeder
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
             'icon'=>'http://localhost:8000/files/categories/default.png',
-            'job_count'=>2,
-            'created_at'=>now(),
-            'updated_at'=>now()
-        ]);
-        DB::table('categories')->insert([
-            'name'=>'Graphics Designer',
-            'slug'=>Str::slug(Str::random(20)),
-            'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default1.png',
-            'job_count'=>2,
+            'job_count'=>0,
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -36,13 +27,22 @@ class CategorySeeder extends Seeder
             'name'=>'Web Developer',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default1.png',
+            'job_count'=>0,
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Cyber Security',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
             'icon'=>'http://localhost:8000/files/categories/default2.png',
-            'job_count'=>2,
+            'job_count'=>0,
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
 
         //\App\Models\Category::factory(25)->create();
-        \App\Models\Category::factory(2)->create();
+        // \App\Models\Category::factory(2)->create();
     }
 }

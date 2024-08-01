@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import sampleIcon from '../../../assets/images/default.png'
 import AdminCompanyItem from "./AdminCompanyItem";
 import { fetchApiData, storeApiData } from "../../../api/api";
+import Loader from "../../../services/Loader"
 
 const openModal = () => {
     let modal = document.getElementsByClassName('modal-company')[0];
@@ -14,6 +15,8 @@ const closeModal = () => {
 }
 
 const AdminCustomCompany = () => {
+    const [loader, setLoader] = useState(true)
+    const [doRefresh, setDoRefresh] = useState(false)
 
     const [fetchState, setFetchState] = useState(true);
     const [companyData, setCompanyData] = useState([]);
@@ -27,6 +30,9 @@ const AdminCustomCompany = () => {
         setFetchState(false);
         fetchCategory()
         // console.log(companyData)
+        setTimeout(() => {
+            setLoader(false);
+        }, 5000);
     }, [fetchState])
 
     const [name, setName] = useState('');
@@ -42,6 +48,7 @@ const AdminCustomCompany = () => {
         const createJob = async () => {
             await storeApiData(`adminCreateCompany`, { name, email, password, confirmPassword, status, companyName, companyLocation, companyDescription })
             .then((response)=>console.log(response.data))
+            .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
         }
 
@@ -49,8 +56,26 @@ const AdminCustomCompany = () => {
         closeModal()
     }
 
+    useEffect(() => {
+        if (doRefresh) {
+            setTimeout(() => {
+                window.location.reload()
+                setDoRefresh(!doRefresh)
+            }, 2000)
+        }
+
+    }, [doRefresh])
+
     return (
-        <section className="admin">
+        <>
+            {
+                loader ? (
+                    <>
+                        <Loader />
+                    </>
+                ) : (
+                    <>
+                        <section className="admin">
             <div className="container">
                 <div className='company-div'>
                     <div className="info">
@@ -58,27 +83,18 @@ const AdminCustomCompany = () => {
                         <div className='button-div'>
                         <button type='button' onClick={openModal} className="button">
                             <div>
-                                {/* <img src='' alt='' height='15px' width='15px'/> */}
                                 <span>Add Company</span>
                             </div>
                         </button>
                     </div>
                     </div>
                     <div className="company__wrapper">
-                        {/* <AdminCompanyItem index={0}/>
-                        <AdminCompanyItem index={1}/> */}
                         {
                             companyData.map((item, i) => (
                                 <AdminCompanyItem key={i} index={i} id={item.id} name={item.name} usersName={item.username} usersEmail={item.email} usersStatus={item.status} slug={item.slug} user_id={item.user_id} location={item.location} description={item.description} image={item.image} job_count={item.job_count}/>
                             ))
                         }
                     </div>
-                    {/* Job that belong to this company are here */}
-                    <>
-                        {/* <CompanyJob /> */}
-                        {/* <JobItem title='Check' slug='a' type='full time' company='PT Tes' icon='http://localhost:8000/files/jobs/default.png'/> */}
-                        {/* <FeaturedJobItem title='Check' slug='a' type='full time' company='PT Tes' icon='http://localhost:8000/files/jobs/default.png'/> */}
-                    </>
                 </div>
             </div>
 
@@ -127,13 +143,11 @@ const AdminCustomCompany = () => {
                             <div className='button-div'>
                                 <button type='button' className="button" onClick={postCompany}>
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Create Company</span>
                                     </div>
                                 </button>
                                 <button type='button' onClick={closeModal} className="button button-cancel">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Cancel</span>
                                     </div>
                                 </button>
@@ -143,6 +157,10 @@ const AdminCustomCompany = () => {
                 </div>
             </div>
         </section>
+                    </>
+                )
+            }
+        </>
     )
 }
 

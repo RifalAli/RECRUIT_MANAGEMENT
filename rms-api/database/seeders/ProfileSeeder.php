@@ -23,7 +23,8 @@ class ProfileSeeder extends Seeder
             'address'=>'Sidoarjo, Jawa Timur',
             'description'=>fake()->sentence(10, true),
             'last_education'=>'S1',
-            'user_id'=>fake()->randomElement(User::where('role', 'job seeker')->pluck('id')->toArray()),
+            // 'user_id'=>fake()->randomElement(User::where('role', 'job seeker')->pluck('id')->toArray()),
+            'user_id'=>3,
             'dream_job'=>fake()->randomElement(Category::where('status', 'active')->pluck('id')->toArray()),
             'created_at'=>now(),
             'updated_at'=>now()

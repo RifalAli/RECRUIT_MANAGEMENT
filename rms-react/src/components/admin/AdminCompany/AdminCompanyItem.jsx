@@ -56,6 +56,7 @@ const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail
         const editCompany = async () => {
             await storeApiData(`adminEditCompany/${id}`, {username, email, status, companyName, companyLocation, companyDescription})
             .then((response)=>console.log(response.data))
+            .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
         }
         

@@ -75,6 +75,6 @@ class MainJobSeeder extends Seeder
             'updated_at'=>now()
         ]);
 
-        \App\Models\MainJob::factory(20)->create();
+        // \App\Models\MainJob::factory(20)->create();
     }
 }

@@ -34,7 +34,18 @@ const SameCategory = () => {
             ) : (
                 <>
                     <NavBar job={job.job} cmp='jobs' />
-                    <FeaturedJob featured={job.same} count={job.same.length} similar={'category'} name={job.categories.name} />
+                    {
+                        job.same && job.same ? (
+                            <>
+                                <FeaturedJob featured={job.same} count={job.same.length} similar={'category'} name={job.categories.name} />
+                            </>
+                        ) : (
+                            <>
+                                <h1>There is no job in this category</h1>
+                            </>
+                        )
+                    }
+
                     <Footer />
                 </>
             )}

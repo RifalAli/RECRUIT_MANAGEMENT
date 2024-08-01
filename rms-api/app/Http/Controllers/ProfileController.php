@@ -32,6 +32,7 @@ class ProfileController extends Controller
         $data['profile']['age'] = $request['age'];
         $data['profile']['address'] = $request['address'];
         $data['profile']['last_education'] = $request['lastEducation'];
+        $data['profile']['dream_job'] = $request['dreamJob'];
         // $data['profile']['dream_job'] = $request['dream_job']; dream job is need to take category id instead of category name
         $data['profile']['status'] = $request['status'];
         $data['profile']->save();

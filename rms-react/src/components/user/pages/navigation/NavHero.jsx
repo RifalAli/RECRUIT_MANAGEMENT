@@ -13,9 +13,9 @@ const NavHero = ({ hero, job }) => {
                             <div className='title'>
                                 <h1>Find Job</h1>
                             </div>
-                            <div className='search_nav'>
+                            {/* <div className='search_nav'>
                                 <Search />    
-                            </div>
+                            </div> */}
                         </> 
                     ) : hero === 'contact' || 
                     hero === 'Login' || 

@@ -34,6 +34,8 @@ const JobDetailsItem = ({ job, similar }) => {
             setMessage('Please Login or Register Before Apply Job')
         }else if (role == 'company') {
             setMessage('Company can\'t Apply Job')
+        }else if (role == 'admin') {
+            setMessage('Admin can\'t Apply Job')
         }
 
         if (profile == null) {
@@ -109,6 +111,7 @@ const JobDetailsItem = ({ job, similar }) => {
 
             console.log('tes')
             console.log(response.data)
+            closeModal()
         }catch (error) {
             console.log('error');
         }

@@ -18,6 +18,19 @@ class JobApplicationSeeder extends Seeder
             'title'=>'Hello',
             'description'=>'Test Description',
             'document_url'=>'http://localhost:8000/files/applications/default.pdf',
+            'status'=>'accepted',
+            'application_date'=>now(),
+            'profile_id'=>1,
+            'company_id'=>1,
+            'job_id'=>1,
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+
+        DB::table('job_applications')->insert([
+            'title'=>'Hi',
+            'description'=>'Test Description',
+            'document_url'=>'http://localhost:8000/files/applications/default.pdf',
             'status'=>'pending',
             'application_date'=>now(),
             'profile_id'=>1,
@@ -27,6 +40,6 @@ class JobApplicationSeeder extends Seeder
             'updated_at'=>now()
         ]);
 
-        \App\Models\JobApplication::factory(5)->create();
+        // \App\Models\JobApplication::factory(5)->create();
     }
 }

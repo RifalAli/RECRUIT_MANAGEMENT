@@ -3,7 +3,7 @@ import Loader from '../../../services/Loader';
 import NavBar from './navigation/NavBar';
 import JobItemSection from './JobItemSection';
 import Footer from '../footer/Footer';
-import { fetchApiData } from '../../../api/api';
+import { fetchApiData, storeApiData } from '../../../api/api';
 
 const AllJobs = () => {
     const [counter, setCounter] = useState(6)
@@ -34,14 +34,51 @@ const AllJobs = () => {
             if (response.status===true) {
                 setJobs(response.data);
             }else {
-                console.log(response);
+                // console.log(response);
             }
         }
         fetchData();
+        fetchCategory()
         setTimeout(() => {
             setLoader(false);
         }, 700)
     }, [counter]);
+
+    const [categoryData, setCategoryData] = useState([])
+
+    const fetchCategory = async () => {
+        const categoryResponse = await fetchApiData(`loadCategory`)
+        setCategoryData(categoryResponse.data.category)
+    }
+
+    // console.log(categoryData)
+
+    const [title, setTitle] = useState('')
+    const [category, setCategory] = useState('')
+    const [location, setLocation] = useState('')
+    const [type, setType] = useState('')
+
+    // console.log(jobs)
+
+    const [searchJobs, setSearchJobs] = useState([])
+
+    const fetchSearchJobs = async () => {
+        const response = await storeApiData(`filterJobs/${counter}`, {title, category, location, type})
+        setSearchJobs(response.data.job)
+
+        // console.log(title)
+        // console.log(category)
+        // console.log(location)
+        // console.log(type)
+    }
+
+    const clearFilter = () => {
+        setSearchJobs([])
+    }
+
+    console.log(jobs.job)
+    console.log(searchJobs)
+
     return (
         <>
             {/* {(loader && <Loader/>) || (
@@ -60,7 +97,56 @@ const AllJobs = () => {
                 (loader && <Loader /> || (
                     <>
                         <NavBar hero='jobs' cmp="jobs" />
-                        <JobItemSection jobs={jobs.job}/>
+                        <div className='searchContainer'>
+                            <div className='searchRow'>
+                                <input type='text' name='title' value={title} onChange={(e)=>setTitle(e.target.value)} className='search' placeholder='title...'/>
+                            </div>
+                            <div className="searchRow">
+                                <select className='form-control' value={category} onChange={(e)=>setCategory(e.target.value)}>
+                                    <option value=''>Select an Option</option>
+                                    {
+                                        categoryData && categoryData.map((item, i) => (
+                                            <option key={item.id} value={item.name}>{item.name}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                            <div className="searchRow">
+                                <input type='text' name='location' value={location} onChange={(e)=>setLocation(e.target.value)} className='search' placeholder='location...'/>
+                            </div>
+                            <div className="searchRow">
+                                <select className='form-control' value={type} onChange={(e)=>setType(e.target.value)}>
+                                    <option value=''>Select an Option</option>
+                                    <option value='full time'>Full Time</option>
+                                    <option value='part time'>Part Time</option>
+                                </select>
+                            </div>
+                            <button type='button' onClick={fetchSearchJobs} >Search</button>
+                            <button type='button' onClick={clearFilter} >Clear Filter</button>
+                        </div>
+                        {
+                            searchJobs && searchJobs.length > 0 ? (
+                                <>
+                                    <h1>Search</h1>
+                                    {
+                                        searchJobs == "Nothing Match" ? (
+                                            <>
+                                                <h1>{searchJobs}</h1>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <JobItemSection jobs={searchJobs} condition='search' />
+                                            </>
+                                        )
+                                    }
+                                    {/* <JobItemSection jobs={searchJobs} /> */}
+                                </>
+                            ) : (
+                                <>
+                                    <JobItemSection jobs={jobs.job} condition='pages' />
+                                </>
+                            )
+                        }
                         <div className="load-data">
                             <button className='button' onClick={handleClick}>Browse More</button>
                         </div>

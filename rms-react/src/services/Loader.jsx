@@ -2,7 +2,9 @@ import react from 'react'
 
 const Loader = () => {
     return (
-        <div className='loader'></div>
+        // <div className='loaderBg'>
+            <div className='loader'></div>
+        // </div>
     )
 }
 

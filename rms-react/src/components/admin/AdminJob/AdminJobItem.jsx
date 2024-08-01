@@ -95,6 +95,7 @@ const AdminJobItem = ({index, id, title, closeDate, type, count, tag, salary, de
         const editJob = async () => {
             await storeApiData(`adminEditJob/${id}`, { jobTitle, jobCloseDate, jobType, jobCount, jobTag, jobSalary, jobDescription, company_id, category_id })
             .then((response)=>console.log(response.data))
+            .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
         }
         

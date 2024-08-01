@@ -4,6 +4,7 @@ import CompanyJob from './CompanyJob';
 import axios from 'axios';
 import { fetchApiData, storeApiData } from '../../api/api';
 import CompanyApplier from './CompanyApplier';
+import Loader from '../../services/Loader';
 
 const openModal = () => {
     let modal = document.getElementsByClassName('modal')[0];
@@ -18,6 +19,8 @@ const openModal = () => {
 // }
 
 const CompanyItem = () => {
+    const [loader, setLoader] = useState(true)
+    const [doRefresh, setDoRefresh] = useState(false)
     //Close Modal is going to clean the form
     const closeModal = () => {
         let modal = document.getElementsByClassName('modal')[0];
@@ -87,6 +90,9 @@ const CompanyItem = () => {
 
     useEffect(() => {
         setCompany()
+        setTimeout(() => {
+            setLoader(false);
+        }, 3500);
     }, [companyData])
 
     console.log(companyData)
@@ -95,6 +101,7 @@ const CompanyItem = () => {
     const requestChanges = async () => {
         await storeApiData(`changeCompany/${companyData.id}`, { name, location, email, description })
             .then((response)=>console.log(response.data))
+            .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
     }
 
@@ -133,6 +140,7 @@ const CompanyItem = () => {
         const createJob = async () => {
             await storeApiData(`companyCreateJob/${companyData.id}`, { jobTitle, jobCount, jobTag, jobSalary, jobCloseDate, jobCategory, jobDescription, jobType })
             .then((response)=>console.log(response.data))
+            .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
         }
 
@@ -147,7 +155,6 @@ const CompanyItem = () => {
         const response = await fetchApiData(`getCompanyJob/${companyData.id}`)
         setAllJobs(response.data.job)
     }
-
     
     //Fetch Applier
     const [allAppliers, setAllAppliers] = useState([])
@@ -172,8 +179,26 @@ const CompanyItem = () => {
     console.log(allJobs)
     console.log(allAppliers)
 
+    useEffect(() => {
+        if (doRefresh) {
+            setTimeout(() => {
+                window.location.reload()
+                setDoRefresh(!doRefresh)
+            }, 2000)
+        }
+
+    }, [doRefresh])
+
     return (
-        <section className='company'>
+        <>
+            {
+                loader ? (
+                    <>
+                        <Loader />
+                    </>
+                ) : (
+                    <>
+                    <section className='company'>
             <div className="container">
                 <div className="configure-profile-div">
                     <div className="photo">
@@ -313,6 +338,10 @@ const CompanyItem = () => {
                 </div>
             </div>
         </section>
+                    </>
+                )
+            }
+        </>
     )
 }
 

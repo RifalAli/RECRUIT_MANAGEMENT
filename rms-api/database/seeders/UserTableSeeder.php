@@ -50,6 +50,6 @@ class UserTableSeeder extends Seeder
             'updated_at' => now()
         ]);
 
-        \App\Models\User::factory(10)->create();
+        // \App\Models\User::factory(10)->create();
     }
 }

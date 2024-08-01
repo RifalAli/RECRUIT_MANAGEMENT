@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Company;
 use App\Models\MainJob;
 use App\Traits\ApiResponseWithHttpStatus;
+use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,7 +16,12 @@ class HomeController extends Controller
     public function index() 
     {
         $data['categories'] = Category::where([['status', 'active']])->take(8)->get();
-        $query['job'] = MainJob::where([['status', 'active'], ['is_featured', true]])->get()->random(6);
+        $query['job'] = [];
+        try {
+            $query['job'] = MainJob::where([['status', 'active'], ['is_featured', true]])->get()->random(6);
+        } catch(Exception $e) {
+            $query['job'] = MainJob::where([['status', 'active'], ['is_featured', true]])->get();
+        }
         // $data['company'] = Company::where([['id', $data['job'][0]['company_id']]])->get();
 
         // $data['latest'] = MainJob::where([['status', 'active']])->latest('created_at')->get()->random(6);

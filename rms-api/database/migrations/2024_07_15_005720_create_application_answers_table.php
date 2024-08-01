@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description')->nullable();
-            $table->timestamp('meeting_date')->default(now());
+            $table->timestamp('meeting_date')->nullable();
             $table->string('meeting_link')->nullable();
             $table->unsignedBigInteger('application_id')->nullable();
 

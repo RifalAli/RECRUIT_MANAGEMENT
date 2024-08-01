@@ -19,11 +19,11 @@ class CompanySeeder extends Seeder
             'slug'=>Str::slug(Str::random(20)),
             'location'=>'Sidoarjo, Jawa Timur',
             'description'=>fake()->sentence(10, true),
-            'user_id'=>1,
+            'user_id'=>2,
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
 
-        \App\Models\Company::factory(5)->create();
+        // \App\Models\Company::factory(5)->create();
     }
 }

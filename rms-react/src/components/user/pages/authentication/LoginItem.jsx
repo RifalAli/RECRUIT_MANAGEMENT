@@ -93,12 +93,12 @@ const LoginItem = () => {
                             </button>
                             <div className="forgot">
                                 <Link to='/sign-up'>Don't have any account?</Link>
-                                <Link to='/forgot-password'>Forgot your password?</Link>
+                                {/* <Link to='/forgot-password'>Forgot your password?</Link> */}
                             </div>
-                            <div className="social">
+                            {/* <div className="social">
                                 <img src={github} alt="github logo" />
                                 <img src={google} alt="google logo" />
-                            </div>
+                            </div> */}
                         </div>
                     </form>
                 </div>

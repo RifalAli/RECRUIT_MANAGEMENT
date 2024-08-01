@@ -32,7 +32,7 @@ const toggleAnswerModal = (state, index) => {
 }
 
 const CompanyApplierItem = ({index, id, title, description, document, status, applicationDate, profile, company, job}) => {
-    // const [doRefresh, setDoRefresh] = useState(false)
+    const [doRefresh, setDoRefresh] = useState(false)
 
     const showApplierDetail = () => {
         toggleApplierDetail('show', index)
@@ -99,6 +99,7 @@ const CompanyApplierItem = ({index, id, title, description, document, status, ap
         const createAnswer = async () => {
             await storeApiData(`answerJobApplication/${id}`, formData)
             .then((response)=>console.log(response.data))
+            .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
         }
         
@@ -109,6 +110,15 @@ const CompanyApplierItem = ({index, id, title, description, document, status, ap
     // const loadURLToInputField = () => {
     //     let file = new File()
     // }
+    useEffect(() => {
+        if (doRefresh) {
+            setTimeout(() => {
+                window.location.reload()
+                setDoRefresh(!doRefresh)
+            }, 2000)
+        }
+
+    }, [doRefresh])
 
     return (
         <>
@@ -241,6 +251,9 @@ const CompanyApplierItem = ({index, id, title, description, document, status, ap
                                 <label htmlFor="description">Description: </label>
                                 <input type="text" className='form-control' name="description" placeholder='Description' value={answerDescription} onChange={(e) => setAnswerDescription(e.target.value)}/>
                             </div>
+                            {
+                                answerStatus === 'accepted' ? (
+                                    <>
                             <div className='form-row'>
                                 <label htmlFor="meeting_date">Meeting Date: </label>
                                 <input type="date" className='form-control' name="close_date" placeholder='meeting date' value={meeting_date} onChange={(e) => setMeeting_date(e.target.value)}/>
@@ -248,7 +261,12 @@ const CompanyApplierItem = ({index, id, title, description, document, status, ap
                             <div className='form-row'>
                                 <label htmlFor="meeting_link">Meeting Link: </label>
                                 <input type="text" className='form-control' name="meeting_link" placeholder='Meeting Link' value={meeting_link} onChange={(e) => setMeeting_link(e.target.value)}/>
-                            </div>
+                            </div>  
+                                    </>
+                                ) : (
+                                    <></>
+                                )
+                            }
                             <div className='button-div'>
                                 <button type='button' className="button" onClick={postAnswer}>
                                     <div>

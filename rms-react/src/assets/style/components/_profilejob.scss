@@ -1,0 +1,227 @@
+.company_job, .profile_applied {
+    background: $color-light;
+
+    .container {
+        @include container;
+
+        .profile_applied-info {
+            margin-top: 6rem;
+            text-align: center;
+            line-height: 2;
+
+            h1 {
+                font-size: 30px;
+            }
+
+            p {
+                text-align: center
+            }
+        }
+
+        .profile_applied__wrapper {
+            margin: 2rem 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 10px 7px;
+
+            &__card {
+                @include card;
+                border: 1px solid $border-card;
+                background: $color-white;
+                box-shadow: $box-shadow;
+                position: relative;
+                border-left: .2rem solid $color-green;
+                display: flex;
+                justify-content: space-around;
+
+                &--line {
+                    border-right: 1px solid $color-green;
+                    height: 100%;
+                }
+
+                &--left {
+                    width: 25%;
+
+                    img {
+                        width: 80%;
+                        height: 80%;
+                        padding: 10px;
+                    }
+                }
+
+                &--right {
+                    width: 75%;
+                    height: auto;
+                    text-align: start;
+                    margin-left: 3rem !important;
+                    @include flexBetween;
+
+                    h1 {
+                        margin-top: 1.2rem;
+                        color: $color-dark !important;
+                    }
+
+                    p {
+                        margin-left: 0.5rem;
+                    }
+
+                    // a {
+                    //     margin-top: 1rem;
+                    //     font-size: 14px;
+                    //     display: inline-block;
+                    //     padding: 5px 15px;
+                    //     border-radius: 50px;
+                    //     cursor: pointer;
+                    //     text-transform: uppercase;
+                    //     background: $color-white-light;
+                    //     color: $color-green;
+                    //     font-weight: bolder;
+                    //     transition: all .3s ease-in-out;
+                    // }
+
+                    &__part-1 {
+                        h1 {
+                            font-size: 20px;
+                            color: #6c757d !important;
+                        }
+                    }
+
+                    &__part-2 {
+                        margin-top: -7rem;
+
+                        i {
+                            font-size: 2rem;
+
+                            &:hover {
+                                color: $color-danger;
+                            }
+                        }
+                    }
+
+                    &__dropdown {
+                        display: none;
+                        position: absolute;
+                        width: 110px;
+                        list-style-type: none;
+                        border: 1px solid $form-control-color;
+                        border-radius: 5px;
+                        background: white;
+                        left: 79%;
+                        top: 25%;
+
+                        &_item {
+                            padding: 5px;
+                            display: flex;
+                            column-gap: 5px;
+                            width: 100%;
+                            height: 30px;
+                            background: white;
+                            border: none;
+                            align-items: center;
+
+                            &:hover {
+                                background: $form-control-color;
+                            }
+                        }
+                    }
+                }
+
+                &:hover {
+                    box-shadow: 1px 8px 20px $color-secondary;
+                    transition: box-shadow .6s linear;
+                    // border-left: .4rem solid $color-green;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .profile_applied__wrapper {
+            margin: 2rem 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px 7px;
+
+            &__card {
+                @include card;
+                border: 1px solid $border-card;
+                background: $color-white;
+                box-shadow: $box-shadow;
+                position: relative;
+                // border-left: .2rem solid $color-green;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+
+                &--center {
+                    // width: 100%;
+                    height: auto;
+                    text-align: start;
+                    margin-left: 1rem !important;
+                    @include flexBetween;
+
+                    h1 {
+                        margin-top: 1.2rem;
+                        color: $color-dark !important;
+                    }
+
+                    p {
+                        // margin-left: 0.5rem;
+                    }
+
+                    &__part-1 {
+                        h1 {
+                            font-size: 20px;
+                            color: #6c757d !important;
+                        }
+                    }
+
+                    &__part-2 {
+                        margin-top: -7rem;
+
+                        i {
+                            font-size: 2rem;
+
+                            &:hover {
+                                color: $color-danger;
+                            }
+                        }
+                    }
+
+                    &__dropdown {
+                        display: none;
+                        position: absolute;
+                        width: 110px;
+                        list-style-type: none;
+                        border: 1px solid $form-control-color;
+                        border-radius: 5px;
+                        background: white;
+                        left: 79%;
+                        top: 25%;
+
+                        &_item {
+                            padding: 5px;
+                            display: flex;
+                            column-gap: 5px;
+                            width: 100%;
+                            height: 30px;
+                            background: white;
+                            border: none;
+                            align-items: center;
+
+                            &:hover {
+                                background: $form-control-color;
+                            }
+                        }
+                    }
+                }
+
+                &:hover {
+                    box-shadow: 1px 8px 20px $color-secondary;
+                    transition: box-shadow .6s linear;
+                    // border-left: .4rem solid $color-green;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Str;
 
+use function PHPUnit\Framework\isEmpty;
+
 class MainJobController extends Controller
 {
     use ApiResponseWithHttpStatus;
@@ -163,5 +165,26 @@ class MainJobController extends Controller
     public function adminDeleteJob($job_id) {
         $data['job'] = MainJob::where([['id', $job_id]])->delete();
         return $this->apiResponse('Success delete job', $data, Response::HTTP_OK, true);
+    }
+
+    public function filterJobs($count, Request $request) {
+        $data['job'] = MainJob::where([
+            ['title', 'LIKE', '%'.$request['title'].'%'], 
+            ['type', $request['type']]
+        ])->whereHas(
+            'category', function ($query) use ($request) {
+                $query->where('name', $request['category']);
+            }
+        )->whereHas(
+            'company', function ($query) use ($request) {
+                $query->where('location', 'LIKE', '%'.$request['location'].'%');
+            }
+        )->with('category')->with('company')->get()->take($count);
+
+        if (empty($data['job']) || sizeof($data['job']) <= 0) {
+            $data['job'] = 'Nothing Match';
+        }
+
+        return $this -> apiResponse('success', $data, Response::HTTP_OK, true);
     }
 }

@@ -64,5 +64,149 @@
                 width: 30%;
             }
         }
+
+        .job-applied-div {
+            margin-top: 20px;
+            // display: flex;
+            // flex-direction: row;
+            // gap: 20px;
+            border: 1px solid $form-control-color;
+            border-radius: 30px;
+        }
+    }
+
+    .applied-detail, .profile-detail, .job-detail {
+        z-index: 5;
+        margin: 0;
+        padding: 0;
+        background: white;
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 65vw;
+        height: 38vw;
+        border: 1px solid $form-control-color;
+        border-radius: 35px;
+
+        .applier-detail-hide {
+            position: relative;
+            top: 1.3rem;
+            left: 92%;
+            background-color: $color-white;
+            border: none;
+            font-size: 1.5rem;
+
+            i:hover {
+                color: red;
+            }
+        }
+
+        .applier-detail-container {
+            // @include flexVertical;
+            // padding: 20px;
+            display: flex;
+            flex-direction: column;
+
+            h1 {
+                text-align: center;
+            }
+
+            &-button {
+                // margin-top: 100px;
+                margin-top: -10px;
+                display: flex;
+                // gap: 20px;
+                // justify-content: space-around;
+                justify-content: center;
+                gap: 10px;
+
+                button {
+                    width: 45%;
+                    height: 35px;
+                    border-radius: 20px;
+                    border: none;
+                    // background-color: white;
+                }
+
+                .btn-reject {
+                    // background-color: $color-secondary;
+                }
+
+                .btn-accept {
+                    // background-color: rgb(25, 255, 25);
+                }
+
+                .btn-reject:hover {
+                    border: 1px solid red;
+                }
+
+                .btn-accept:hover {
+                    border: 1px solid green;
+                }
+            }
+
+            .form {
+                display: flex;
+                flex-direction: column;
+                width: 50vw;
+                height: auto;
+                padding: 2rem;
+                font-size: 12px;
+                border-radius: 30px;
+                // border: 1px solid $form-control-color;
+                transform: all .3s;
+            }
+            
+            .form-row {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            .form-control {
+                @include formControl;
+
+                width: 70%;
+            }
+
+            label {
+                flex: 1;
+            }
+
+            input {
+                flex: 4;
+                // margin-left: 100px;
+            }
+
+            select {
+                flex: 4;
+            }
+
+            .button-div {
+                display: flex;
+                flex-direction: row-reverse;
+                column-gap: 10px;
+            }
+
+            .button {
+                width: 28%;
+            }
+
+            .button-cancel {
+                background: #a9a9a9;
+            }
+        }
+    }
+
+    .profile-detail, .job-detail {
+        z-index: 7;
+    }
+
+    .answer-modal {
+        z-index: 10;
+        width: 50vw;
+        height: 55vh;
     }
 }

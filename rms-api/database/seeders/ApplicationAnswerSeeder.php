@@ -24,6 +24,6 @@ class ApplicationAnswerSeeder extends Seeder
             'updated_at'=>now()
         ]);
 
-        \App\Models\ApplicationAnswer::factory(5)->create();
+        // \App\Models\ApplicationAnswer::factory(5)->create();
     }
 }

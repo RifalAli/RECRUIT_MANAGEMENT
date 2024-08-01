@@ -48,6 +48,7 @@ const AdminCategoryItem = ({index, id, name, slug, icon, status, job_count}) => 
         const editCategory = async () => {
             await storeApiData(`adminEditCategory/${id}`, {categoryName, categoryStatus})
             .then((response)=>console.log(response.data))
+            .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
         }
         

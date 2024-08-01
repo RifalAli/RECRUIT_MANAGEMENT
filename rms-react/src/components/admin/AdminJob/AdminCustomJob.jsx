@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import sampleIcon from '../../../assets/images/default.png'
 import AdminJobItem from '../AdminJob/AdminJobItem'
 import { fetchApiData, storeApiData } from "../../../api/api";
+import Loader from "../../../services/Loader"
 
 const openModal = () => {
     let modal = document.getElementsByClassName('modal-job')[0];
@@ -14,6 +15,9 @@ const closeModal = () => {
 }
 
 const AdminCustomJob = () => {
+    const [loader, setLoader] = useState(true)
+    const [doRefresh, setDoRefresh] = useState(false)
+
     const [categoryData, setCategoryData] = useState([]);
     const [companyData, setCompanyData] = useState([]);
 
@@ -64,6 +68,7 @@ const AdminCustomJob = () => {
         const createJob = async () => {
             await storeApiData(`adminCreateJob`, { company_id, category_id, jobTitle, jobCloseDate, jobType, jobCount, jobTag, jobSalary, jobDescription, jobStatus })
             .then((response)=>console.log(response.data))
+            .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
         }
 
@@ -87,6 +92,9 @@ const AdminCustomJob = () => {
         fetchJob()
         // iniateData()
         // console.log(jobData)
+        setTimeout(() => {
+            setLoader(false);
+        }, 7000);
     }, [fetchState])
 
     function formatJobData() {
@@ -144,8 +152,27 @@ const AdminCustomJob = () => {
     //     calculateToLoadData()
     //     console.log(toLoadData)
     // }, [jobData])
+
+    useEffect(() => {
+        if (doRefresh) {
+            setTimeout(() => {
+                window.location.reload()
+                setDoRefresh(!doRefresh)
+            }, 2000)
+        }
+
+    }, [doRefresh])
+
     return (
-        <section className="admin">
+        <>
+            {
+                loader ? (
+                    <>
+                        <Loader />
+                    </>
+                ) : (
+                    <>
+                        <section className="admin">
             <div className="container">
                 <div className="job-div">
                     <div className="info">
@@ -153,20 +180,12 @@ const AdminCustomJob = () => {
                         <div className='button-div'>
                         <button type='button' onClick={openModal} className="button">
                             <div>
-                                {/* <img src='' alt='' height='15px' width='15px'/> */}
                                 <span>Add Job</span>
                             </div>
                         </button>
                     </div>
                     </div>
                     <div className="job__wrapper">
-                        {/* <AdminJobItem index={0}/>
-                        <AdminJobItem index={1}/> */}
-                        {
-                            // jobData.map((item, i) => (
-                            //     <AdminJobItem key={i} index={i} id={item.id} title={item.title} type={item.type} slug={item.slug} icon={item.icon} status={item.status} company={item.company[0]}/>
-                            // ))
-                        }
                         {
                             toLoadData && toLoadData.map((item, i) => (
                                 <AdminJobItem key={i} index={i} id={item.id} title={item.title} closeDate={item.closeDate} type={item.type} count={item.count} tag={item.tag} salary={item.salary} description={item.description} slug={item.slug} icon={item.icon} status={item.status} company={item.company[0]} cat_id={item.cat_id}/>
@@ -174,25 +193,12 @@ const AdminCustomJob = () => {
                         }
                     </div>
                     <div className="page__wrapper">
-                        {/* <button type="button" value={1} onClick={e => setCurrentPage(e.target.value)}>1</button>
-                        <button type="button" value={2} onClick={e => setCurrentPage(e.target.value)}>2</button>
-                        <button type="button" value={3} onClick={e => setCurrentPage(e.target.value)}>3</button>
-                        <button type="button" value={4} onClick={e => setCurrentPage(e.target.value)}>4</button> */}
-                        {
-                            // toLoadData && toLoadData.map((item, i) => (
-                                //     <button type="button" onClick={setCurrentPage(i+1)}>{i+1}</button>
-                            // ))
-                            // newJobDataFormat.map((item, i) => (
-                            //     <button type="button" onClick={setCurrentPage(i+1)}>{i+1}</button>
-                            // ))
-                        }
                         {
                             newJobDataFormat && newJobDataFormat.map((item, i) => (
                                 <button type="button" key={i} value={i+1} onClick={e => setCurrentPage(e.target.value)}>{i+1}</button>
                             ))
                         }
                     </div>
-                    {/*  */}
                 </div>
             </div>
 
@@ -268,13 +274,11 @@ const AdminCustomJob = () => {
                             <div className='button-div'>
                                 <button type='button' onClick={postJob} className="button">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Create Job</span>
                                     </div>
                                 </button>
                                 <button type='button' onClick={closeModal} className="button button-cancel">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Cancel</span>
                                     </div>
                                 </button>
@@ -284,6 +288,10 @@ const AdminCustomJob = () => {
                 </div>
             </div>
         </section>
+                    </>
+                )
+            }
+        </>
     )
 }
 
