@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('description');
             $table->string('image')->default('http://localhost:8000/files/companies/default.png');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('job_count')->default(0);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');//SET NULL
             $table->timestamps();
         });

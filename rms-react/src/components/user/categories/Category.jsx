@@ -17,8 +17,7 @@ const Category = ({categories}) => {
                             <CategoryItem 
                                 key={i} 
                                 name={category.name} 
-                                icon={category.icon} 
-                                count={category.job_count} 
+                                icon={category.icon}
                                 slug={category.slug} 
                             />
                         ))

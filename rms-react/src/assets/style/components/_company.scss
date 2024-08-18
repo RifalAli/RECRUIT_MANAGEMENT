@@ -84,8 +84,9 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 65vw;
-        height: 38vw;
+        // width: 65vw;
+        // height: 38vw;
+        width: 70%;
         border: 1px solid $form-control-color;
         border-radius: 35px;
 
@@ -163,8 +164,10 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 65vw;
-        height: 38vw;
+        // width: 65vw;
+        // height: 38vw;
+        width: 55%;
+        padding: 5px 10px 30px 10px;
         border: 1px solid $form-control-color;
         border-radius: 35px;
 
@@ -189,6 +192,36 @@
 
             h1 {
                 text-align: center;
+            }
+
+            .applier-detail-row {
+                margin-left: 25px;
+                display: flex;
+
+                :nth-child(1) {
+                    flex: 1;
+                    // background: red;
+                }
+
+                :nth-child(2) {
+                    flex: 4;
+                    // background: blue;
+                    // font-weight: bold;
+                }
+
+                p {
+                    margin-bottom: 5px;
+                    // font-size: 0.9rem;
+                }
+
+                .applier-detail-button {
+                    padding: 1px 10px;
+                    border-radius: 7px;
+                }
+
+                .applier-detail-button:hover {
+                    background-color: white;
+                }
             }
 
             &-button {
@@ -284,7 +317,11 @@
 
     .answer-modal {
         z-index: 10;
-        width: 50vw;
-        height: 55vh;
+        width: 55%;
+
+        h1 {
+            text-align: center;
+            margin: 15px 0px 10px 0px;
+        }
     }
 }

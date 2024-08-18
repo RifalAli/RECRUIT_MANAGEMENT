@@ -108,7 +108,7 @@ const ProfileItem = () => {
 
     const fetchAllAppliedJobs = async () => {
         const response = await fetchApiData(`getAppliedJobs/${profileData.id}`)
-        setAllAppliedJobs(response.data.jobApplication)
+        setAllAppliedJobs(response?.data.jobApplication)
     }
     
     useEffect(() => {

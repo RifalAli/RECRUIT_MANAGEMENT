@@ -41,7 +41,10 @@ const SameCategory = () => {
                             </>
                         ) : (
                             <>
-                                <h1>There is no job in this category</h1>
+                                <div className='no-jobs'>
+                                    <h1>Job not Found</h1>
+                                    <p>There is no job in this category</p>
+                                </div>
                             </>
                         )
                     }

@@ -6,7 +6,7 @@ const Info = () => {
         <div className="footer__section__container__footer__info">
             <img src={logo} alt="logo" />
             <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam quisquam cum ipsam nemo provident soluta.
+                Experience a streamlined recruitment process that brings together the best talent and the best employers in one place.
             </p>
         </div>
     );

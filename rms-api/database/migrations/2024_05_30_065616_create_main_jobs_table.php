@@ -15,11 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->integer('count')->default(0);
-            // $table->string('company');
-            // $table->string('location');
-            // $table->string('email');
-            $table->string('tag')->nullable();
             $table->float('salary', 10, 2)->default(0.00);
             $table->timestamp('close_date')->default(now());
             $table->unsignedBigInteger('cat_id')->nullable();
@@ -27,7 +22,7 @@ return new class extends Migration
             $table->string('icon')->default('http://localhost:8000/files/jobs/default.png');
             $table->longText('description')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->enum('type', ['full time', 'half time', 'part time'])->default('full time');
+            $table->enum('type', ['full time', 'part time'])->default('full time');
             $table->boolean('is_featured')->nullable();
             $table->foreign('cat_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');//SET NULL

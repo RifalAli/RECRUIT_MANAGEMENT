@@ -18,7 +18,7 @@ const CompanyJob = ({ allJobs, category }) => {
                     <CompanyJobItem index={3}/> */}
                     {
                         allJobs.map((item, i) => (
-                            <CompanyJobItem key={i} index={i} id={item.id} title={item.title} slug={item.slug} tag={item.tag} count={item.count} closeDate={item.close_date} company={item.company.name} description={item.description} salary={item.salary} company_id={item.company_id} type={item.type} icon={item.icon} cat_id={item.cat_id} category={category} />
+                            <CompanyJobItem key={i} index={i} id={item.id} title={item.title} slug={item.slug} closeDate={item.close_date} company={item.company.name} description={item.description} salary={item.salary} company_id={item.company_id} type={item.type} icon={item.icon} cat_id={item.cat_id} category={category} />
                         ))
                     }
                     {

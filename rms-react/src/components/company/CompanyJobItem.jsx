@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import sampleIcon from '../../assets/images/default.png'
 import { fetchApiData, storeApiData } from "../../api/api";
 
-const CompanyJobItem = ({index, id, title, slug, tag, count, closeDate, company, description, salary, company_id, type, icon, cat_id, category}) => {
+const CompanyJobItem = ({index, id, title, slug, closeDate, company, description, salary, company_id, type, icon, cat_id, category}) => {
     const [dropdownState, setDropdownState] = useState(false)
     const [doRefresh, setDoRefresh] = useState(false)
 
@@ -56,8 +56,6 @@ const CompanyJobItem = ({index, id, title, slug, tag, count, closeDate, company,
         modal.style.display = 'none';
     
         setJobTitle('')
-        setJobTag('')
-        setJobCount('')
         setJobCloseDate('')
         setJobSalary('')
         setJobDescription('')
@@ -67,8 +65,9 @@ const CompanyJobItem = ({index, id, title, slug, tag, count, closeDate, company,
 
     const applyJobChanges = () => {
         const editJob = async () => {
-            await storeApiData(`companyEditJob/${company_id}/${id}`, { jobTitle, jobCount, jobTag, jobSalary, jobCloseDate, jobCategory, jobDescription, jobType })
+            await storeApiData(`companyEditJob/${company_id}/${id}`, { jobTitle, jobSalary, jobCloseDate, jobCategory, jobDescription, jobType })
             .then((response)=>console.log(response.data))
+            .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
         }
 
@@ -85,8 +84,6 @@ const CompanyJobItem = ({index, id, title, slug, tag, count, closeDate, company,
             }
 
             setJobTitle(title)
-            setJobTag(tag)
-            setJobCount(count)
             setJobSalary(salary)
             setJobCloseDate(formatDate(closeDate))
             setJobDescription(description)
@@ -109,8 +106,6 @@ const CompanyJobItem = ({index, id, title, slug, tag, count, closeDate, company,
     }
 
     const [jobTitle, setJobTitle] = useState(title)
-    const [jobTag, setJobTag] = useState('')
-    const [jobCount, setJobCount] = useState('')
     const [jobSalary, setJobSalary] = useState('')
     const [jobCloseDate, setJobCloseDate] = useState('')
     const [jobDescription, setJobDescription] = useState('')
@@ -173,14 +168,6 @@ const CompanyJobItem = ({index, id, title, slug, tag, count, closeDate, company,
                                 <input type="text" className='form-control' name="title" placeholder='Job Title' value={jobTitle} onChange={(e) => setJobTitle(e.target.value)}/>
                             </div>
                             <div className='form-row'>
-                                <label htmlFor="tag">Tag: </label>
-                                <input type="text" className='form-control' name="tag" placeholder='Job Tag' value={jobTag} onChange={(e) => setJobTag(e.target.value)}/>
-                            </div>
-                            <div className='form-row'>
-                                <label htmlFor="count">Count: </label>
-                                <input type="number" className='form-control' name="count"  placeholder='People Needed' value={jobCount} onChange={(e) => setJobCount(e.target.value)}/>
-                            </div>
-                            <div className='form-row'>
                                 <label htmlFor="salary">Salary: </label>
                                 <input type="text" className='form-control' name="salary" placeholder='Job Salary' value={jobSalary} onChange={(e) => setJobSalary(e.target.value)}/>
                             </div>
@@ -214,7 +201,6 @@ const CompanyJobItem = ({index, id, title, slug, tag, count, closeDate, company,
                                 <select className='form-control' value={jobType} onChange={(e)=>setJobType(e.target.value)}>
                                     <option value='full time'>full time</option>
                                     <option value='part time'>part time</option>
-                                    <option value='half time'>half time</option>
                                 </select>
                             </div>
                             <div className='button-div'>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import sampleIcon from '../../../assets/images/default.png'
 import { fetchApiData, storeApiData } from "../../../api/api";
 
-const AdminJobItem = ({index, id, title, closeDate, type, count, tag, salary, description, slug, icon, status, company, cat_id}) => {
+const AdminJobItem = ({index, id, title, closeDate, type, salary, description, slug, icon, status, company, cat_id}) => {
     const [dropdownState, setDropdownState] = useState(false)
     const [doRefresh, setDoRefresh] = useState(false)
 
@@ -45,8 +45,6 @@ const AdminJobItem = ({index, id, title, closeDate, type, count, tag, salary, de
     const [jobTitle, setJobTitle] = useState('')
     const [jobCloseDate, setJobCloseDate] = useState('')
     const [jobType, setJobType] = useState('')
-    const [jobCount, setJobCount] = useState('')
-    const [jobTag, setJobTag] = useState('')
     const [jobSalary, setJobSalary] = useState('')
     const [jobDescription, setJobDescription] = useState('')
     const [jobStatus, setJobStatus] = useState('active')
@@ -74,10 +72,9 @@ const AdminJobItem = ({index, id, title, closeDate, type, count, tag, salary, de
             setJobTitle(title)
             setJobCloseDate(formatDate(closeDate))
             setJobType(type)
-            setJobCount(count)
-            setJobTag(tag)
             setJobSalary(salary)
             setJobDescription(description)
+            setJobStatus(status)
         }
 
         const showModal = () => {
@@ -93,7 +90,7 @@ const AdminJobItem = ({index, id, title, closeDate, type, count, tag, salary, de
 
     const applyJobChanges = () => {
         const editJob = async () => {
-            await storeApiData(`adminEditJob/${id}`, { jobTitle, jobCloseDate, jobType, jobCount, jobTag, jobSalary, jobDescription, company_id, category_id })
+            await storeApiData(`adminEditJob/${id}`, { jobTitle, jobCloseDate, jobType, jobSalary, jobDescription, company_id, category_id, jobStatus })
             .then((response)=>console.log(response.data))
             .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
@@ -185,14 +182,6 @@ const AdminJobItem = ({index, id, title, closeDate, type, count, tag, salary, de
                                 <input type="text" value={jobTitle} onChange={(e)=>setJobTitle(e.target.value)} className='form-control' name="title" placeholder='Job Title'/>
                             </div>
                             <div className='form-row'>
-                                <label htmlFor="tag">Tag: </label>
-                                <input type="text" value={jobTag} onChange={(e)=>setJobTag(e.target.value)} className='form-control' name="tag" placeholder='Job Tag'/>
-                            </div>
-                            <div className='form-row'>
-                                <label htmlFor="count">Count: </label>
-                                <input type="number" value={jobCount} onChange={(e)=>setJobCount(e.target.value)} className='form-control' name="count"  placeholder='People Needed'/>
-                            </div>
-                            <div className='form-row'>
                                 <label htmlFor="salary">Salary: </label>
                                 <input type="text" value={jobSalary} onChange={(e)=>setJobSalary(e.target.value)} className='form-control' name="salary" placeholder='Job Salary'/>
                             </div>
@@ -221,16 +210,15 @@ const AdminJobItem = ({index, id, title, closeDate, type, count, tag, salary, de
                                     <option value=''>Select an Option</option>
                                     <option value='full time'>full time</option>
                                     <option value='part time'>part time</option>
-                                    <option value='half time'>half time</option>
                                 </select>
                             </div>
-                            {/* <div className='form-row'>
+                            <div className='form-row'>
                                 <label htmlFor="status">Status: </label>
                                 <select className='form-control' value={jobStatus} onChange={(e)=>setJobStatus(e.target.value)}>
                                     <option value='active'>active</option>
                                     <option value='inactive'>inactive</option>
                                 </select>
-                            </div> */}
+                            </div>
                             <div className='button-div'>
                                 <button type='button' onClick={applyJobChanges} className="button">
                                     <div>

@@ -14,6 +14,10 @@
                 height: 100%;
                 padding: 15px 20px;
                 box-shadow: $box-shadow-2;
+
+                button {
+                    color: white;
+                }
             }
 
             h1, 
@@ -47,8 +51,10 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 65vw;
-        height: 38vw;
+        // width: 65vw;
+        // height: 38vw;
+        width: 50%;
+        // text-align: center;
         border: 1px solid $form-control-color;
         border-radius: 35px;
 
@@ -108,6 +114,7 @@
 
             .button {
                 width: 28%;
+                text-align: center;
             }
 
             .button-cancel {

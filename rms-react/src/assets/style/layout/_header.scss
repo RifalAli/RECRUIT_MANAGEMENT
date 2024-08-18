@@ -60,13 +60,19 @@
                         @include formControl;
 
                         &--search-btn {
-                            margin-left: 0.6rem;
+                            margin-left: -50%;
+                            margin-top: -10px;
+                            background: $color-green;
+                            color: $color-white-light;
+                            padding: 8px 20px;
+                            border-radius: 13px;
+                            // margin-left: 0.6rem;
 
-                            i {
-                                font-size: 2rem;
-                                color: $color-green;
-                                cursor: pointer;
-                            }
+                            // i {
+                            //     font-size: 2rem;
+                            //     color: $color-green;
+                            //     cursor: pointer;
+                            // }
                         }
                     }
                 }

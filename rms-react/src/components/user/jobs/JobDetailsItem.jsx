@@ -141,12 +141,15 @@ const JobDetailsItem = ({ job, similar }) => {
                         <div className="form">
                         <h2 className="message">{message}</h2>
                         <div className='button-div'>
-                                <button type='button' onClick={openModal} className="button">
-                                    <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
-                                        <span>Apply Job</span>
-                                    </div>
-                                </button>
+                            {
+                                role == 'undefined' ? (
+                                    <>
+                                        <Link to='/login' className='button'>Apply Job</Link>
+                                    </>
+                                ) : (
+                                    <></>
+                                )
+                            }
                                 <button type='button' onClick={closeModal} className="button button-cancel">
                                     <div>
                                         {/* <img src='' alt='' height='15px' width='15px'/> */}

@@ -10,7 +10,7 @@ const FeaturedJob = ({featured, similar, name, count}) => {
                         similar && similar==='featured' ? (
                             <>
                                 <h1 className="featured_job-info__heading">Featured Job</h1>
-                                <p className="featured_job-info__des">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Id natus perferendis nisi enim dignissimos assumenda ullam rerum, quaerat maxime officiis.
+                                <p className="featured_job-info__des">Discover our selection of featured jobs, curated to match your skills and career aspirations. Take the next step in your career journey with these exceptional opportunities.
                                 </p>
                             </>
                         ) : (

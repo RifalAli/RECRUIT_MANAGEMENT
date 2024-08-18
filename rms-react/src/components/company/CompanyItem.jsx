@@ -27,8 +27,6 @@ const CompanyItem = () => {
         modal.style.display = 'none';
     
         setJobTitle('')
-        setJobTag('')
-        setJobCount('')
         setJobCloseDate('')
         setJobSalary('')
         setJobDescription('')
@@ -128,8 +126,6 @@ const CompanyItem = () => {
 
     //Add Job
     const [jobTitle, setJobTitle] = useState('')
-    const [jobTag, setJobTag] = useState('')
-    const [jobCount, setJobCount] = useState('')
     const [jobSalary, setJobSalary] = useState('')
     const [jobCloseDate, setJobCloseDate] = useState('')
     const [jobDescription, setJobDescription] = useState('')
@@ -138,7 +134,7 @@ const CompanyItem = () => {
 
     const postJob = () => {
         const createJob = async () => {
-            await storeApiData(`companyCreateJob/${companyData.id}`, { jobTitle, jobCount, jobTag, jobSalary, jobCloseDate, jobCategory, jobDescription, jobType })
+            await storeApiData(`companyCreateJob/${companyData.id}`, { jobTitle, jobSalary, jobCloseDate, jobCategory, jobDescription, jobType })
             .then((response)=>console.log(response.data))
             .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
@@ -275,14 +271,6 @@ const CompanyItem = () => {
                                 <input type="text" className='form-control' name="title" placeholder='Job Title' value={jobTitle} onChange={(e) => setJobTitle(e.target.value)}/>
                             </div>
                             <div className='form-row'>
-                                <label htmlFor="tag">Tag: </label>
-                                <input type="text" className='form-control' name="tag" placeholder='Job Tag' value={jobTag} onChange={(e) => setJobTag(e.target.value)}/>
-                            </div>
-                            <div className='form-row'>
-                                <label htmlFor="count">Count: </label>
-                                <input type="number" className='form-control' name="count"  placeholder='People Needed' value={jobCount} onChange={(e) => setJobCount(e.target.value)}/>
-                            </div>
-                            <div className='form-row'>
                                 <label htmlFor="salary">Salary: </label>
                                 <input type="text" className='form-control' name="salary" placeholder='Job Salary' value={jobSalary} onChange={(e) => setJobSalary(e.target.value)}/>
                             </div>
@@ -316,7 +304,6 @@ const CompanyItem = () => {
                                 <select className='form-control' value={jobType} onChange={(e)=>setJobType(e.target.value)}>
                                     <option value='full time'>full time</option>
                                     <option value='part time'>part time</option>
-                                    <option value='half time'>half time</option>
                                 </select>
                             </div>
                             <div className='button-div'>

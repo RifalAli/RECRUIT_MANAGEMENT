@@ -17,13 +17,6 @@ const toggleProfileDetail = (state, index) => {
     if (state == 'hide') dropdown.style.display = 'none';
 }
 
-const toggleJobDetail = (state, index) => {
-    let dropdown = document.getElementsByClassName('job-detail')[index];
-
-    if (state == 'show') dropdown.style.display = 'block';
-    if (state == 'hide') dropdown.style.display = 'none';
-}
-
 const toggleAnswerModal = (state, index) => {
     let dropdown = document.getElementsByClassName('answer-modal')[index];
 
@@ -50,18 +43,9 @@ const CompanyApplierItem = ({index, id, title, description, document, status, ap
         toggleProfileDetail('hide', index)
     }
 
-    const showJobDetail = () => {
-        toggleJobDetail('show', index)
-    }
-
-    const hideJobDetail = () => {
-        toggleJobDetail('hide', index)
-    }
-
     const closeAllDetail = () => {
         hideApplierDetail()
         hideProfileDetail()
-        hideJobDetail()
         hideAnswerModal()
     }
 
@@ -140,31 +124,35 @@ const CompanyApplierItem = ({index, id, title, description, document, status, ap
             <div className="applier-detail-container">
                 <h1>Applier's Message</h1>
                 <div className="applier-detail-row">
-                    <p>Applier Name: </p>
-                    <p>{profile.fullname}</p>
+                    <p>Applier Name</p>
+                    <p>: {profile.fullname}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Job Applied: </p>
-                    <p>{job.title}</p>
+                    <p>Job Applied</p>
+                    <p>: {job.title}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Title: </p>
-                    <p>{title}</p>
+                    <p>Title</p>
+                    <p>: {title}</p>
                 </div>
                 <div className="applier-detail-row">
                     <p>Description: </p>
-                    <p>{description}</p>
+                    <p>: {description}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Document: </p>
+                    <p>Document</p>
                     {/* <iframe src={document} frameborder="0" style={{ width: '100%', height: '500px' }}></iframe> */}
-                    <a href={document} download="applier's CV">View Applier's CV</a>
+                    <p>
+                        : <a href={document} download="applier's CV">View Applier's CV</a>
+                    </p>
                 </div>
-                <br />
-                <h1>Details</h1>
-                <button type="button" onClick={showProfileDetail} className="applier-detail-profile-button">Click to See Applier's Profile Detail</button>
-                <button type="button" onClick={showJobDetail} className="applier-detail-job-button">Click to See Job Applied Detail</button>
-                <br />
+                <div className="applier-detail-row">
+                    <p>Detail</p>
+                    <p>
+                        : <button type="button" onClick={showProfileDetail} className="applier-detail-button">More Details</button>
+                    </p>
+                </div>
+                <br /><br />
                 <div className="applier-detail-container-button">
                     {
                         status === 'pending' ? (
@@ -185,63 +173,66 @@ const CompanyApplierItem = ({index, id, title, description, document, status, ap
             </button>
             <div className="applier-detail-container">
                 <h1>Applier's Profile Detail</h1>
+                <br />
                 <div className="applier-detail-row">
-                    <p>Fullname: </p>
-                    <p>{profile.fullname}</p>
+                    <p>Fullname</p>
+                    <p>: {profile.fullname}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Age: </p>
-                    <p>{profile.age}</p>
+                    <p>Age</p>
+                    <p>: {profile.age}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Address: </p>
-                    <p>{profile.address}</p>
+                    <p>Address</p>
+                    <p>: {profile.address}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Description: </p>
-                    <p>{profile.description}</p>
+                    <p>Description</p>
+                    <p>: {profile.description}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Last Education: </p>
-                    <p>{profile.last_education}</p>
+                    <p>Last Education</p>
+                    <p>: {profile.last_education}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Status: </p>
-                    <p>{profile.status}</p>
+                    <p>Status</p>
+                    <p>: {profile.status}</p>
                 </div>
-            </div>
-        </div>
-        <div className="job-detail">
-            <button className="applier-detail-hide" type="button" onClick={hideJobDetail}>
-                <i className="fa fa-close fa-fw"></i>
-            </button>
-            <div className="applier-detail-container">
+                <br /><br />
                 <h1>Job Applied Detail</h1>
+                <br />
                 <div className="applier-detail-row">
-                    <p>Title: </p>
-                    <p>{job.title}</p>
+                    <p>Title</p>
+                    <p>: {job.title}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Tag: </p>
-                    <p>{job.tag}</p>
+                    <p>Salary</p>
+                    <p>: {job.salary}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Salary: </p>
-                    <p>{job.salary}</p>
+                    <p>Type</p>
+                    <p>: {job.type}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Type: </p>
-                    <p>{job.type}</p>
-                </div>
-                <div className="applier-detail-row">
-                    <p>Description: </p>
-                    <p>{job.description}</p>
+                    <p>Description</p>
+                    <p>: {job.description}</p>
                 </div>
             </div>
         </div>
         <div className="answer-modal">
                 <div className="modal-container">
                     <form>
+                        {
+                            answerStatus == 'accepted' ? (
+                                <>
+                                    <h1>Applier's Accept Message</h1>
+                                </>
+                            )  : (
+                                <>
+                                    <h1>Applier's Reject Message</h1>
+                                </>
+                            )
+                        }
                         <div className="form">
                             <div className='form-row'>
                                 <label htmlFor="title">Title: </label>

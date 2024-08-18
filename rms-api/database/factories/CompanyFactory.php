@@ -24,7 +24,6 @@ class CompanyFactory extends Factory
             'description'=>fake()->sentence(10, true),
             'image'=>fake()->randomElement(['http://localhost:8000/files/companies/default.png', 'http://localhost:8000/files/companies/default1.png', 'http://localhost:8000/files/companies/default2.png', 'http://localhost:8000/files/companies/default3.png']),
             'user_id'=>fake()->randomElement(User::where('role', 'company')->pluck('id')->toArray()),
-            'job_count'=>fake()->numberBetween(0,10),
             'created_at'=>fake()->dateTimeThisYear(),
             'updated_at'=>fake()->dateTimeThisYear(),
         ];

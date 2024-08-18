@@ -58,15 +58,13 @@ const AdminCustomJob = () => {
     const [jobTitle, setJobTitle] = useState('')
     const [jobCloseDate, setJobCloseDate] = useState('')
     const [jobType, setJobType] = useState('')
-    const [jobCount, setJobCount] = useState('')
-    const [jobTag, setJobTag] = useState('')
     const [jobSalary, setJobSalary] = useState('')
     const [jobDescription, setJobDescription] = useState('')
     const [jobStatus, setJobStatus] = useState('active')
 
     const postJob = () => {
         const createJob = async () => {
-            await storeApiData(`adminCreateJob`, { company_id, category_id, jobTitle, jobCloseDate, jobType, jobCount, jobTag, jobSalary, jobDescription, jobStatus })
+            await storeApiData(`adminCreateJob`, { company_id, category_id, jobTitle, jobCloseDate, jobType, jobSalary, jobDescription, jobStatus })
             .then((response)=>console.log(response.data))
             .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
@@ -188,7 +186,7 @@ const AdminCustomJob = () => {
                     <div className="job__wrapper">
                         {
                             toLoadData && toLoadData.map((item, i) => (
-                                <AdminJobItem key={i} index={i} id={item.id} title={item.title} closeDate={item.closeDate} type={item.type} count={item.count} tag={item.tag} salary={item.salary} description={item.description} slug={item.slug} icon={item.icon} status={item.status} company={item.company[0]} cat_id={item.cat_id}/>
+                                <AdminJobItem key={i} index={i} id={item.id} title={item.title} closeDate={item.closeDate} type={item.type} salary={item.salary} description={item.description} slug={item.slug} icon={item.icon} status={item.status} company={item.company[0]} cat_id={item.cat_id}/>
                             ))
                         }
                     </div>
@@ -225,14 +223,6 @@ const AdminCustomJob = () => {
                                 <input type="text" value={jobTitle} onChange={(e)=>setJobTitle(e.target.value)} className='form-control' name="title" placeholder='Job Title'/>
                             </div>
                             <div className='form-row'>
-                                <label htmlFor="tag">Tag: </label>
-                                <input type="text" value={jobTag} onChange={(e)=>setJobTag(e.target.value)} className='form-control' name="tag" placeholder='Job Tag'/>
-                            </div>
-                            <div className='form-row'>
-                                <label htmlFor="count">Count: </label>
-                                <input type="number" value={jobCount} onChange={(e)=>setJobCount(e.target.value)} className='form-control' name="count"  placeholder='People Needed'/>
-                            </div>
-                            <div className='form-row'>
                                 <label htmlFor="salary">Salary: </label>
                                 <input type="text" value={jobSalary} onChange={(e)=>setJobSalary(e.target.value)} className='form-control' name="salary" placeholder='Job Salary'/>
                             </div>
@@ -261,16 +251,15 @@ const AdminCustomJob = () => {
                                     <option value=''>Select an Option</option>
                                     <option value='full time'>full time</option>
                                     <option value='part time'>part time</option>
-                                    <option value='half time'>half time</option>
                                 </select>
                             </div>
-                            {/* <div className='form-row'>
+                            <div className='form-row'>
                                 <label htmlFor="status">Status: </label>
                                 <select className='form-control' value={jobStatus} onChange={(e)=>setJobStatus(e.target.value)}>
                                     <option value='active'>active</option>
                                     <option value='inactive'>inactive</option>
                                 </select>
-                            </div> */}
+                            </div>
                             <div className='button-div'>
                                 <button type='button' onClick={postJob} className="button">
                                     <div>

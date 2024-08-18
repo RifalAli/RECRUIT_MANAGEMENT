@@ -135,24 +135,26 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
             <div className="applier-detail-container">
                 <h1>Job Applied</h1>
                 <div className="applier-detail-row">
-                    <p>Job Title: </p>
-                    <p>{main_job.title}</p>
+                    <p>Job Title</p>
+                    <p>: {main_job.title}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Job Description: </p>
-                    <p>{main_job.description}</p>
+                    <p>Job Description</p>
+                    <p>: {main_job.description}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Job Salary: </p>
-                    <p>{main_job.salary}</p>
+                    <p>Job Salary</p>
+                    <p>: {main_job.salary}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Type: </p>
-                    <p>{main_job.type}</p>
+                    <p>Type</p>
+                    <p>: {main_job.type}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Your CV: </p>
-                    <a href={document_url} download="applied">View your CV</a>
+                    <p>Your CV</p>
+                    <p>
+                        : <a href={document_url} download="applied">View your CV</a>
+                    </p>
                 </div>
                 <br />
                 <h1>Details</h1>
@@ -160,26 +162,34 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                     <>
                         <div className="applier-detail-container">
                 <div className="applier-detail-row">
-                    <p>Title: </p>
-                    <p>{applicationAnswer.title}</p>
+                    <p>Title</p>
+                    <p>: {applicationAnswer.title}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Description: </p>
-                    <p>{applicationAnswer.description}</p>
+                    <p>Description</p>
+                    <p>: {applicationAnswer.description}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Meeting Date: </p>
-                    <p>{applicationAnswer.meeting_date}</p>
+                    <p>Meeting Date</p>
+                    <p>: {applicationAnswer.meeting_date}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Meeting Link: </p>
-                    <a href={applicationAnswer.meeting_link}>{applicationAnswer.meeting_link}</a>
+                    <p>Meeting Link</p>
+                    <p>
+                        : <a href={applicationAnswer.meeting_link}>{applicationAnswer.meeting_link}</a>
+                    </p>
+                </div>
+                <div className="applier-detail-row">
+                    <p>Status</p>
+                    <p>
+                        : Your request was <span className={status == 'accepted' ? 'accepted' : 'rejected'}>{status}</span>
+                    </p>
                 </div>
                 </div>
                     </>
                 ) : (
                     <>
-                        <p>Your request is still pending</p>
+                        <p className="pending">Your request is still pending</p>
                     </>
                 )}
                 {/* <button type="button" onClick={showProfileDetail} className="applier-detail-profile-button">Click to See Applier's Profile Detail</button> */}

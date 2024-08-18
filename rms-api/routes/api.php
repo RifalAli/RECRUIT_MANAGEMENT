@@ -32,6 +32,7 @@ Route::group([
 Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('/categories', CategoryController::class);
 });
+
 Route::get('/home', [HomeController::class, 'index']);
 Route::get('/home/browse/{count}', [HomeController::class, 'getAllJobs']);
 Route::get('/home/{slug}', [HomeController::class, 'getSingleJobDetails']);
@@ -68,4 +69,10 @@ Route::group([
     Route::post('/answerJobApplication/{jobApplication_id}', [ApplicationAnswerController::class, 'answerJobApplication']);
     Route::get('/getAppliedJobs/{profile_id}', [JobApplicationController::class, 'getProfileJobApplication']);
     Route::post('/filterJobs/{count}', [MainJobController::class, 'filterJobs']);
+});
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    // return $request -> user();
+    // Route::resource('/categories', CategoryController::class);
+    // Route::get('/home', [HomeController::class, 'index']);
 });

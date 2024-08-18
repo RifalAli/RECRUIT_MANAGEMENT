@@ -12,7 +12,7 @@ const Footer = () => {
                     <Info/>
                     <Links/>
                     <Condition/>
-                    <Subscribe/>
+                    {/* <Subscribe/> */}
                 </div>
             </div>
         </div>

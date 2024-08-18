@@ -39,11 +39,6 @@ class MainJobController extends Controller
         $data['job'] = MainJob::create([
             'title' => $request['jobTitle'],
             'slug' => Str::lower(str_replace('', '_', Str::random(15))),
-            'count' => $request['jobCount'],
-            // 'company' => $data['company']['name'],
-            // 'location' => $data['company']['location'],
-            // 'email' => $data['user']['email'],
-            'tag' => $request['jobTag'],
             'salary' => $request['jobSalary'],
             'close_date' => $request['jobCloseDate'],
             'cat_id' => $request['jobCategory'],
@@ -85,8 +80,6 @@ class MainJobController extends Controller
         }
 
         $data['job']['title'] = $request['jobTitle'];
-        $data['job']['count'] = $request['jobCount'];
-        $data['job']['tag'] = $request['jobTag'];
         $data['job']['salary'] = $request['jobSalary'];
         $data['job']['close_date'] = $request['jobCloseDate'];
         $data['job']['cat_id'] = $request['jobCategory'];
@@ -116,11 +109,8 @@ class MainJobController extends Controller
         $data['job'] = MainJob::create([
             'title' => $request['jobTitle'],
             'slug' => Str::lower(str_replace('', '_', Str::random(15))),
-            'count' => $request['jobCount'],
-            'tag' => $request['jobTag'],
             'salary' => $request['jobSalary'],
             'close_date' => $request['jobCloseDate'],
-            // 'cat_id' => $request['jobCategory'],
             'cat_id' => $request['category_id'],
             'company_id' => $data['company']['id'], 
             'icon'=>'http://localhost:8000/files/users/default.png',
@@ -148,13 +138,12 @@ class MainJobController extends Controller
         }
 
         $data['job']['title'] = $request['jobTitle'];
-        $data['job']['count'] = $request['jobCount'];
-        $data['job']['tag'] = $request['jobTag'];
         $data['job']['salary'] = $request['jobSalary'];
         $data['job']['close_date'] = $request['jobCloseDate'];
         $data['job']['company_id'] = $request['company_id'];
         $data['job']['cat_id'] = $request['category_id'];
         $data['job']['description'] = $request['jobDescription'];
+        $data['job']['status'] = $request['jobStatus'];
         $data['job']['type'] = $request['jobType'];
 
         $data['job']->save();
@@ -170,7 +159,8 @@ class MainJobController extends Controller
     public function filterJobs($count, Request $request) {
         $data['job'] = MainJob::where([
             ['title', 'LIKE', '%'.$request['title'].'%'], 
-            ['type', $request['type']]
+            ['type', $request['type']], 
+            ['status', 'active']
         ])->whereHas(
             'category', function ($query) use ($request) {
                 $query->where('name', $request['category']);
