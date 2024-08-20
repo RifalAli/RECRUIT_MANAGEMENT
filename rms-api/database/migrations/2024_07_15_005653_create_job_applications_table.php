@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('job_applications', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->longText('description')->nullable();
-            $table->string('document_url')->default('http://localhost:8000/files/applications/default.pdf');
+            // $table->string('title');
+            // $table->longText('description')->nullable();
+            // $table->string('document_url')->default('http://localhost:8000/files/applications/default.pdf');
             $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamp('application_date')->default(now());
             $table->unsignedBigInteger('profile_id')->nullable();

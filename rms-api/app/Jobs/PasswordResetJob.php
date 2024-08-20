@@ -30,5 +30,6 @@ class PasswordResetJob implements ShouldQueue
     {
         $data = new PasswordResetMail($this->details);
         Mail::to($this->details['email'])->send($data);
+        // Mail::to("bizreave1@gmail.com")->send($data);
     }
 }

@@ -91,7 +91,7 @@ const AdminCustomCompany = () => {
                     <div className="company__wrapper">
                         {
                             companyData.map((item, i) => (
-                                <AdminCompanyItem key={i} index={i} id={item.id} name={item.name} usersName={item.username} usersEmail={item.email} usersStatus={item.status} slug={item.slug} user_id={item.user_id} location={item.location} description={item.description} image={item.image} job_count={item.job_count}/>
+                                <AdminCompanyItem key={i} index={i} id={item.id} name={item.name} usersName={item.username} usersEmail={item.email} usersStatus={item.status} slug={item.slug} user_id={item.user_id} location={item.location} description={item.description} image={item.image} job_count={item.job_count} verify={item.verify}/>
                             ))
                         }
                     </div>

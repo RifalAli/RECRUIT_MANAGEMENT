@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import sampleIcon from '../../../assets/images/default.png'
 import { storeApiData } from "../../../api/api";
 
-const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail, usersStatus, location, description, image, job_count}) => {
+const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail, usersStatus, location, description, image, job_count, verify}) => {
     const [dropdownState, setDropdownState] = useState(false)
     const [doRefresh, setDoRefresh] = useState(false)
 
@@ -25,6 +25,8 @@ const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail
     const [companyLocation, setCompanyLocation] = useState('')
     const [companyDescription, setCompanyDescription] = useState('')
 
+    const [companyVerify, setCompanyVerify] = useState('')
+
     const closeModal = () => {
         let modal = document.getElementsByClassName('company-child-modal')[index];
         modal.style.display = 'none';
@@ -41,6 +43,10 @@ const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail
             setCompanyName(name)
             setCompanyLocation(location)
             setCompanyDescription(description)
+
+            if (verify === 0) {
+                setCompanyVerify(verify)
+            }
         }
 
         const showModal = () => {
@@ -54,7 +60,7 @@ const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail
 
     const applyCompanyChanges = () => {
         const editCompany = async () => {
-            await storeApiData(`adminEditCompany/${id}`, {username, email, status, companyName, companyLocation, companyDescription})
+            await storeApiData(`adminEditCompany/${id}`, {username, email, status, companyName, companyLocation, companyDescription, companyVerify})
             .then((response)=>console.log(response.data))
             .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
@@ -63,6 +69,8 @@ const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail
         editCompany()
         closeModal()
     }
+
+    console.log(companyVerify)
 
     const companyDeleteHandler = async () => {
         await storeApiData(`adminDeleteCompany/${user_id}/${id}`)
@@ -146,6 +154,22 @@ const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail
                                     <option value='inactive'>inactive</option>
                                 </select>
                             </div>
+                            {
+                                verify === 0 ? (
+                                    <>
+                                        <div className='form-row'>
+                                            <label htmlFor="verify">Verification: </label>
+                                            <select className='form-control' value={companyVerify} onChange={(e)=>setCompanyVerify(e.target.value)}>
+                                                <option value={0}>Unverify</option>
+                                                <option value={1}>Verify</option>
+                                            </select>
+                                        </div>
+                                    </>
+
+                                ) : (
+                                    <></>
+                                )
+                            }
                             <div className='form-row'>
                                 <label htmlFor="companyName">Company Name: </label>
                                 <input type="text" className='form-control' name="companyName" placeholder='Company Name' value={companyName} onChange={(e) => setCompanyName(e.target.value)}/>

@@ -91,11 +91,12 @@ class AuthController extends Controller
                     'slug'=>Str::random(15),
                     'token'=>Str::random(20),
                     'status'=>'active', 
+                    'otp'=>random_int(100000, 999999),
                     'image'=>'http://localhost:8000/files/users/default.png',
                     'role'=>$request['role']]
                 ));
         if ($user) {
-            $details = ['name'=>$user->name, 'email'=>$user->email, 'hashEmail'=>Crypt::encryptString($user->email), 'token'=>$user->token];
+            $details = ['name'=>$user->name, 'email'=>$user->email, 'hashEmail'=>Crypt::encryptString($user->email), 'token'=>$user->token, 'otp'=>$user->otp];
             dispatch(new VerifyUserJobs($details));
         }
 
@@ -109,10 +110,11 @@ class AuthController extends Controller
                 'address' => 'No Address', 
                 'description' => 'No Description', 
                 'last_education' => 'SMA/Sederajat',
+                'document_url' => 'http://localhost:8000/files/applications/default.pdf',
                 'image' => 'http://localhost:8000/files/profiles/default.png',
                 'user_id' => $data['user']['id'],
                 'dream_job' => null, 
-                'status' => 'unemploye',
+                'status' => 'unemployed',
             ]);
             
             $data['profile']->save();
@@ -136,6 +138,36 @@ class AuthController extends Controller
         return $this->createNewToken($token);
 
         // return $this->apiResponse('User succesfully registered',$data=$user,Response::HTTP_OK, true);
+    }
+
+    public function compareOTP(Request $request) {
+        $data['user'] = User::where([['slug', $request['slug']], ['role', $request['role']]])->first();
+        // $data['user'] = \App\Models\User::where([['slug', $request['slug']]])->first();
+        // return $this->apiResponse('Success Verify', $data['user'], Response::HTTP_OK, true);
+
+        if ($data['user']['otp'] == $request['otp']) {
+            $data['user']['verify'] = true;
+            $data['user']['otp'] = null;
+
+            $data['user']->save();
+
+            return $this->apiResponse('Success Verify', $data['user'], Response::HTTP_OK, true);
+        }else {
+            return $this->apiResponse('Invalid OTP', $data='Invalid', Response::HTTP_OK, true);
+        }
+    }
+    
+    public function resendOTP(Request $request) {
+        $data['user'] = User::where([['slug', $request['slug']], ['role', $request['role']]])->first();
+        
+        if ($data['user']['otp'] != null) {
+            $details = ['name'=>$data['user']['name'], 'email'=>$data['user']['email'], 'hashEmail'=>Crypt::encryptString($data['user']['email']), 'token'=>$data['user']['token'], 'otp'=>$data['user']['otp']];
+            dispatch(new VerifyUserJobs($details));
+
+            return $this->apiResponse('Success resend OTP', $data['user'], Response::HTTP_OK, true);
+        }else {
+            return $this->apiResponse('User already verified', $data['user'], Response::HTTP_OK, true);
+        }
     }
 
     /**

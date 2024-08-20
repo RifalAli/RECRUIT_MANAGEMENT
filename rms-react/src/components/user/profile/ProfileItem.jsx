@@ -5,6 +5,25 @@ import { fetchApiData, storeApiData } from '../../../api/api'
 import ProfileApplied from './ProfileApplied'
 import Loader from '../../../services/Loader'
 
+const openCVInput = () => {
+    let cvInput = document.getElementById('changeCV')
+    let btnChange = document.getElementById('btnChange')
+    let btnCancel = document.getElementById('btnCancel')
+    
+    cvInput.style.display = 'block';
+    btnCancel.style.display = 'block';
+    btnChange.style.display = 'none';
+}
+const closeCVInput = () => {
+    let cvInput = document.getElementById('changeCV')
+    let btnChange = document.getElementById('btnChange')
+    let btnCancel = document.getElementById('btnCancel')
+
+    cvInput.style.display = 'none';
+    btnChange.style.display = 'block';
+    btnCancel.style.display = 'none';
+}
+
 const ProfileItem = () => {
     const [loader, setLoader] = useState(true)
     const [doRefresh, setDoRefresh] = useState(false)
@@ -20,6 +39,9 @@ const ProfileItem = () => {
     const [lastEducation, setLastEducation] = useState('')
     const [dreamJob, setDreamJob] = useState('')
     const [status, setStatus] = useState('')
+    const [documentUrl, setDocumentUrl] = useState('')
+
+    const [document, setDocument] = useState(null)
 
     const fetchCategory = async () => {
         const response = await fetchApiData('categories')
@@ -38,6 +60,12 @@ const ProfileItem = () => {
             console.log(error.response.data);
         }
     };
+
+    const checkVerify = () => {
+        if (userData.verify === 0) {
+            window.location = '/verify';
+        }
+    }
     
     const getCompleteProfile = async () => {
         if (userData) {
@@ -59,6 +87,7 @@ const ProfileItem = () => {
             setLastEducation(profileData.last_education)
             setDreamJob(profileData.dream_job)
             setStatus(profileData.status)
+            setDocumentUrl(profileData.document_url)
             
             // if (profileData.dream_job !== null) {
                 // setDreamJob(categoryData[profileData.dream_job-1].name)
@@ -77,6 +106,7 @@ const ProfileItem = () => {
     }, []);
     
     useEffect(() => {
+        checkVerify();
         getCompleteProfile();
     }, [userData]);
 
@@ -93,15 +123,43 @@ const ProfileItem = () => {
     // console.log(dreamJob)
     // console.log(profileData.dream_job)
 
-    const requestChanges = async () => {
+    const requestChanges = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('fullname', fullname)
+        formData.append('email', email)
+        formData.append('age', age)
+        formData.append('address', address)
+        formData.append('lastEducation', lastEducation)
+        formData.append('dreamJob', dreamJob)
+        formData.append('status', status)
+        formData.append('file', document)
+
+        try {
+            const response = await axios.post(`http://localhost:8000/changeProfile/${profileData.id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+            })
+
+            console.log('tes')
+            console.log(response.data)
+            setDoRefresh(!doRefresh)
+        } catch (error) {
+            console.log('error');
+        }
+    }
+
+    const requestChange = async () => {
         await storeApiData(`changeProfile/${profileData.id}`, { fullname, email, age, address, lastEducation, dreamJob, status })
             .then((response)=>console.log(response.data))
             .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
     }
 
-    const applyChangesHandler = () => {
-        requestChanges()
+    const applyChangesHandler = (e) => {
+        requestChanges(e)
     }
 
     const [allAppliedJobs, setAllAppliedJobs] = useState([])
@@ -189,6 +247,15 @@ const ProfileItem = () => {
                                     <option value='employed'>Employed</option>
                                 </select>
                             </div>
+                            <div className="form-row">
+                                <label htmlFor="document">CV: </label>
+                                <div className='form-column-row'>
+                                    <a href={documentUrl}>View your CV</a>
+                                    <button type='button' id='btnChange' onClick={openCVInput}>Change CV</button>
+                                    <button type='button' id='btnCancel' onClick={closeCVInput}>Cancel</button>
+                                    <input id='changeCV' type='file' onChange={(e) => setDocument(e.target.files[0])} className='form-control' name='document' placeholder='Change CV'></input>
+                                </div>
+                            </div>
                             <div className='button-div'>
                                 <button type='button' className="button" onClick={applyChangesHandler}>
                                     <div>
@@ -205,7 +272,7 @@ const ProfileItem = () => {
                         <h1>Applied Job</h1>
                     </div>
                     <>
-                        <ProfileApplied allAppliedJobs = {allAppliedJobs} />
+                        <ProfileApplied allAppliedJobs = {allAppliedJobs} document_url={documentUrl} />
                     </>
                 </div>
             </div>

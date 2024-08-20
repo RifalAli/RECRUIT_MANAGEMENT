@@ -9,6 +9,7 @@
 <body>
     <h2>Dear <span>{{ $details['name'] }}</span></h2>
     <p>We are requesting you to verify your email address Please click link below to verify your account</p>
+    <p>Your OTP is <span>{{ $details['otp'] }}</span></p>
     <a href="http://127.0.0.1:8000/auth/verify/{{ $details['token'] }}/{{$details['hashEmail']}}">Verify Here</a>
     <br><br><br>
     <p>Thank You</p>

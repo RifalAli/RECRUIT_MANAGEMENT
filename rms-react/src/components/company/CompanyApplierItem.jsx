@@ -24,7 +24,7 @@ const toggleAnswerModal = (state, index) => {
     if (state == 'hide') dropdown.style.display = 'none';
 }
 
-const CompanyApplierItem = ({index, id, title, description, document, status, applicationDate, profile, company, job}) => {
+const CompanyApplierItem = ({index, id, title, description, status, applicationDate, profile, company, job}) => {
     const [doRefresh, setDoRefresh] = useState(false)
 
     const showApplierDetail = () => {
@@ -132,18 +132,10 @@ const CompanyApplierItem = ({index, id, title, description, document, status, ap
                     <p>: {job.title}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Title</p>
-                    <p>: {title}</p>
-                </div>
-                <div className="applier-detail-row">
-                    <p>Description: </p>
-                    <p>: {description}</p>
-                </div>
-                <div className="applier-detail-row">
                     <p>Document</p>
                     {/* <iframe src={document} frameborder="0" style={{ width: '100%', height: '500px' }}></iframe> */}
                     <p>
-                        : <a href={document} download="applier's CV">View Applier's CV</a>
+                        : <a href={profile.document_url} download="applier's CV">View Applier's CV</a>
                     </p>
                 </div>
                 <div className="applier-detail-row">

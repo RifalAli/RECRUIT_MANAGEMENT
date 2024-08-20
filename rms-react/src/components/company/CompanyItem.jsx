@@ -56,6 +56,12 @@ const CompanyItem = () => {
         }
     };
 
+    const checkVerify = () => {
+        if (userData.verify === 0) {
+            window.location = '/verify';
+        }
+    }
+
     const getCompleteCompany = async () => {
         if (userData) {
             const response = await fetchApiData(`user-complete-company/${userData.id}`);
@@ -83,6 +89,7 @@ const CompanyItem = () => {
     });
 
     useEffect(() => {
+        checkVerify();
         getCompleteCompany();
     }, [userData]);
 

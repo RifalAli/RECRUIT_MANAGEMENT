@@ -19,7 +19,7 @@ const CompanyApplier = ({ allAppliers }) => {
                     <CompanyJobItem index={3}/> */}
                     {
                         allAppliers && allAppliers.map((item, i) => (
-                            <CompanyApplierItem key={i} index={i} id={item.id} title={item.title} description={item.description} document={item.document_url} status={item.status} applicationDate={item.applicationDate} profile={item.profile} company={item.company} job={item.main_job} />
+                            <CompanyApplierItem key={i} index={i} id={item.id} title={item.title} description={item.description} status={item.status} applicationDate={item.applicationDate} profile={item.profile} company={item.company} job={item.main_job} />
                         ))
                     }
                     {

@@ -49,6 +49,12 @@ const SignUpItem = () => {
     }
 
     const checkRole = async () => {
+        if (userData.verify === 0) {
+            localStorage.setItem('slug', userData.slug);
+            window.location = '/verify';
+            return;
+        }
+
         if (userData.role === 'company') {
             window.location = `/company/${userData.slug}`
         }else if (userData.role === 'job seeker') {

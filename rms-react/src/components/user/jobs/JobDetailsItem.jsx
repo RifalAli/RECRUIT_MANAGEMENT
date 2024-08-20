@@ -91,7 +91,28 @@ const JobDetailsItem = ({ job, similar }) => {
         checkRole(role)
     }
 
-    const applyJob = async (e) => {
+    const applyJob = () => {
+        if (user.verify === 0) {
+            window.location = '/verify';
+        }
+
+        const formData = new FormData();
+
+        formData.append('company_id', job.company[0]?.id)
+        formData.append('job_id', job?.id)
+        formData.append('profile_id', profile?.id)
+
+        const createApplication = async () => {
+            await storeApiData('applyJob', formData)
+            .then((response)=>console.log(response.data))
+            .catch((response)=>console.log(response.data))
+        }
+
+        createApplication()
+        closeModal()
+    }
+
+    const applyJobWithDocument = async (e) => {
         e.preventDefault();
 
         const formData = new FormData();
@@ -166,7 +187,7 @@ const JobDetailsItem = ({ job, similar }) => {
                 <div className="modal-container">
                     <form>
                         <div className="form">
-                            <div className='form-row'>
+                            {/* <div className='form-row'>
                                 <label htmlFor="title">Title: </label>
                                 <input type="text" value={title} onChange={(e)=>setTitle(e.target.value)} className='form-control' name="title" placeholder='Job Title'/>
                             </div>
@@ -177,7 +198,8 @@ const JobDetailsItem = ({ job, similar }) => {
                             <div className='form-row'>
                                 <label htmlFor="CV">Curriculum Vitae: </label>
                                 <input type="file" onChange={(e)=>setDocument(e.target.files[0])} className='form-control' name="CV" placeholder='Job Document'/>
-                            </div>
+                            </div> */}
+                            <h1>Are you sure want to apply this job?</h1>
                             <div className='button-div'>
                                 <button type='button' onClick={applyJob} className="button">
                                     <div>

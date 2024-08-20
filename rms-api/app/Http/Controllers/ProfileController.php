@@ -35,6 +35,14 @@ class ProfileController extends Controller
         $data['profile']['dream_job'] = $request['dreamJob'];
         // $data['profile']['dream_job'] = $request['dream_job']; dream job is need to take category id instead of category name
         $data['profile']['status'] = $request['status'];
+
+        if ($request->hasFile('file')) {
+            $file = $request['file'];
+            $filename = time().'_'.$file->getClientOriginalName();
+            $path = $file->move(public_path('files/applications'), $filename);
+            $data['profile']['document_url'] = 'http://localhost:8000/files/applications/'.$filename;
+        }
+
         $data['profile']->save();
         $data['user']->save();
         return $this->apiResponse('success', $data, Response::HTTP_OK, true);

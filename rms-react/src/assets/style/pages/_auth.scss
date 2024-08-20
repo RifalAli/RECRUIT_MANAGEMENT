@@ -16,7 +16,23 @@
                 border-radius: 30px;
                 border: 1px solid $form-control-color;
                 transform: all .3s;
+
+                .otp-input {
+                    // background-color: red;
+                    // margin-top: 100px;
+                    // background-color: red;
+                    // padding: 50px;
+                    // background-color: red;
+                    width: 100%;
+                    height: 120%;
+                    text-align: center;
+                    font-size: 1.8rem;
+                    font-weight: bold;
+                    border-radius: 10px;
+                    border: 1px solid black;
+                }
             }
+
 
             .form-row-radio {
                 display: flex;

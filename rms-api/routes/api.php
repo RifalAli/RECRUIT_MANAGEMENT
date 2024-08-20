@@ -25,6 +25,8 @@ Route::group([
     Route::get('/verify/{token}/{email}', [AuthController::class, 'accountVerify']);
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('/update-password', [AuthController::class, 'updatePassword']);
+    Route::post('/verify-otp', [AuthController::class, 'compareOTP']);
+    Route::post('/send-otp', [AuthController::class, 'resendOTP']);
 
     //Home
 });

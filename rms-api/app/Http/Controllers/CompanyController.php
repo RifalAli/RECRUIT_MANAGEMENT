@@ -104,6 +104,10 @@ class CompanyController extends Controller
         $data['company']['location'] = $request['companyLocation'];
         $data['company']['description'] = $request['companyDescription'];
 
+        if ($request['companyVerify'] == 1) {
+            $data['user']['verify'] = $request['companyVerify'];
+        }
+
         $data['user'] -> save();
         $data['company'] -> save();
 

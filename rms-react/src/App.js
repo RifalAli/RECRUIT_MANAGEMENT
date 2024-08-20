@@ -15,6 +15,7 @@ import Support from './components/user/footer/footer-detail/Support';
 import TermsConditions from './components/user/footer/footer-detail/TermsConditions';
 import Abouts from './components/user/footer/footer-detail/AboutUs';
 import PrivacyPolicy from './components/user/footer/footer-detail/PrivacyPolicy';
+import OTPAuth from './components/user/pages/authentication/OTPAuth';
 
 const App = () => {
   return(
@@ -36,6 +37,7 @@ const App = () => {
       <Route path="/support" element={<Support />}/>
       <Route path="/termsConditions" element={<TermsConditions/>}/>
       <Route path="/privacy" element={<PrivacyPolicy/>}/>
+      <Route path="/verify" element={<OTPAuth/>}/>
     </>
   </Routes>
   </>

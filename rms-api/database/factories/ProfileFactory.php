@@ -25,10 +25,11 @@ class ProfileFactory extends Factory
             'address'=>fake()->address(),
             'description'=>fake()->sentence(20, true),
             'last_education'=>fake()->randomElement(['S3', 'S2', 'S1', 'SMA/Sederajat']),
+            'document_url'=>'http://localhost:8000/files/applications/default.pdf',
             'image'=>fake()->randomElement(['http://localhost:8000/files/profiles/default.png', 'http://localhost:8000/files/profiles/default1.png', 'http://localhost:8000/files/profiles/default2.png', 'http://localhost:8000/files/profiles/default3.png']),
             'user_id'=>fake()->randomElement(User::where('role', 'job seeker')->pluck('id')->toArray()),
             'dream_job'=>fake()->randomElement(Category::where('status', 'active')->pluck('id')->toArray()),
-            'status'=>fake()->randomElement(['unemploye', 'employed']),
+            'status'=>fake()->randomElement(['unemployed', 'employed']),
             'created_at'=>fake()->dateTimeThisYear(),
             'updated_at'=>fake()->dateTimeThisYear(),
         ];
