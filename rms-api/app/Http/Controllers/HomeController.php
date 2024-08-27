@@ -73,6 +73,7 @@ class HomeController extends Controller
         $data['job']['icon'] = $query['job']['icon'];
         $data['job']['salary'] = $query['job']['salary'];
         $data['job']['description'] = $query['job']['description'];
+        $data['job']['expire_at'] = $query['job']['expire_at'];
         $data['job']['company'] = $query['job_company'];
         $data['job']['category'] = $query['job']['category'];
         $data['job']['created_at'] = $query['job']['created_at'];

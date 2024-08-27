@@ -34,13 +34,17 @@ const NavHero = ({ hero, job }) => {
                                         <div className="details">
                                             <h1>{job.title}</h1>
                                             <div className="posted">
-                                                <div className="country">
+                                                <div className="company-name">
                                                     <i className="fa fa-map-marker"></i>
                                                     <span>{job.company[0].name}</span>
                                                 </div>
-                                                <div className="date">
+                                                <div className="post-date">
                                                     <i className="fa fa-calendar"></i>
                                                     <span>Posted: {new Date(job.created_at).toISOString().slice(0, 10)}</span>
+                                                </div>
+                                                <div className="expire-date">
+                                                    <i className="fa fa-calendar"></i>
+                                                    <span>Expires: {new Date(job.expire_at).toISOString().slice(0, 10)}</span>
                                                 </div>
                                             </div>
                                         </div>

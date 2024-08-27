@@ -38,6 +38,7 @@ const CompanyItem = () => {
     const [userData, setUserData] = useState('')
     const [companyData, setCompanyData] = useState('')
 
+    const [username, setUsername] = useState('')
     const [name, setName] = useState('')
     const [location, setLocation] = useState('')
     const [email, setEmail] = useState('')
@@ -75,6 +76,7 @@ const CompanyItem = () => {
 
     const setCompany = () => {
         if (companyData && userData) {
+            setUsername(userData.name)
             setName(companyData.name)
             setEmail(userData.email)
             setLocation(companyData.location)
@@ -104,7 +106,7 @@ const CompanyItem = () => {
     console.log(userData)
 
     const requestChanges = async () => {
-        await storeApiData(`changeCompany/${companyData.id}`, { name, location, email, description })
+        await storeApiData(`changeCompany/${companyData.id}`, { username, name, location, email, description })
             .then((response)=>console.log(response.data))
             .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
@@ -210,20 +212,28 @@ const CompanyItem = () => {
                     <form>
                         <div className="form">
                             <div className='form-row'>
-                                <label htmlFor="name">Name: </label>
-                                <input type="text" className='form-control' name="name" placeholder='company name' value={name} onChange={(e) => setName(e.target.value)}/>
+                                <label htmlFor="name">Username: </label>
+                                <input type="text" className='form-control' name="name" placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)}/>
+                            </div>
+                            <div className='form-row'>
+                                <label htmlFor="name">Company Name: </label>
+                                <input type="text" className='form-control' name="name" placeholder='Company name' value={name} onChange={(e) => setName(e.target.value)}/>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="location">Location: </label>
-                                <input type="text" className='form-control' name="location" placeholder='company location' value={location} onChange={(e) => setLocation(e.target.value)}/>
+                                <input type="text" className='form-control' name="location" placeholder='Company location' value={location} onChange={(e) => setLocation(e.target.value)}/>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="email">Email: </label>
                                 <input type="email" className='form-control' name="email" placeholder='company email' value={email} onChange={(e) => setEmail(e.target.value)}/>
                             </div>
-                            <div className='form-row'>
+                            {/* <div className='form-row'>
                                 <label htmlFor="description">Description: </label>
                                 <input type="text" className='form-control' name="address" placeholder='company description' value={description} onChange={(e) => setDescription(e.target.value)}/>
+                            </div> */}
+                            <div className='form-row'>
+                                <label htmlFor="description">Description: </label>
+                                <textarea className='form-control' name="description" id="text-area" cols="30" rows="20" placeholder='Company Description' value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                             </div>
                             <div className='button-div'>
                                 <button className="button" onClick={applyChangesHandler} type='button'>
@@ -281,13 +291,21 @@ const CompanyItem = () => {
                                 <label htmlFor="salary">Salary: </label>
                                 <input type="text" className='form-control' name="salary" placeholder='Job Salary' value={jobSalary} onChange={(e) => setJobSalary(e.target.value)}/>
                             </div>
+                            {/* <div className='form-row'>
+                                <label htmlFor="expire_at">Close Date: </label>
+                                <input type="date" className='form-control' name="expire_at" placeholder='close date' value={jobCloseDate} onChange={(e) => setJobCloseDate(e.target.value)}/>
+                            </div> */}
                             <div className='form-row'>
-                                <label htmlFor="close_date">Close Date: </label>
-                                <input type="date" className='form-control' name="close_date" placeholder='close date' value={jobCloseDate} onChange={(e) => setJobCloseDate(e.target.value)}/>
+                                <label htmlFor="expire_at">Expire at: </label>
+                                <input type="datetime-local" className='form-control' name="expire_at" placeholder='close date' value={jobCloseDate} onChange={(e) => setJobCloseDate(e.target.value)}/>
                             </div>
-                            <div className='form-row'>
+                            {/* <div className='form-row'>
                                 <label htmlFor="description">Description: </label>
                                 <input type="text" className='form-control' name="address" placeholder='Job Description' value={jobDescription} onChange={(e) => setJobDescription(e.target.value)}/>
+                            </div> */}
+                            <div className='form-row'>
+                                <label htmlFor="description">Description: </label>
+                                <textarea className='form-control' name="description" id="text-area" cols="30" rows="20" placeholder='Job Description' value={jobDescription} onChange={(e) => setJobDescription(e.target.value)}></textarea>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="category">Category: </label>

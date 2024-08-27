@@ -226,13 +226,21 @@ const AdminCustomJob = () => {
                                 <label htmlFor="salary">Salary: </label>
                                 <input type="text" value={jobSalary} onChange={(e)=>setJobSalary(e.target.value)} className='form-control' name="salary" placeholder='Job Salary'/>
                             </div>
+                            {/* <div className='form-row'>
+                                <label htmlFor="expire_at">Close Date: </label>
+                                <input type="date" value={jobCloseDate} onChange={(e)=>setJobCloseDate(e.target.value)} className='form-control' name="expire_at" placeholder='close date'/>
+                            </div> */}
                             <div className='form-row'>
-                                <label htmlFor="close_date">Close Date: </label>
-                                <input type="date" value={jobCloseDate} onChange={(e)=>setJobCloseDate(e.target.value)} className='form-control' name="close_date" placeholder='close date'/>
+                                <label htmlFor="expire_at">Expire at: </label>
+                                <input type="datetime-local" value={jobCloseDate} onChange={(e)=>setJobCloseDate(e.target.value)} className='form-control' name="expire_at" placeholder='close date'/>
                             </div>
-                            <div className='form-row'>
+                            {/* <div className='form-row'>
                                 <label htmlFor="description">Description: </label>
                                 <input type="text" value={jobDescription} onChange={(e)=>setJobDescription(e.target.value)} className='form-control' name="address" placeholder='Job Description'/>
+                            </div> */}
+                            <div className='form-row'>
+                            <label htmlFor="description">Description: </label>
+                            <textarea className='form-control' name="description" id="text-area" cols="30" rows="20" placeholder='Job Description' value={jobDescription} onChange={(e) => setJobDescription(e.target.value)}></textarea>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="category">Category: </label>

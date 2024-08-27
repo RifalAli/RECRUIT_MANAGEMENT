@@ -5,6 +5,7 @@ namespace App\Http\Controllers\auth;
 use App\Http\Controllers\Controller;
 use App\Jobs\PasswordResetJob;
 use App\Jobs\VerifyUserJobs;
+use App\Mail\VerifyUserMail;
 use App\Models\Company;
 use App\Models\Profile;
 use App\Models\User;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
 
@@ -39,14 +41,39 @@ class AuthController extends Controller
     	$validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
+        ], [
+            'password.min' => 'Password min'
         ]);
+
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return response()->json($validator->errors()->first(), 200);
+            // return response()->json($validator->errors(), 422);
         }
+
+        $userByEmail = User::where([['email', $request['email']]])->first();
+        if (!$userByEmail) {
+            return response()->json('Invalid email', 200);
+        }
+
         if (! $token = JWTAuth::attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            // return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json('Unauthorized', 200);
         }
+
         return $this->createNewToken($token);
+
+    	// $validator = Validator::make($request->all(), [
+        //     'email' => 'required|email',
+        //     'password' => 'required|string|min:6',
+        // ]);
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors(), 422);
+        // }
+        // if (! $token = JWTAuth::attempt($validator->validated())) {
+        //     // return response()->json(['error' => 'Unauthorized'], 401);
+        //     return response()->json('Unauthorized', 200);
+        // }
+        // return $this->createNewToken($token);
     }
     /**
      * Register a User.
@@ -76,9 +103,14 @@ class AuthController extends Controller
             'name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:6',
+        ], [
+            'email.unique' => 'Email taken',
+            'name.between' => 'Name between', 
+            'password.min' => 'Password min',
         ]);
+
         if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json($validator->errors()->first(), 200);
         }
 
         if (!($request['password'] === $request['confirmPassword'])) {
@@ -98,6 +130,7 @@ class AuthController extends Controller
         if ($user) {
             $details = ['name'=>$user->name, 'email'=>$user->email, 'hashEmail'=>Crypt::encryptString($user->email), 'token'=>$user->token, 'otp'=>$user->otp];
             dispatch(new VerifyUserJobs($details));
+            // Mail::to($details['email'])->send(new VerifyUserMail($details));
         }
 
         $data['user'] = $user;
@@ -113,7 +146,7 @@ class AuthController extends Controller
                 'document_url' => 'http://localhost:8000/files/applications/default.pdf',
                 'image' => 'http://localhost:8000/files/profiles/default.png',
                 'user_id' => $data['user']['id'],
-                'dream_job' => null, 
+                'dream_job' => 1, 
                 'status' => 'unemployed',
             ]);
             
@@ -126,7 +159,6 @@ class AuthController extends Controller
                 'description' => 'No Description',
                 'image' => 'http://localhost:8000/files/companies/default.png',
                 'user_id' => $data['user']['id'],
-                'job_count' => 0,
             ]);
 
             $data['company']->save();
@@ -222,7 +254,8 @@ class AuthController extends Controller
     protected function createNewToken($token){
         $data['token'] = $token;
         $data['token_type'] = 'bearer';
-        $data['expires_in'] = JWTAuth::factory()->getTTL() * 60;
+        // $data['expires_in'] = JWTAuth::factory()->getTTL() * 60;
+        $data['expires_in'] = JWTAuth::factory()->getTTL() * 120;
         $data['user'] = auth() -> user();
         return $this->apiResponse('success',$data,Response::HTTP_OK, true);
     }

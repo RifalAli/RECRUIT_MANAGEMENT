@@ -18,9 +18,18 @@ const CompanyApplier = ({ allAppliers }) => {
                     <CompanyJobItem index={2}/>
                     <CompanyJobItem index={3}/> */}
                     {
-                        allAppliers && allAppliers.map((item, i) => (
-                            <CompanyApplierItem key={i} index={i} id={item.id} title={item.title} description={item.description} status={item.status} applicationDate={item.applicationDate} profile={item.profile} company={item.company} job={item.main_job} />
-                        ))
+                        // allAppliers && allAppliers.map((item, i) => (
+                        //     <CompanyApplierItem key={i} index={i} id={item.id} title={item.title} description={item.description} status={item.status} applicationDate={item.applicationDate} profile={item.profile} company={item.company} job={item.main_job} />
+                        // ))
+                    }
+                    {
+                        allAppliers && allAppliers.length < 1 ? (
+                            <p className="empty-msg">No Job Applier Yet</p>
+                        ) : (
+                            allAppliers && allAppliers.map((item, i) => (
+                                <CompanyApplierItem key={i} index={i} id={item.id} title={item.title} description={item.description} status={item.status} applicationDate={item.applicationDate} profile={item.profile} company={item.company} job={item.main_job} />
+                            ))
+                        )
                     }
                     {
                         // latest && latest.map((job, i) => (

@@ -31,7 +31,7 @@ const toggleAnswerModal = (state, index) => {
     if (state == 'hide') dropdown.style.display = 'none';
 }
 
-const ProfileAppliedItem = ({index, id, title, description, document_url, status, application_date, profile_id, company_id, job_id, main_job, applicationAnswer}) => {
+const ProfileAppliedItem = ({index, id, title, description, document_url, status, application_date, profile_id, company_id, job_id, main_job, applicationAnswer, company}) => {
     // const [doRefresh, setDoRefresh] = useState(false)
     // console.log(main_job)
     // console.log(applicationAnswer)
@@ -138,13 +138,27 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                     <p>Job Title</p>
                     <p>: {main_job.title}</p>
                 </div>
-                <div className="applier-detail-row">
+                {/* <div className="applier-detail-row">
                     <p>Job Description</p>
                     <p>: {main_job.description}</p>
+                </div> */}
+                <div className="applier-detail-row">
+                    <p>Description</p>
+                    <p>: 
+                    <textarea readOnly className='form-control' id="text-area" cols="30" rows="20" value={main_job.description}></textarea>
+                    </p>
                 </div>
                 <div className="applier-detail-row">
                     <p>Job Salary</p>
                     <p>: {main_job.salary}</p>
+                </div>
+                <div className="applier-detail-row">
+                    <p>Company Name</p>
+                    <p>: {company.name}</p>
+                </div>
+                <div className="applier-detail-row">
+                    <p>Company Location</p>
+                    <p>: {company.location}</p>
                 </div>
                 <div className="applier-detail-row">
                     <p>Type</p>
@@ -156,8 +170,14 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                         : <a href={document_url} download="applied">View your CV</a>
                     </p>
                 </div>
+                <div className="applier-detail-row">
+                    <p>Detail</p>
+                    <p>
+                        : <button type="button" onClick={showProfileDetail} className="applier-detail-button">More Details</button>
+                    </p>
+                </div>
                 <br />
-                <h1>Details</h1>
+                <h1>Request Details</h1>
                 {applicationAnswer && applicationAnswer  ? (
                     <>
                         <div className="applier-detail-container">
@@ -165,9 +185,15 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                     <p>Title</p>
                     <p>: {applicationAnswer.title}</p>
                 </div>
-                <div className="applier-detail-row">
+                {/* <div className="applier-detail-row">
                     <p>Description</p>
                     <p>: {applicationAnswer.description}</p>
+                </div> */}
+                <div className="applier-detail-row">
+                    <p>Description</p>
+                    <p>: 
+                    <textarea readOnly className='form-control application-description' cols="30" rows="20" value={applicationAnswer.description}></textarea>
+                    </p>
                 </div>
                 <div className="applier-detail-row">
                     <p>Meeting Date</p>
@@ -196,39 +222,61 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                 {/* <button type="button" onClick={showJobDetail} className="applier-detail-job-button">Click to See Job Applied Detail</button> */}
             </div>
         </div>
-        { /* <div className="profile-detail">
+        <div className="profile-detail">
             <button className="applier-detail-hide" type="button" onClick={hideProfileDetail}>
                 <i className="fa fa-close fa-fw"></i>
             </button>
             <div className="applier-detail-container">
-                <h1>Applier's Profile Detail</h1>
+                <h1>Company Detail</h1>
                 <div className="applier-detail-row">
-                    <p>Fullname: </p>
-                    <p>{profile.fullname}</p>
+                    <p>Name</p>
+                    <p>: {company.name}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Age: </p>
-                    <p>{profile.age}</p>
+                    <p>Location</p>
+                    <p>: {company.location}</p>
+                </div>
+                {/* <div className="applier-detail-row">
+                    <p>Description</p>
+                    <p>: {company.description}</p>
+                </div> */}
+                <div className="applier-detail-row">
+                    <p>Description</p>
+                    <p>: 
+                    <textarea readOnly className='form-control' id="text-area" cols="30" rows="20" value={company.description}></textarea>
+                    </p>
+                </div>
+                <br />
+                <h1>Job Detail</h1>
+                <div className="applier-detail-row">
+                    <p>Name</p>
+                    <p>: {main_job.title}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Address: </p>
-                    <p>{profile.address}</p>
+                    <p>Salary</p>
+                    <p>: {main_job.salary}</p>
+                </div>
+                {/* <div className="applier-detail-row">
+                    <p>Description</p>
+                    <p>: {main_job.description}</p>
+                </div> */}
+                <div className="applier-detail-row">
+                    <p>Description</p>
+                    <p>: 
+                    <textarea readOnly className='form-control' id="text-area" cols="30" rows="20" value={main_job.description}></textarea>
+                    </p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Description: </p>
-                    <p>{profile.description}</p>
+                    <p>Type</p>
+                    <p>: {main_job.type}</p>
                 </div>
                 <div className="applier-detail-row">
-                    <p>Last Education: </p>
-                    <p>{profile.last_education}</p>
-                </div>
-                <div className="applier-detail-row">
-                    <p>Status: </p>
-                    <p>{profile.status}</p>
+                    <p>Expire at</p>
+                    <p>: {main_job.expire_at}</p>
                 </div>
             </div>
         </div>
-        <div className="job-detail">
+        {  /* <div className="job-detail">
             <button className="applier-detail-hide" type="button" onClick={hideJobDetail}>
                 <i className="fa fa-close fa-fw"></i>
             </button>
@@ -273,7 +321,7 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                                     <>
                             <div className='form-row'>
                                 <label htmlFor="meeting_date">Meeting Date: </label>
-                                <input type="date" className='form-control' name="close_date" placeholder='meeting date' value={meeting_date} onChange={(e) => setMeeting_date(e.target.value)}/>
+                                <input type="date" className='form-control' name="expire_at" placeholder='meeting date' value={meeting_date} onChange={(e) => setMeeting_date(e.target.value)}/>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="meeting_link">Meeting Link: </label>

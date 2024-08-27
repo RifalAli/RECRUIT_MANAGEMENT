@@ -527,7 +527,7 @@
 
         .modal-container {
             @include flexVertical;
-            padding: 20px;
+            // padding: 20px;
 
             .photo {
                 img {
@@ -552,6 +552,20 @@
                 display: flex;
                 align-items: center;
                 margin-bottom: 10px;
+            }
+
+            #text-area {
+                width: 81%;
+                height: 50px;
+                border-radius: 20px;
+                resize: none;
+            }
+
+            #text-area-expand {
+                width: 81%;
+                height: 100px;
+                border-radius: 20px;
+                resize: none;
             }
 
             .form-control {

@@ -28,9 +28,11 @@ class ProfileController extends Controller
         $data['profile']['fullname'] = $request['fullname'];
         // $data['profile']['fullname'] = $request['fullname']; Email is belong to the user
         $data['user']['email'] = $request['email'];
+        $data['user']['name'] = $request['name'];
         //
         $data['profile']['age'] = $request['age'];
         $data['profile']['address'] = $request['address'];
+        $data['profile']['description'] = $request['description'];
         $data['profile']['last_education'] = $request['lastEducation'];
         $data['profile']['dream_job'] = $request['dreamJob'];
         // $data['profile']['dream_job'] = $request['dream_job']; dream job is need to take category id instead of category name

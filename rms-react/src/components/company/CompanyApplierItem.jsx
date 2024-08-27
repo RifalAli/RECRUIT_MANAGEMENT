@@ -178,9 +178,15 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
                     <p>Address</p>
                     <p>: {profile.address}</p>
                 </div>
-                <div className="applier-detail-row">
+                {/* <div className="applier-detail-row">
                     <p>Description</p>
                     <p>: {profile.description}</p>
+                </div> */}
+                <div className="applier-detail-row">
+                    <p>Description</p>
+                    <p>: 
+                    <textarea readOnly className='form-control' id="text-area" cols="30" rows="20" value={profile.description}></textarea>
+                    </p>
                 </div>
                 <div className="applier-detail-row">
                     <p>Last Education</p>
@@ -239,7 +245,7 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
                                     <>
                             <div className='form-row'>
                                 <label htmlFor="meeting_date">Meeting Date: </label>
-                                <input type="date" className='form-control' name="close_date" placeholder='meeting date' value={meeting_date} onChange={(e) => setMeeting_date(e.target.value)}/>
+                                <input type="date" className='form-control' name="expire_at" placeholder='meeting date' value={meeting_date} onChange={(e) => setMeeting_date(e.target.value)}/>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="meeting_link">Meeting Link: </label>

@@ -31,6 +31,32 @@
                     border-radius: 10px;
                     border: 1px solid black;
                 }
+
+                .otp-quest-msg {
+                    margin-bottom: 5px;
+                    .otp-resend {
+                        cursor: pointer;
+                        color: blue;
+                    }
+                }
+
+                .otp-error-msg {
+                    color: red;
+                }
+
+                .otp-submit {
+                    // margin-top: -2px;
+                    margin-top: 5px;
+                    margin-bottom: -10px;
+                }
+
+                .auth-error {
+                    color: red;
+                    text-align: start;
+                    margin-left: 5.3rem;
+                    margin-top: -5px;
+                    margin-bottom: -5px;
+                }
             }
 
 
@@ -66,6 +92,10 @@
                     label {
                         position: relative;
                         top: -2px;
+                    }
+
+                    .radio {
+                        cursor: pointer;
                     }
 
                 }

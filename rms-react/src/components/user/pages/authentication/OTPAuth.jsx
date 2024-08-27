@@ -13,7 +13,7 @@ const OTPAuth = () => {
     const [user, setUser] = useState('')
     const [otp, setOtp] = useState('')
 
-    const [msg, setMsg] = useState('')
+    const [msg, setMsg] = useState('-')
 
     const checkProfile = async () => {
         try {
@@ -40,6 +40,7 @@ const OTPAuth = () => {
         // }
         if (user === 'Invalid') {
             setMsg('Invalid OTP, consider check back your email')
+            toggleError('visible')
         }else {
             if (user?.verify === 1 || user?.verify === true) {
                 const role = localStorage.getItem('role')
@@ -48,6 +49,8 @@ const OTPAuth = () => {
     
                 if (role == 'job seeker') {
                     realRole = 'user'
+                }else if (role == 'company') {
+                    realRole = 'company'
                 }
     
                 window.location = `/${realRole}/${slug}`
@@ -70,8 +73,16 @@ const OTPAuth = () => {
         // }
     }
 
+    const toggleError = (state) => {
+        let errMsg = document.getElementsByClassName('otp-error-msg')[0];
+        if (errMsg) {
+            errMsg.style.visibility = state;
+        }
+    }
+
     const submitOTP = async () => {
-        setMsg('')
+        setMsg('-')
+        toggleError('hidden')
         setUser('')
         let slug = localStorage.getItem('slug');
         let role = localStorage.getItem('role');
@@ -91,6 +102,7 @@ const OTPAuth = () => {
     useEffect(() => {
         if (!user) {
             checkProfile()
+            toggleError('hidden')
         }
     }, [])
 
@@ -100,6 +112,7 @@ const OTPAuth = () => {
 
     useEffect(() => {
         setTimeout(() => {
+            toggleError('hidden')
             setLoader(false);
         }, 300)
     }, []);
@@ -140,11 +153,14 @@ const OTPAuth = () => {
                                             renderInput={(props) => <input {...props} />}
                                         />
 
-                                        <p>Didn't receive OTP mail yet? <span onClick={resendOTP}>Resend OTP</span></p>
+                                        <br />
+                                        <p className='otp-error-msg'>{msg}</p>
 
-                                        <p>{msg}</p>
+                                        <p className='otp-quest-msg'>Didn't receive OTP mail yet? <span className='otp-resend' onClick={resendOTP}>Resend OTP</span></p>
 
-                                        <button type='button' className="button" onClick={submitOTP}>
+                                        {/* <p>{msg}</p> */}
+
+                                        <button type='button' className="button otp-submit" onClick={submitOTP}>
                                             <div>
                                                 <span>Submit</span>
                                             </div>

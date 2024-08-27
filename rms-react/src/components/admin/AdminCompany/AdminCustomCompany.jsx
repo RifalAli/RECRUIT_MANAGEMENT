@@ -106,24 +106,24 @@ const AdminCustomCompany = () => {
                     <form>
                         <div className="form">
                             <div className='form-row'>
-                                <label htmlFor="name">Username: </label>
-                                <input type="text" className='form-control' name="name" placeholder='Company Name' value={name} onChange={(e)=>setName(e.target.value)}/>
+                                <label htmlFor="username">Username: </label>
+                                <input type="text" className='form-control' name="username" placeholder='Username' value={name} onChange={(e)=>setName(e.target.value)}/>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="name">Company Name: </label>
                                 <input type="text" className='form-control' name="name" placeholder='Company Name' value={companyName} onChange={(e)=>setCompanyName(e.target.value)}/>
                             </div>
                             <div className='form-row'>
-                                <label htmlFor="name">Company Email: </label>
+                                <label htmlFor="email">Company Email: </label>
                                 <input type="email" className='form-control' name="email" placeholder='Company Email' value={email} onChange={(e)=>setEmail(e.target.value)}/>
                             </div>
                             <div className='form-row'>
-                                <label htmlFor="name">Company Password: </label>
-                                <input type="password" className='form-control' name="Company Password" placeholder='Company Password' value={password} onChange={(e)=>setPassword(e.target.value)}/>
+                                <label htmlFor="password">Company Password: </label>
+                                <input type="password" className='form-control' name="password" placeholder='Company Password' value={password} onChange={(e)=>setPassword(e.target.value)}/>
                             </div>
                             <div className='form-row'>
-                                <label htmlFor="name">Confirm Password: </label>
-                                <input type="password" className='form-control' name="confirm Password" placeholder='Company Email' value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)}/>
+                                <label htmlFor="confirmPassword">Confirm Password: </label>
+                                <input type="password" className='form-control' name="confirmPassword" placeholder='Confirm Password' value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)}/>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="status">Status: </label>
@@ -136,9 +136,13 @@ const AdminCustomCompany = () => {
                                 <label htmlFor="location">Company Location: </label>
                                 <input type="text" className='form-control' name="location" placeholder='Company Location' value={companyLocation} onChange={(e)=>setCompanyLocation(e.target.value)}/>
                             </div>
-                            <div className='form-row'>
+                            {/* <div className='form-row'>
                                 <label htmlFor="description">Company Description: </label>
                                 <input type="text" className='form-control' name="description" placeholder='Company Description' value={companyDescription} onChange={(e)=>setCompanyDescription(e.target.value)}/>
+                            </div> */}
+                            <div className='form-row'>
+                                <label htmlFor="description">Description: </label>
+                                <textarea className='form-control' name="description" id="text-area" cols="30" rows="20" placeholder='Company Description' value={companyDescription} onChange={(e) => setCompanyDescription(e.target.value)}></textarea>
                             </div>
                             <div className='button-div'>
                                 <button type='button' className="button" onClick={postCompany}>

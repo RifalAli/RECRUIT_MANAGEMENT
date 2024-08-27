@@ -18,7 +18,7 @@ class MainJobSeeder extends Seeder
             'title'=>'Software Engineer',
             'slug'=>Str::lower(str_replace('', '_', Str::random(15))),
             'salary'=>36000,
-            'close_date'=>'2022-03-03 11:02:45',
+            'expire_at'=>'2022-03-03 11:02:45',
             'cat_id'=>'1',
             'company_id'=>1,
             'icon'=>'http://localhost:8000/files/jobs/default.png',
@@ -33,7 +33,7 @@ class MainJobSeeder extends Seeder
             'title'=>'Graphic Designer',
             'slug'=>Str::lower(str_replace('', '_', Str::random(15))),
             'salary'=>41000,
-            'close_date'=>'2022-05-03 11:02:45',
+            'expire_at'=>'2022-05-03 11:02:45',
             'cat_id'=>'2',
             'company_id'=>1,
             'icon'=>'http://localhost:8000/files/jobs/default2.png',
@@ -45,11 +45,11 @@ class MainJobSeeder extends Seeder
             'updated_at'=>now()
         ]);
         DB::table('main_jobs')->insert([
-            'title'=>'Software Engineer',
+            'title'=>'Software Development',
             'slug'=>Str::lower(str_replace('', '_', Str::random(15))),
             'salary'=>41000,
-            'close_date'=>'2022-05-03 11:02:45',
-            'cat_id'=>'2',
+            'expire_at'=>'2022-05-03 11:02:45',
+            'cat_id'=>'1',
             'company_id'=>1,
             'icon'=>'http://localhost:8000/files/jobs/default1.png',
             'description'=>'Test Description',

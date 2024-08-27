@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ApplicationAnswer;
+use App\Models\Company;
 use App\Models\JobApplication;
 use App\Models\MainJob;
 use App\Traits\ApiResponseWithHttpStatus;
@@ -19,19 +20,13 @@ class JobApplicationController extends Controller
     use ApiResponseWithHttpStatus;
     
     public function applyJob(Request $request) {
-        // if (!$request->hasFile('file')) {
-        //     return $this->apiResponse('Document not inserted', $request['title'], Response::HTTP_OK, true);
-        // }
+        $jobPending = JobApplication::where([['profile_id', $request['profile_id']], ['job_id', $request['job_id']], ['status', 'pending']])->first();
 
-        // $file = $request['file'];
-        // $filename = time().'_'.$file->getClientOriginalName();
-        // $path = $file->move(public_path('files/applications'), $filename);
+        if ($jobPending) {
+            return response()->json('Already apply', 200);
+        }
 
-        // $data['jobApllication'] = JobApplication::create([
         $data['jobApplication'] = JobApplication::create([
-            // 'title' => $request['title'],
-            // 'description' => $request['description'],
-            // 'document_url' => 'http://localhost:8000/files/applications/'.$filename,
             'profile_id' => $request['profile_id'],
             'company_id' => $request['company_id'],
             'job_id' => $request['job_id'],
@@ -49,13 +44,17 @@ class JobApplicationController extends Controller
     public function getProfileJobApplication($profile_id) {
         $query['jobApplication'] = JobApplication::where([['profile_id', $profile_id]])->get();
 
+        $data['jobApplication'][0] = 'Nothing';
+
         for ($i = 0; $i < count($query['jobApplication']); $i++) {
             $query['applicationAnswer'][$i] = ApplicationAnswer::where([['application_id', $query['jobApplication'][$i]['id']]])->get();
             $query['job'][$i] = MainJob::where([['id', $query['jobApplication'][$i]['job_id']]])->get();
+            $query['company'][$i] = Company::where([['id', $query['jobApplication'][$i]['company_id']]])->get();
 
             $data['jobApplication'][$i] = $query['jobApplication'][$i];
             $data['jobApplication'][$i]['job'] = $query['job'][$i];
             $data['jobApplication'][$i]['applicationAnswer'] = $query['applicationAnswer'][$i];
+            $data['jobApplication'][$i]['company'] = $query['company'][$i];
         }
 
         return $this->apiResponse('Success Fetch Applied Jobs', $data, Response::HTTP_OK, true);

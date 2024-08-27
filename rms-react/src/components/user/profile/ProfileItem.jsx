@@ -32,11 +32,13 @@ const ProfileItem = () => {
     const [userData, setUserData] = useState('')
     const [profileData, setProfileData] = useState('')
 
+    const [username, setUsername] = useState('')
     const [fullname, setFullname] = useState('')
     const [email, setEmail] = useState('')
     const [age, setAge] = useState(0)
     const [address, setAddress] = useState('')
     const [lastEducation, setLastEducation] = useState('')
+    const [description, setDescription] = useState('')
     const [dreamJob, setDreamJob] = useState('')
     const [status, setStatus] = useState('')
     const [documentUrl, setDocumentUrl] = useState('')
@@ -80,10 +82,12 @@ const ProfileItem = () => {
 
     const setProfile = () => {
         if (profileData && userData && categoryData) {
+            setUsername(userData.name)
             setFullname(profileData.fullname)
             setEmail(userData.email)
             setAge(profileData.age)
             setAddress(profileData.address)
+            setDescription(profileData.description)
             setLastEducation(profileData.last_education)
             setDreamJob(profileData.dream_job)
             setStatus(profileData.status)
@@ -127,10 +131,12 @@ const ProfileItem = () => {
         e.preventDefault();
 
         const formData = new FormData();
+        formData.append('name', username)
         formData.append('fullname', fullname)
         formData.append('email', email)
         formData.append('age', age)
         formData.append('address', address)
+        formData.append('description', description)
         formData.append('lastEducation', lastEducation)
         formData.append('dreamJob', dreamJob)
         formData.append('status', status)
@@ -185,7 +191,7 @@ const ProfileItem = () => {
         }
 
     }, [doRefresh])
-
+    
     return (
         <>
             {
@@ -202,20 +208,32 @@ const ProfileItem = () => {
                     <form>
                         <div className="form">
                             <div className='form-row'>
+                                <label htmlFor="username">Username: </label>
+                                <input type="text" className='form-control' name="username" placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)} />
+                            </div>
+                            <div className='form-row'>
                                 <label htmlFor="fullname">Fullname: </label>
-                                <input type="text" className='form-control' name="fullname" placeholder='fullname' value={fullname} onChange={(e) => setFullname(e.target.value)} />
+                                <input type="text" className='form-control' name="fullname" placeholder='Fullname' value={fullname} onChange={(e) => setFullname(e.target.value)} />
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="email">Email: </label>
-                                <input type="email" className='form-control' name="email" placeholder='user email' value={email} onChange={(e) => setEmail(e.target.value)}/>
+                                <input type="email" className='form-control' name="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="age">Age: </label>
-                                <input type="number" className='form-control' name="age" placeholder='user age' value={age} onChange={(e) => setAge(e.target.value)}/>
+                                <input type="number" className='form-control' name="age" placeholder='Age' value={age} onChange={(e) => setAge(e.target.value)}/>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="address">Address: </label>
-                                <input type="text" className='form-control' name="address" placeholder='user address' value={address} onChange={(e) => setAddress(e.target.value)}/>
+                                <input type="text" className='form-control' name="address" placeholder='Address' value={address} onChange={(e) => setAddress(e.target.value)}/>
+                            </div>
+                            {/* <div className='form-row'>
+                                <label htmlFor="description">Description: </label>
+                                <input type="text" className='form-control' name="description" placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)}/>
+                            </div> */}
+                            <div className='form-row'>
+                                <label htmlFor="description">Description: </label>
+                                <textarea className='form-control' name="description" id="text-area" cols="30" rows="20" placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="lastEducation">Last Education: </label>
@@ -243,7 +261,7 @@ const ProfileItem = () => {
                             <div className='form-row'>
                                 <label htmlFor="status">Status: </label>
                                 <select className='form-control' value={status} onChange={(e)=>setStatus(e.target.value)}>
-                                    <option value='unemploye'>Unemploye</option>
+                                    <option value='unemployed'>Unemployed</option>
                                     <option value='employed'>Employed</option>
                                 </select>
                             </div>

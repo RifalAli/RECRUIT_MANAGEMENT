@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->float('salary', 10, 2)->default(0.00);
-            $table->timestamp('close_date')->default(now());
+            $table->timestamp('expire_at')->default(now());
             $table->unsignedBigInteger('cat_id')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
             $table->string('icon')->default('http://localhost:8000/files/jobs/default.png');

@@ -10,6 +10,7 @@ const ProfileApplied = ( {allAppliedJobs, document_url} ) => {
 
     // console.log(allAppliedJobs[0].job[0].title)
     // console.log(allAppliedJobs[0].applicationAnswer)
+    console.log(allAppliedJobs)
     return (
         <>
             <div className="profile_applied">
@@ -20,9 +21,18 @@ const ProfileApplied = ( {allAppliedJobs, document_url} ) => {
                         //     <CompanyApplierItem key={i} index={i} id={item.id} title={item.title} description={item.description} document={item.document_url} status={item.status} applicationDate={item.applicationDate} profile={item.profile} company={item.company} job={item.main_job} />
                         // ))
 
-                        allAppliedJobs && allAppliedJobs.map((item, i) => (
-                            <ProfileAppliedItem key={i} index={i} id={item.id} title={item.title} description={item.description} document_url={document_url} status={item.status} application_date={item.applicationDate} profile_id={item.profile_id} company_id={item.company_id} job_id={item.job_id} main_job={item.job[0]} applicationAnswer={item.applicationAnswer[0]} cv/>
-                        ))
+                        // allAppliedJobs && allAppliedJobs.map((item, i) => (
+                        //     <ProfileAppliedItem key={i} index={i} id={item.id} title={item.title} description={item.description} document_url={document_url} status={item.status} application_date={item.applicationDate} profile_id={item.profile_id} company_id={item.company_id} job_id={item.job_id} main_job={item.job[0]} applicationAnswer={item.applicationAnswer[0]} cv/>
+                        // ))
+                    }
+                    {
+                        allAppliedJobs && allAppliedJobs[0] === 'Nothing' ? (
+                            <p className='empty-msg'>No Applied Job Yet</p>
+                        ) : (
+                            allAppliedJobs && allAppliedJobs.map((item, i) => (
+                                <ProfileAppliedItem key={i} index={i} id={item.id} title={item.title} description={item.description} document_url={document_url} status={item.status} application_date={item.applicationDate} profile_id={item.profile_id} company_id={item.company_id} job_id={item.job_id} main_job={item.job[0]} applicationAnswer={item.applicationAnswer[0]} company={item.company[0]}/>
+                            ))
+                        )
                     }
                     </div>
                 </div>

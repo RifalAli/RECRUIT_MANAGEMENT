@@ -30,7 +30,8 @@ class VerifyUserMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Verify User Mail',
+            // subject: 'Verify User Mail',
+            subject: 'Recruit - OTP Verification',
         );
     }
 

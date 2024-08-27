@@ -178,9 +178,13 @@ const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail
                                 <label htmlFor="companyLocation">Company Location: </label>
                                 <input type="text" className='form-control' name="companyLocation" placeholder='Company Location' value={companyLocation} onChange={(e) => setCompanyLocation(e.target.value)}/>
                             </div>
-                            <div className='form-row'>
+                            {/* <div className='form-row'>
                                 <label htmlFor="companyDescription">Company Description: </label>
                                 <input type="text" className='form-control' name="companyDescription" placeholder='Company Description' value={companyDescription} onChange={(e) => setCompanyDescription(e.target.value)}/>
+                            </div> */}
+                            <div className='form-row'>
+                                <label htmlFor="companyDescription">Company Description: </label>
+                                <textarea className='form-control' name="companyDescription" id="text-area-expand" cols="30" rows="20" placeholder='Company Description' value={companyDescription} onChange={(e) => setCompanyDescription(e.target.value)}></textarea>
                             </div>
                             <div className='button-div'>
                                 <button type='button' className="button" onClick={applyCompanyChanges}>

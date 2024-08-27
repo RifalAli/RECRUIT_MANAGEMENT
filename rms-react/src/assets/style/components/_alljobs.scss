@@ -80,14 +80,16 @@
                         .posted {
                             margin-top: 0.6rem;
 
-                            .country {
+                            .company-name, .post-date {
                                 padding-bottom: .5rem;
                             }
     
-                            .country span, 
-                            .date span, 
-                            .country i, 
-                            .date i {
+                            .company-name span, 
+                            .post-date span, 
+                            .expire-date span,
+                            .company-name i, 
+                            .post-date i,
+                            .expire-date i {
                                 margin-left: 0.8rem;
                                 color: #6c757d;
                             }
@@ -131,16 +133,18 @@
     .btnApplyFilter {
         width: 130px;
         border: none;
+        margin-top: 20px;
         background-color: $color-white-light;
         color: $color-green;
         border-radius: 10px;
         font-weight: bolder;
         text-transform: uppercase;
     }
-
+    
     .btnClearFilter {
         width: 130px;
         border: none;
+        margin-top: 20px;
         background-color: #FFD8D2;
         color: #FF7B66;
         border-radius: 10px;

@@ -36,7 +36,7 @@ class AdminController extends Controller
 
             $data['job'][$i]['id'] = $query['job'][$i]['id'];
             $data['job'][$i]['title'] = $query['job'][$i]['title'];
-            $data['job'][$i]['closeDate'] = $query['job'][$i]['close_date'];
+            $data['job'][$i]['closeDate'] = $query['job'][$i]['expire_at'];
             $data['job'][$i]['type'] = $query['job'][$i]['type'];
             $data['job'][$i]['count'] = $query['job'][$i]['count'];
             $data['job'][$i]['tag'] = $query['job'][$i]['tag'];

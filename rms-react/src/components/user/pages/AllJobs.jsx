@@ -103,30 +103,34 @@ const AllJobs = () => {
                         <NavBar hero='jobs' cmp="jobs" />
                         <div className='searchContainer'>
                             <div className='searchRow'>
-                                <input type='text' name='title' value={title} onChange={(e)=>setTitle(e.target.value)} className='textSearch' placeholder='title...'/>
+                                <label htmlFor="">Job Title: </label>
+                                <input type='text' name='title' value={title} onChange={(e)=>setTitle(e.target.value)} className='textSearch' placeholder='Developer, Designer, etc...'/>
                             </div>
-                            <div className="searchRow">
+                            {/* <div className="searchRow">
+                                <label htmlFor="">Category: </label>
                                 <select className='dropdownSearch' value={category} onChange={(e)=>setCategory(e.target.value)}>
                                     <option value=''>Select an Option</option>
-                                    {/* <option value='all'>All Category</option> */}
+                                    <option value='all'>All Category</option>
                                     {
                                         categoryData && categoryData.map((item, i) => (
                                             <option key={item.id} value={item.name}>{item.name}</option>
                                         ))
                                     }
                                 </select>
-                            </div>
+                            </div> */}
                             <div className="searchRow">
-                                <input type='text' name='location' value={location} onChange={(e)=>setLocation(e.target.value)} className='textSearch' placeholder='location...'/>
+                                <label htmlFor="">Job Location: </label>
+                                <input type='text' name='location' value={location} onChange={(e)=>setLocation(e.target.value)} className='textSearch' placeholder='Sidoarjo, Bandung, etc...'/>
                             </div>
-                            <div className="searchRow">
+                            {/* <div className="searchRow">
+                                <label htmlFor="">Type: </label>
                                 <select className='dropdownSearch' value={type} onChange={(e)=>setType(e.target.value)}>
                                     <option value=''>Select an Option</option>
-                                    {/* <option value='all'>All Types</option> */}
+                                    <option value='all'>All Types</option>
                                     <option value='full time'>Full Time</option>
                                     <option value='part time'>Part Time</option>
                                 </select>
-                            </div>
+                            </div> */}
                             <button className='btnApplyFilter' type='button' onClick={fetchSearchJobs} >Search</button>
                             <button className='btnClearFilter' type='button' onClick={clearFilter} >Clear Filter</button>
                         </div>

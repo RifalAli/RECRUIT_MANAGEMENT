@@ -35,6 +35,7 @@ class CompanyController extends Controller
         $data['company']['name'] = $request['name'];
         //
         $data['user']['email'] = $request['email'];
+        $data['user']['name'] = $request['username'];
         //
         $data['company']['location'] = $request['location'];
         $data['company']['description'] = $request['description'];
