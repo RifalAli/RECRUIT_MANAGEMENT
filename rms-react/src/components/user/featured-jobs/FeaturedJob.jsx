@@ -1,7 +1,7 @@
 import React from 'react';
 import FeaturedJobItem from './FeaturedJobItem';
 
-const FeaturedJob = ({featured, similar, name, count}) => {
+const FeaturedJob = ({featured, similar, name, count, pageObjects}) => {
     return (
         <div className="featured_job">
             <div className="container">
@@ -33,6 +33,15 @@ const FeaturedJob = ({featured, similar, name, count}) => {
                         )
                     }
                 </div>
+                {
+                    similar && similar === 'category'  && count > 0 ? (
+                        <>
+                            <p className='pageMsg'>Page {pageObjects.currentPage} of {pageObjects.totalPage} with total of {pageObjects.jobCount} jobs</p>
+                        </>
+                    ) : (
+                        <></>
+                    )
+                }
                 <div className="featured_job--wrapper">
                     {
                         featured && featured.map((job, i) => (

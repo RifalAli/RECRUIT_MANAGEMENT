@@ -112,7 +112,16 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
                     <div className="company_applier__wrapper__card--center__part-1">
                         <h1>{profile.fullname}</h1>
                         <p>{job.title}</p>
-                        <Link className={status === "pending" ? "half-time" : "full-time"} to={`/job-details/${status}`}>{status}</Link>
+                        {/* <Link className={status === "pending" ? "half-time" : "full-time"} to={'#'}>{status}</Link> */}
+                        <Link className={
+                        status === "pending" ? 
+                            "status-pending" 
+                        : 
+                            status === 'accepted' ? 
+                            "status-accepted"
+                            : 
+                            "status-rejected"
+                        } to={'#'}>{status}</Link>
                     </div>
                 </div>
             </div>
@@ -192,11 +201,11 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
                     <p>Last Education</p>
                     <p>: {profile.last_education}</p>
                 </div>
-                <div className="applier-detail-row">
+                {/* <div className="applier-detail-row">
                     <p>Status</p>
                     <p>: {profile.status}</p>
-                </div>
-                <br /><br />
+                </div> */}
+                <br />
                 <h1>Job Applied Detail</h1>
                 <br />
                 <div className="applier-detail-row">
@@ -211,9 +220,15 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
                     <p>Type</p>
                     <p>: {job.type}</p>
                 </div>
-                <div className="applier-detail-row">
+                {/* <div className="applier-detail-row">
                     <p>Description</p>
                     <p>: {job.description}</p>
+                </div> */}
+                <div className="applier-detail-row">
+                    <p>Description</p>
+                    <p>: 
+                    <textarea readOnly className='form-control' id="text-area" cols="30" rows="20" value={company.description}></textarea>
+                    </p>
                 </div>
             </div>
         </div>
@@ -237,20 +252,20 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
                                 <input type="text" className='form-control' name="title" placeholder='Job Title' value={answerTitle} onChange={(e) => setAnswerTitle(e.target.value)}/>
                             </div>
                             <div className='form-row'>
-                                <label htmlFor="description">Description: </label>
-                                <input type="text" className='form-control' name="description" placeholder='Description' value={answerDescription} onChange={(e) => setAnswerDescription(e.target.value)}/>
+                                <label htmlFor="description">Message: </label>
+                                <input type="text" className='form-control' name="description" placeholder='Message' value={answerDescription} onChange={(e) => setAnswerDescription(e.target.value)}/>
                             </div>
                             {
                                 answerStatus === 'accepted' ? (
                                     <>
-                            <div className='form-row'>
+                            {/* <div className='form-row'>
                                 <label htmlFor="meeting_date">Meeting Date: </label>
                                 <input type="date" className='form-control' name="expire_at" placeholder='meeting date' value={meeting_date} onChange={(e) => setMeeting_date(e.target.value)}/>
-                            </div>
-                            <div className='form-row'>
+                            </div> */}
+                            {/* <div className='form-row'>
                                 <label htmlFor="meeting_link">Meeting Link: </label>
                                 <input type="text" className='form-control' name="meeting_link" placeholder='Meeting Link' value={meeting_link} onChange={(e) => setMeeting_link(e.target.value)}/>
-                            </div>  
+                            </div>   */}
                                     </>
                                 ) : (
                                     <></>

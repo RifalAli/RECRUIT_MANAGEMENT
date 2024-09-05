@@ -180,7 +180,7 @@ const LoginItem = () => {
                         <div className="form">
                             <div className='form-row'>
                                 <label htmlFor="email">Email: </label>
-                                <input type="email" className='form-control' name="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/>
+                                <input type="email" className='form-control' name="email" placeholder='name@domain.com' value={email} onChange={(e) => setEmail(e.target.value)}/>
                             </div>
                             <p className='auth-error'>{emailMsg}</p>
                             <div className='form-row'>
@@ -196,7 +196,7 @@ const LoginItem = () => {
                             </button>
                             <div className="forgot">
                                 <Link to='/sign-up'>Don't have any account?</Link>
-                                {/* <Link to='/forgot-password'>Forgot your password?</Link> */}
+                                <Link to='/forgot-password'>Forgot your password?</Link>
                             </div>
                             {/* <div className="social">
                                 <img src={github} alt="github logo" />

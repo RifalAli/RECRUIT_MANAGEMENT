@@ -30,5 +30,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MainJobSeeder::class);
         $this->call(JobApplicationSeeder::class);
         $this->call(ApplicationAnswerSeeder::class);
+        $this->call(BlacklistSeeder::class);
     }
 }

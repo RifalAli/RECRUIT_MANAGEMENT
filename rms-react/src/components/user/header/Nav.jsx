@@ -41,8 +41,8 @@ const Nav = ({cmp, addon}) => {
         if (role !== null) logout()
     }
 
-    console.log(slug)
-    console.log(role)
+    // console.log(slug)
+    // console.log(role)
     return (
     <div className='home-header-container-nav'>
         <div className="home-header-container-nav-left">
@@ -97,6 +97,7 @@ const Nav = ({cmp, addon}) => {
                 {
                     (location.pathname === '/sign-up' && 'Sign Up') ||
                     (location.pathname === '/forgot-password' && 'Reset Password') || 
+                    (location.pathname.includes('/auth/forgot-password/') && 'New Password') || 
                     (location.pathname === '/login' && 'Login') || 
                     (addon === 'loggedin' && "Logout") ||
                     'Login'

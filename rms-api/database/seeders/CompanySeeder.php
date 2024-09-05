@@ -15,11 +15,31 @@ class CompanySeeder extends Seeder
     public function run(): void
     {
         DB::table('companies')->insert([
-            'name'=>'PT. Tes Migrasi',
+            'name'=>'PT. Kompeni',
             'slug'=>Str::slug(Str::random(20)),
             'location'=>'Sidoarjo, Jawa Timur',
             'description'=>fake()->sentence(10, true),
             'user_id'=>2,
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+
+        DB::table('companies')->insert([
+            'name'=>'PT. Eka Lestari',
+            'slug'=>Str::slug(Str::random(20)),
+            'location'=>'Sidoarjo, Jawa Timur',
+            'description'=>fake()->sentence(10, true),
+            'user_id'=>4,
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+
+        DB::table('companies')->insert([
+            'name'=>'PT. Sinar Mas',
+            'slug'=>Str::slug(Str::random(20)),
+            'location'=>'Sidoarjo, Jawa Timur',
+            'description'=>fake()->sentence(10, true),
+            'user_id'=>5,
             'created_at'=>now(),
             'updated_at'=>now()
         ]);

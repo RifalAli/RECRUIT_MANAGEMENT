@@ -390,20 +390,27 @@
                     }
                 }
             }
+
+            .pageMsg {
+                position: unset;
+            }
+            
             .page__wrapper {
                 display: flex;
                 justify-content: center;
                 margin-bottom: 15px;
                 button {
-                    background: $color-green;
+                    background: rgb(221, 220, 220);
+                    color: $color-secondary;
                     border: none;
                     width: 30px;
                     height: 30px;
                     margin: 2px;
                 }
 
-                button:visited {
-                    background: red;
+                .button-current {
+                    background: $color-white-light;
+                    color: $color-green;
                 }
             }
         }

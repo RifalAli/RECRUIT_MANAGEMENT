@@ -24,6 +24,16 @@ const closeCVInput = () => {
     btnCancel.style.display = 'none';
 }
 
+const openWarning = () => {
+    let modal = document.getElementsByClassName('warning-modal')[0]
+    modal.style.display = 'block'
+}
+
+const closeWarning = () => {
+    let modal = document.getElementsByClassName('warning-modal')[0]
+    modal.style.display = 'none'
+}
+
 const ProfileItem = () => {
     const [loader, setLoader] = useState(true)
     const [doRefresh, setDoRefresh] = useState(false)
@@ -39,8 +49,6 @@ const ProfileItem = () => {
     const [address, setAddress] = useState('')
     const [lastEducation, setLastEducation] = useState('')
     const [description, setDescription] = useState('')
-    const [dreamJob, setDreamJob] = useState('')
-    const [status, setStatus] = useState('')
     const [documentUrl, setDocumentUrl] = useState('')
 
     const [document, setDocument] = useState(null)
@@ -89,8 +97,6 @@ const ProfileItem = () => {
             setAddress(profileData.address)
             setDescription(profileData.description)
             setLastEducation(profileData.last_education)
-            setDreamJob(profileData.dream_job)
-            setStatus(profileData.status)
             setDocumentUrl(profileData.document_url)
             
             // if (profileData.dream_job !== null) {
@@ -138,8 +144,6 @@ const ProfileItem = () => {
         formData.append('address', address)
         formData.append('description', description)
         formData.append('lastEducation', lastEducation)
-        formData.append('dreamJob', dreamJob)
-        formData.append('status', status)
         formData.append('file', document)
 
         try {
@@ -158,13 +162,24 @@ const ProfileItem = () => {
     }
 
     const requestChange = async () => {
-        await storeApiData(`changeProfile/${profileData.id}`, { fullname, email, age, address, lastEducation, dreamJob, status })
+        await storeApiData(`changeProfile/${profileData.id}`, { fullname, email, age, address, lastEducation })
             .then((response)=>console.log(response.data))
             .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
     }
 
     const applyChangesHandler = (e) => {
+        if (email === userData.email) {
+            // console.log('Still Same')
+            requestChanges(e)
+        }else {
+            openWarning()
+        }
+        // requestChanges(e)
+    }
+
+    const changeNow = (e) => {
+        closeWarning()
         requestChanges(e)
     }
 
@@ -247,7 +262,7 @@ const ProfileItem = () => {
                                     <option value='SD/Sederajat'>SD/Sederajat</option>
                                 </select>
                             </div>
-                            <div className='form-row'>
+                            {/* <div className='form-row'>
                                 <label htmlFor="dreamJob">Dream Job: </label>
                                 <select className='form-control' value={dreamJob} onChange={(e)=>setDreamJob(e.target.value)}>
                                     <option value=''>Select an Option</option>
@@ -264,7 +279,7 @@ const ProfileItem = () => {
                                     <option value='unemployed'>Unemployed</option>
                                     <option value='employed'>Employed</option>
                                 </select>
-                            </div>
+                            </div> */}
                             <div className="form-row">
                                 <label htmlFor="document">CV: </label>
                                 <div className='form-column-row'>
@@ -295,6 +310,31 @@ const ProfileItem = () => {
                 </div>
             </div>
         </section>
+        
+        <div className="modal warning-modal">
+                <div className="modal-container">
+                    <form>
+                        <div className="form">
+                        <h2 className="message">You are going to change your email address, are you sure?</h2>
+                        <p>Please note that you are going to re verify your email address. </p>
+                        <div className='button-div'>
+                                <button type='button' onClick={changeNow} className="button">
+                                    <div>
+                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
+                                        <span>Confirm</span>
+                                    </div>
+                                </button>
+                                <button type='button' onClick={closeWarning} className="button button-cancel">
+                                    <div>
+                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
+                                        <span>Cancel</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
                     </>
                 )
             }

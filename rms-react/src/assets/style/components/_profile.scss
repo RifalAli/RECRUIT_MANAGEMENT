@@ -358,3 +358,41 @@
         }
     }
 }
+
+.modal {
+    z-index: 5;
+    margin: 0;
+    padding: 0;
+    background: white;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    // width: 65vw;
+    // height: 38vw;
+    width: 50%;
+    // text-align: center;
+    border: 1px solid $form-control-color;
+    border-radius: 35px;
+
+    .modal-container {
+        @include flexVertical;
+        padding: 20px;
+
+        .button-div {
+            display: flex;
+            flex-direction: row-reverse;
+            column-gap: 10px;
+        }
+
+        .button {
+            width: 28%;
+            text-align: center;
+        }
+
+        .button-cancel {
+            background: #a9a9a9;
+        }
+    }
+}

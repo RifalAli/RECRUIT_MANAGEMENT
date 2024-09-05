@@ -7,7 +7,7 @@ const JobItemSection = ({jobs, condition}) => {
             <div className="container">
                 <div className="featured_job--wrapper">
                     {
-                        condition && condition == 'search' ? 
+                        condition && condition === 'search' ? 
                         
                         jobs && jobs.map((item, i) => (
                             <FeaturedJobItem

@@ -16,6 +16,7 @@ import TermsConditions from './components/user/footer/footer-detail/TermsConditi
 import Abouts from './components/user/footer/footer-detail/AboutUs';
 import PrivacyPolicy from './components/user/footer/footer-detail/PrivacyPolicy';
 import OTPAuth from './components/user/pages/authentication/OTPAuth';
+import ForgotPasswordItem from './components/user/pages/authentication/ForgotPasswordItem';
 
 const App = () => {
   return(
@@ -29,6 +30,7 @@ const App = () => {
       <Route path="/login" element={<Login/>}/>
       <Route path="/sign-up" element={<SignUp/>}/>
       <Route path="/forgot-password" element={<ForgotPassword/>}/>
+      <Route path="/auth/forgot-password/:token/:hashEmail" element={<ForgotPasswordItem/>}/>
       <Route path="/categories/jobs/:slug" element={<SameCategory />}/>
       <Route path="/admin/:slug" element={<Admin />}/>
       <Route path="/company/:slug" element={<Company />}/>

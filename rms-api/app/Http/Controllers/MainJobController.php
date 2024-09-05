@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blacklist;
 use App\Models\Company;
 use App\Models\MainJob;
 use App\Models\User;
 use App\Traits\ApiResponseWithHttpStatus;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +22,37 @@ class MainJobController extends Controller
     public function getCompanyJob($company_id) {
         $data['job'] = MainJob::where([['company_id', $company_id]])->with('company')->get();
         return $this->apiResponse('Success fetch all job that belong to this company', $data, Response::HTTP_OK, true);
+    }
+
+    public function getCompanyPaginationJob($company_id, $page) {
+        $query['job'] = MainJob::where([['company_id', $company_id]])->with('company')->get();
+
+        $jobCount = sizeof($query['job']);
+        $totalPage = ceil($jobCount / 6);
+        
+        $pageDestination = $page;
+
+        for ($i = ($pageDestination - 1) * 6, $num = 0; $i < ($pageDestination) * 6; $i++, $num++) {
+            try {
+                $data['job'][$num] = $query['job'][$i];
+                // $data['job'][$num]['title'] = $query['job'][$i]['title'];
+                // $data['job'][$num]['type'] = $query['job'][$i]['type'];
+                // $data['job'][$num]['slug'] = $query['job'][$i]['slug'];
+                // $data['job'][$num]['icon'] = $query['job'][$i]['icon'];
+            } catch (Exception $err) {
+                // $data['job'][$num] = '';
+            }
+        }
+
+        try {
+            $finalData = ['job' => $data['job'], 'jobCount' => $jobCount, 'totalPage' => $totalPage, 'currentPage' => $pageDestination];
+        } catch(Exception $err) {
+            $finalData = ['job' => 'Nothing', 'jobCount' => $jobCount, 'totalPage' => $totalPage, 'currentPage' => $pageDestination];
+        }
+
+        return $this -> apiResponse('success', $finalData, Response::HTTP_OK, true);
+
+        // return $this->apiResponse('Success fetch all job that belong to this company', $data, Response::HTTP_OK, true);
     }
 
     public function companyCreateJob($company_id, Request $request) {
@@ -176,5 +209,58 @@ class MainJobController extends Controller
         }
 
         return $this -> apiResponse('success', $data, Response::HTTP_OK, true);
+    }
+
+    public function filterPaginationJobs($page, Request $request) {
+        $blacklist = [];
+        if ($request['user_id']) {
+            $user = User::where([['id', $request['user_id']]])->first();
+            $blacklist = Blacklist::where([['user_profile_id', $request['user_id']]])->get();
+        }
+
+        $query['job'] = MainJob::where([
+            ['title', 'LIKE', '%'.$request['title'].'%'], 
+            ['status', 'active']
+        ])->whereHas(
+            'company', function ($query) use ($blacklist) {
+                if ($blacklist) {
+                    for ($a = 0; $a < sizeof($blacklist); $a++) {
+                        $query->whereNot('user_id', $blacklist[$a]['user_company_id']);
+                    }
+                }
+            }
+        )->whereHas(
+            'company', function ($query) use ($request) {
+                $query->where('location', 'LIKE', '%'.$request['location'].'%');
+            }
+        )->get();
+
+        $jobCount = sizeof($query['job']);
+        $totalPage = ceil($jobCount / 6);
+
+        $pageDestination = $page;
+
+        for ($i = ($pageDestination - 1) * 6, $num = 0; $i < ($pageDestination) * 6; $i++, $num++) {
+            try {
+                $query['company'][$i] = Company::where([['id', $query['job'][$i]['company_id']]])->get();
+    
+                $data['job'][$num]['title'] = $query['job'][$i]['title'];
+                $data['job'][$num]['type'] = $query['job'][$i]['type'];
+                $data['job'][$num]['slug'] = $query['job'][$i]['slug'];
+                $data['job'][$num]['description'] = $query['job'][$i]['description'];
+                $data['job'][$num]['icon'] = $query['job'][$i]['icon'];
+                $data['job'][$num]['company'] = $query['company'][$i];
+            } catch (Exception $err) {
+                // $data['job'][$num] = '';
+            }
+        }
+
+        try {
+            $finalData = ['jobs' => $data['job'], 'jobCount' => $jobCount, 'totalPage' => $totalPage, 'currentPage' => $pageDestination];
+        } catch(Exception $err) {
+            $finalData = ['jobs' => 'Nothing', 'jobCount' => $jobCount, 'totalPage' => $totalPage, 'currentPage' => $pageDestination];
+        }
+
+        return $this -> apiResponse('success', $finalData, Response::HTTP_OK, true);
     }
 }

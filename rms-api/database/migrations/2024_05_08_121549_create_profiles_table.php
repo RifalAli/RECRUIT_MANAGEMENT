@@ -22,10 +22,10 @@ return new class extends Migration
             $table->string('document_url')->default('http://localhost:8000/files/applications/default.pdf');
             $table->string('image')->default('http://localhost:8000/files/profiles/default.png');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('dream_job')->nullable();
-            $table->enum('status', ['unemployed', 'employed'])->default('unemployed');
+            // $table->unsignedBigInteger('dream_job')->nullable();
+            // $table->enum('status', ['unemployed', 'employed'])->default('unemployed');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');//SET NULL
-            $table->foreign('dream_job')->references('id')->on('categories')->onDelete('cascade');//SET NULL
+            // $table->foreign('dream_job')->references('id')->on('categories')->onDelete('cascade');//SET NULL
             $table->timestamps();
         });
     }

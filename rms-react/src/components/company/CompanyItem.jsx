@@ -5,6 +5,7 @@ import axios from 'axios';
 import { fetchApiData, storeApiData } from '../../api/api';
 import CompanyApplier from './CompanyApplier';
 import Loader from '../../services/Loader';
+import CompanyBlacklist from './CompanyBlacklist';
 
 const openModal = () => {
     let modal = document.getElementsByClassName('modal')[0];
@@ -155,11 +156,34 @@ const CompanyItem = () => {
 
     //Fetch Job
     const [allJobs, setAllJobs] = useState([])
+    const [jobCount, setJobCount] = useState(0)
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(0)
+    const totalPageArray = []
+    const [pageArray, setPageArray] = useState([])
 
-    const fetchAllJobs = async () => {
-        const response = await fetchApiData(`getCompanyJob/${companyData.id}`)
-        setAllJobs(response.data.job)
+    // const fetchAllJobs = async () => {
+    //     const response = await fetchApiData(`getCompanyJob/${companyData.id}`)
+    //     setAllJobs(response.data.job)
+    // }
+
+    const fetchJobs = async () => {
+        await fetchApiData(`getCompanyJob/${companyData.id}/${currentPage}`)
+        .then((response) => { setAllJobs(response.data.job); setTotalPage(response.data.totalPage); setCurrentPage(response.data.currentPage); setJobCount(response.data.jobCount) })
+        .catch((response) => {})
     }
+
+    useEffect(() => {
+        const fillData = () => {
+            for (let i = 1; i <= totalPage; i++) {
+                totalPageArray.push(i)
+            }
+        }
+
+        fillData()
+        // console.log(totalPageArray)
+        setPageArray(totalPageArray)
+    }, [totalPage])
     
     //Fetch Applier
     const [allAppliers, setAllAppliers] = useState([])
@@ -171,9 +195,10 @@ const CompanyItem = () => {
     
     useEffect(() => {
         if (companyData) {
-            fetchAllJobs()
+            // fetchAllJobs()
+            fetchJobs()
         }
-    }, [companyData])
+    }, [companyData, currentPage])
 
     useEffect(() => {
         if (companyData) {
@@ -246,6 +271,9 @@ const CompanyItem = () => {
                         </div>
                     </form>
                 </div>
+                <div className='blacklist-company-div'>
+                    <CompanyBlacklist company_id={userData.id} user_id={userData.id} />
+                </div>
                 <div className='job-profile-div'>
                     <div className="info">
                         <h1>Job</h1>
@@ -260,9 +288,17 @@ const CompanyItem = () => {
                     </div>
                     {/* Job that belong to this company are here */}
                     <>
+                        <p className='pageMsg'>Page {currentPage} of {totalPage} with total of {jobCount} jobs</p>
                         <CompanyJob allJobs={allJobs} category={category} />
                         {/* <JobItem title='Check' slug='a' type='full time' company='PT Tes' icon='http://localhost:8000/files/jobs/default.png'/> */}
                         {/* <FeaturedJobItem title='Check' slug='a' type='full time' company='PT Tes' icon='http://localhost:8000/files/jobs/default.png'/> */}
+                        <div className='page__wrapper'>
+                        {
+                            pageArray && pageArray.map((item, i) => (
+                                <button type='button' className={item == currentPage ? 'button-current' : ''} value={item} onClick={(e) => setCurrentPage(e.target.value)}>{item}</button>
+                            ))
+                        }
+                        </div>
                     </>
                 </div>
                 <div className="job-applier-div">

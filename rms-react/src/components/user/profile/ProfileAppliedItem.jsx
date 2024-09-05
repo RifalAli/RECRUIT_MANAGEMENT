@@ -123,7 +123,15 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                     <div className="company_applier__wrapper__card--center__part-1">
                         <h1>{main_job.title}</h1>
                         <p>{description}</p>
-                        <p className={status === "pending" ? "half-time" : "full-time"}>{status}</p>
+                        <p className={
+                            status === "pending" ? 
+                            "status-pending" 
+                        : 
+                            status === 'accepted' ? 
+                            "status-accepted"
+                            : 
+                            "status-rejected"
+                        }>{status}</p>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,110 @@
+import React, { useEffect, useState } from 'react'
+import NavBar from '../navigation/NavBar'
+import Footer from '../../footer/Footer'
+import { Link, useParams } from 'react-router-dom'
+import Loader from '../../../../services/Loader'
+import { storeApiData } from '../../../../api/api'
+
+const ForgotPasswordItem = () => {
+    const [loader, setLoader] = useState(true);
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [errMsg, setErrMsg] = useState('');
+    const [updateRepsonse, setUpdateResponse] = useState('');
+    let url = useParams()
+    // console.log(url)
+
+    const { token, hashEmail } = url
+
+    // console.log(token, hashEmail)
+
+    const submitHandler = () => {
+        const checkPassword = () => {
+            setErrMsg('')
+            console.log(password, confirmPassword)
+            if (password == '' || confirmPassword == '') {
+                return setErrMsg('All field must be filled first')
+            }
+            
+            if (password.length < 6) {
+                return setErrMsg('Password must be at least 6 character')
+            }
+            
+            if (password !== confirmPassword) {
+                return setErrMsg('Password and confirm password are not same')
+            }
+
+            const formData = new FormData();
+            formData.append('email', hashEmail)
+            formData.append('token', token)
+            formData.append('password', password)
+
+            requestChangePassword(formData)
+        }
+
+        const requestChangePassword = async (formData) => {
+            await storeApiData(`/auth/update-password`, formData)
+            .then((response) => { setUpdateResponse(response) })
+            .catch((response) => { console.log(response) })
+        }
+        
+        checkPassword()
+    }
+
+    useEffect(() => {
+        const checkResponse = () => {
+            if (updateRepsonse.message == 'Password Updated') {
+                window.location = '/login';
+            }else if (updateRepsonse.message == 'Invalid email address or token'){
+                setErrMsg('Failed to update password, try again later')
+            }
+        }
+        checkResponse()
+    }, [updateRepsonse])
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoader(false);
+        }, 300)
+    }, []);
+    return (
+        <>
+            {loader ? (
+                <Loader />
+            ) : (
+                <>
+                    <NavBar hero='Forgot Password' cmp='auth'/>
+                    <section className='login'>
+                        <div className="container">
+                            <div className="auth-div">
+                                <form>
+                                    <div className="form">
+                                        <div>
+                                            <input type="password" className='form-control' name="password" placeholder='New Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+                                            <input type="password" className='form-control' name="confirmPassword" placeholder='Confirm Password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                                        </div>
+                                        <br />
+                                        <p className='auth-error' style={{ margin: '-10px 0 -10px 0' }}>{errMsg}</p>
+                                        <button type='button' className="button" onClick={submitHandler}>
+                                            <div>
+                                                {/* <img src='' alt='' height='15px' width='15px'/> */}
+                                                <span>Submit</span>
+                                            </div>
+                                        </button>
+                                       <div className="forgot">
+                                            <Link to='/login'>Login form here</Link>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                    <Footer/>
+                </>
+            )}
+            
+        </>
+    )
+}
+
+export default ForgotPasswordItem

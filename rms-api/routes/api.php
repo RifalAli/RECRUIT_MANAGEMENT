@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApplicationAnswerController;
 use App\Http\Controllers\auth\AuthController;
+use App\Http\Controllers\BlacklistController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\HomeController;
@@ -26,7 +27,7 @@ Route::group([
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('/update-password', [AuthController::class, 'updatePassword']);
     Route::post('/verify-otp', [AuthController::class, 'compareOTP']);
-    Route::post('/send-otp', [AuthController::class, 'resendOTP']);
+    Route::post('/send-otp', [AuthController::class, 'sendOTP']);
 
     //Home
 });
@@ -36,10 +37,13 @@ Route::group(['middleware' => 'api'], function ($router) {
 });
 
 Route::get('/home', [HomeController::class, 'index']);
+Route::post('/homepage', [HomeController::class, 'homepage']);
 Route::get('/home/browse/{count}', [HomeController::class, 'getAllJobs']);
+Route::post('/home/browseJobs/{page}', [HomeController::class, 'getPaginationJobs']);
 Route::get('/home/{slug}', [HomeController::class, 'getSingleJobDetails']);
 
 Route::get('/categories/jobs/{slug}', [HomeController::class, 'sameCategory']);
+Route::post('/category/jobs/{slug}/{page}', [HomeController::class, 'sameCategoryPagination']);
 
 // Route::get('/user-complete-profile/{user_id}', [ProfileController::class, 'getProfile']);
 
@@ -52,11 +56,13 @@ Route::group([
     Route::post('/changeCompany/{company_id}', [CompanyController::class, 'changeCompany']);
     Route::post('/companyCreateJob/{company_id}', [MainJobController::class, 'companyCreateJob']);
     Route::get('/getCompanyJob/{company_id}', [MainJobController::class, 'getCompanyJob']);
+    Route::get('/getCompanyJob/{company_id}/{page}', [MainJobController::class, 'getCompanyPaginationJob']);
     Route::post('/companyDeleteJob/{company_id}/{job_id}', [MainJobController::class, 'companyDeleteJob']);
     Route::post('/companyEditJob/{company_id}/{job_id}', [MainJobController::class, 'companyEditJob']);
     Route::get('/loadCategory', [AdminController::class, 'loadCategory']);
     Route::get('/loadCompany', [AdminController::class, 'loadCompany']);
     Route::get('/loadJob', [AdminController::class, 'loadJob']);
+    Route::get('/loadJob/{page}', [AdminController::class, 'getAdminPaginationJob']);
     Route::post('/adminCreateCategory', [CategoryController::class, 'adminCreateCategory']);
     Route::post('/adminEditCategory/{category_id}', [CategoryController::class, 'adminEditCategory']);
     Route::post('/adminDeleteCategory/{category_id}', [CategoryController::class, 'adminDeleteCategory']);
@@ -70,7 +76,12 @@ Route::group([
     Route::get('/companyViewApplier/{company_id}', [JobApplicationController::class, 'companyViewApplier']);
     Route::post('/answerJobApplication/{jobApplication_id}', [ApplicationAnswerController::class, 'answerJobApplication']);
     Route::get('/getAppliedJobs/{profile_id}', [JobApplicationController::class, 'getProfileJobApplication']);
-    Route::post('/filterJobs/{count}', [MainJobController::class, 'filterJobs']);
+    // Route::post('/filterJobs/{count}', [MainJobController::class, 'filterJobs']);
+    Route::post('/filterJobs/{page}', [MainJobController::class, 'filterPaginationJobs']);
+    Route::get('/getUsers/{user_company_id}', [BlacklistController::class, 'getAllUsers']);
+    Route::get('/getBlacklist/{user_company_id}', [BlacklistController::class, 'getAllBlacklists']);
+    Route::post('/blacklistUser', [BlacklistController::class, 'createBlacklist']);
+    Route::post('/unblacklistUser', [BlacklistController::class, 'removeBlacklist']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

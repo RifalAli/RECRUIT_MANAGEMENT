@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
@@ -129,8 +130,12 @@ class AuthController extends Controller
                 ));
         if ($user) {
             $details = ['name'=>$user->name, 'email'=>$user->email, 'hashEmail'=>Crypt::encryptString($user->email), 'token'=>$user->token, 'otp'=>$user->otp];
-            dispatch(new VerifyUserJobs($details));
+            VerifyUserJobs::dispatchSync($details);
+            // // dispatch(new VerifyUserJobs($details));
+            // VerifyUserJobs::dispatchSync(Mail::to($details['email'])->send(new VerifyUserMail($details)));
             // Mail::to($details['email'])->send(new VerifyUserMail($details));
+            // $details = ['slug' => $user->slug, 'role' => $user->role];
+            // $asyncMail = Http::async()->post(url('/send-otp'), $details);
         }
 
         $data['user'] = $user;
@@ -167,6 +172,7 @@ class AuthController extends Controller
         if (! $token = JWTAuth::attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+        
         return $this->createNewToken($token);
 
         // return $this->apiResponse('User succesfully registered',$data=$user,Response::HTTP_OK, true);
@@ -189,14 +195,15 @@ class AuthController extends Controller
         }
     }
     
-    public function resendOTP(Request $request) {
+    public function sendOTP(Request $request) {
         $data['user'] = User::where([['slug', $request['slug']], ['role', $request['role']]])->first();
         
         if ($data['user']['otp'] != null) {
             $details = ['name'=>$data['user']['name'], 'email'=>$data['user']['email'], 'hashEmail'=>Crypt::encryptString($data['user']['email']), 'token'=>$data['user']['token'], 'otp'=>$data['user']['otp']];
-            dispatch(new VerifyUserJobs($details));
+            // dispatch(new VerifyUserJobs($details));
+            Mail::to($details['email'])->send(new VerifyUserMail($details));
 
-            return $this->apiResponse('Success resend OTP', $data['user'], Response::HTTP_OK, true);
+            return $this->apiResponse('Success send OTP', $data['user'], Response::HTTP_OK, true);
         }else {
             return $this->apiResponse('User already verified', $data['user'], Response::HTTP_OK, true);
         }
@@ -265,12 +272,14 @@ class AuthController extends Controller
         if ($user) {
             $token = Str::random(15);
             $details = ['name' => $user->name, 'token' => $token, 'email' => $user->email, 'hashEmail' => Crypt::encryptString($user->email)];
-            if (dispatch(new PasswordResetJob($details))) {
+            // if (dispatch(new PasswordResetJob($details))) {
+            if ($details) {
                 DB::table('password_resets')->insert([
                     'email'=>$user->email,
                     'token'=>$token, 
                     'created_at'=>now()
                 ]);
+                PasswordResetJob::dispatchSync($details);
                 return $this->apiResponse('Password reset link has been sent to your email address',null,Response::HTTP_OK, true);
             }
         } else {

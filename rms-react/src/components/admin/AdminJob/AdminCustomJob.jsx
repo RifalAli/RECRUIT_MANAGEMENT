@@ -75,15 +75,38 @@ const AdminCustomJob = () => {
     }
 
     const [fetchState, setFetchState] = useState(true);
-    const [jobData, setJobData] = useState([]);
-    const [newJobDataFormat, setNewJobDataFormat] = useState([]);
-    const [toLoadData, setToLoadData] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1)
+    const [allJobs, setAllJobs] = useState([])
+    const [jobCount, setJobCount] = useState(0)
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(0)
+    const totalPageArray = []
+    const [pageArray, setPageArray] = useState([])
 
     const fetchJob = async () => {
-        const response = await fetchApiData(`loadJob`)
-        setJobData(response.data.job)
+        await fetchApiData(`loadJob/${currentPage}`)
+        .then((response) => { setAllJobs(response.data.job); setTotalPage(response.data.totalPage); setCurrentPage(response.data.currentPage); setJobCount(response.data.jobCount); })
+        .catch((response) => {})
     }
+
+    useEffect(() => {
+        const fillData = () => {
+            for (let i = 1; i <= totalPage; i++) {
+                totalPageArray.push(i)
+            }
+        }
+
+        fillData()
+        setPageArray(totalPageArray)
+    }, [totalPage])
+    // const [jobData, setJobData] = useState([]);
+    // const [newJobDataFormat, setNewJobDataFormat] = useState([]);
+    // const [toLoadData, setToLoadData] = useState([]);
+    // const [currentPage, setCurrentPage] = useState(1)
+
+    // const fetchJob = async () => {
+    //     const response = await fetchApiData(`loadJob`)
+    //     setJobData(response.data.job)
+    // }
 
     useEffect(() => {
         setFetchState(false);
@@ -92,51 +115,51 @@ const AdminCustomJob = () => {
         // console.log(jobData)
         setTimeout(() => {
             setLoader(false);
-        }, 7000);
-    }, [fetchState])
+        }, 500);
+    }, [fetchState, currentPage])
 
-    function formatJobData() {
-        let otherTempJobData = [];
-        let displayCount = 4;
-        let totalPage = Math.ceil(jobData.length / displayCount);
-        let page = 0;
+    // function formatJobData() {
+    //     let otherTempJobData = [];
+    //     let displayCount = 4;
+    //     let totalPage = Math.ceil(jobData.length / displayCount);
+    //     let page = 0;
 
-        for (page; page < totalPage; page++) {
-            let leftFlag = page * displayCount;
-            let rightFlag = leftFlag + displayCount;
+    //     for (page; page < totalPage; page++) {
+    //         let leftFlag = page * displayCount;
+    //         let rightFlag = leftFlag + displayCount;
 
-            let tempJob = [];
-            let tempJobLength = 0;
+    //         let tempJob = [];
+    //         let tempJobLength = 0;
 
-            for (leftFlag; leftFlag < rightFlag; leftFlag++) {
-                if (jobData[leftFlag] != null) {
-                    tempJob[tempJobLength] = jobData[leftFlag];
-                    ++tempJobLength;
-                }
-            }
+    //         for (leftFlag; leftFlag < rightFlag; leftFlag++) {
+    //             if (jobData[leftFlag] != null) {
+    //                 tempJob[tempJobLength] = jobData[leftFlag];
+    //                 ++tempJobLength;
+    //             }
+    //         }
 
-            otherTempJobData[page] = tempJob;
-        }
+    //         otherTempJobData[page] = tempJob;
+    //     }
 
-        setNewJobDataFormat(otherTempJobData)
-    }
+    //     setNewJobDataFormat(otherTempJobData)
+    // }
 
-    useEffect(() => {
-        formatJobData()
-        // console.log(newJobDataFormat)
-        // console.log("a")
-    }, [jobData])
+    // useEffect(() => {
+    //     formatJobData()
+    //     // console.log(newJobDataFormat)
+    //     // console.log("a")
+    // }, [jobData])
 
-    function movePage() {
-        setToLoadData(newJobDataFormat[currentPage-1])
-        // console.log(toLoadData)
-    }
+    // function movePage() {
+    //     setToLoadData(newJobDataFormat[currentPage-1])
+    //     // console.log(toLoadData)
+    // }
 
-    useEffect(() => {
-        movePage()
-        // console.log(currentPage)
-        // console.log(toLoadData)
-    }, [jobData, currentPage])
+    // useEffect(() => {
+    //     movePage()
+    //     // console.log(currentPage)
+    //     // console.log(toLoadData)
+    // }, [jobData, currentPage])
 
     // console.log(currentPage)
     // console.log(toLoadData)
@@ -183,17 +206,24 @@ const AdminCustomJob = () => {
                         </button>
                     </div>
                     </div>
+                    <p className="pageMsg">Page {currentPage} of {totalPage} with total of {jobCount} jobs</p>
                     <div className="job__wrapper">
                         {
-                            toLoadData && toLoadData.map((item, i) => (
+                            // toLoadData && toLoadData.map((item, i) => (
+                            //     <AdminJobItem key={i} index={i} id={item.id} title={item.title} closeDate={item.closeDate} type={item.type} salary={item.salary} description={item.description} slug={item.slug} icon={item.icon} status={item.status} company={item.company[0]} cat_id={item.cat_id}/>
+                            // ))
+                            allJobs && allJobs.map((item, i) => (
                                 <AdminJobItem key={i} index={i} id={item.id} title={item.title} closeDate={item.closeDate} type={item.type} salary={item.salary} description={item.description} slug={item.slug} icon={item.icon} status={item.status} company={item.company[0]} cat_id={item.cat_id}/>
                             ))
                         }
                     </div>
                     <div className="page__wrapper">
                         {
-                            newJobDataFormat && newJobDataFormat.map((item, i) => (
-                                <button type="button" key={i} value={i+1} onClick={e => setCurrentPage(e.target.value)}>{i+1}</button>
+                            // newJobDataFormat && newJobDataFormat.map((item, i) => (
+                            //     <button type="button" key={i} value={i+1} onClick={e => setCurrentPage(e.target.value)}>{i+1}</button>
+                            // ))
+                            pageArray && pageArray.map((item, i) => (
+                                <button type='button' className={item == currentPage ? 'button-current' : ''} key={i} value={item} onClick={(e) => setCurrentPage(e.target.value)}>{item}</button>
                             ))
                         }
                     </div>
