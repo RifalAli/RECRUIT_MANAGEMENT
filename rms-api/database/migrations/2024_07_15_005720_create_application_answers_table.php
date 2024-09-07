@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('application_answers', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->longText('description')->nullable();
-            $table->timestamp('meeting_date')->nullable();
-            $table->string('meeting_link')->nullable();
+            $table->longText('message')->nullable();
+            // $table->timestamp('meeting_date')->nullable();
+            // $table->string('meeting_link')->nullable();
             $table->unsignedBigInteger('application_id')->nullable();
 
             $table->foreign('application_id')->references('id')->on('job_applications')->onDelete('cascade');

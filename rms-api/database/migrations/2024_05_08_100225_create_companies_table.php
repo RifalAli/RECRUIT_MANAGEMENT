@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('slug')->unique();
-            $table->string('name');
-            $table->string('location');
-            $table->string('description');
-            $table->string('image')->default('http://localhost:8000/files/companies/default.png');
+            $table->string('name')->nullable();
+            $table->string('location')->nullable();
+            $table->string('description')->nullable();
+            $table->string('image')->nullable()->default('http://localhost:8000/files/companies/default.png');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');//SET NULL
             $table->timestamps();

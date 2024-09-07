@@ -9,12 +9,15 @@ const ForgotPassword = () => {
     const [loader, setLoader] = useState(true);
     const [email, setEmail] = useState('')
     const [errMsg, setErrMsg] = useState('');
+    const [successMsg, setSuccessMsg] = useState('');
     const [response, setReponse] = useState('')
 
     const submitEmailHandler = () => {
+        setLoader(true)
         setErrMsg('')
         const validation = () => {
             if (email == '') {
+                setLoader(false)
                 return setErrMsg('Email field must be filled first')
             }
 
@@ -32,7 +35,11 @@ const ForgotPassword = () => {
     useEffect(() => {
         const checkResponse = () => {
             if (response.message == 'Invalid email') {
+                setLoader(false)
                 setErrMsg('Invalid Email')
+            }else if (response.message == 'Link sent') {
+                setLoader(false)
+                setSuccessMsg('Success send reset password link to your email')
             }
         }
         checkResponse()
@@ -60,6 +67,7 @@ const ForgotPassword = () => {
                                             <input type="email" className='form-control' name="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/>
                                         </div>
                                         <p className='auth-error' style={{ margin: '3px 0 -20px 5px' }}>{errMsg}</p>
+                                        <p className='auth-success' style={{ margin: '3px 0 -20px 5px' }}>{successMsg}</p>
                                         <button type='button' className="button" onClick={submitEmailHandler}>
                                             <div>
                                                 {/* <img src='' alt='' height='15px' width='15px'/> */}

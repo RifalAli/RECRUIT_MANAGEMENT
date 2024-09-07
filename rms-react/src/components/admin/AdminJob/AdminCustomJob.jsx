@@ -84,8 +84,13 @@ const AdminCustomJob = () => {
 
     const fetchJob = async () => {
         await fetchApiData(`loadJob/${currentPage}`)
-        .then((response) => { setAllJobs(response.data.job); setTotalPage(response.data.totalPage); setCurrentPage(response.data.currentPage); setJobCount(response.data.jobCount); })
+        .then((response) => { setAllJobs(response.data.job); setTotalPage(response.data.totalPage); setJobCount(response.data.jobCount); })
         .catch((response) => {})
+    }
+
+    const logout = () => {
+        localStorage.clear();
+        window.location = '/login';
     }
 
     useEffect(() => {
@@ -228,6 +233,7 @@ const AdminCustomJob = () => {
                         }
                     </div>
                 </div>
+            <button className='btn-logout button' type='button' onClick={logout}>LOGOUT</button>
             </div>
 
             <div className="modal modal-job">

@@ -24,7 +24,7 @@ class JobApplicationFactory extends Factory
             // 'description'=>fake()->sentence(300),
             'status'=>fake()->randomElement(['pending', 'accepted', 'rejected']),
             // 'document_url'=>'http://localhost:8000/files/applications/default.pdf',
-            'application_date'=>now(),
+            // 'application_date'=>now(),
             'profile_id'=>fake()->randomElement(Profile::where('id', 1)->pluck('id')->toArray()),
             'company_id'=>fake()->randomElement(Company::where('id', 1)->pluck('id')->toArray()),
             'job_id'=>fake()->randomElement(MainJob::where('id', 1)->pluck('id')->toArray()),

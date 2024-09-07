@@ -22,6 +22,7 @@ const openModal = () => {
 const CompanyItem = () => {
     const [loader, setLoader] = useState(true)
     const [doRefresh, setDoRefresh] = useState(false)
+    const [errMsg, setErrMsg] = useState('')
     //Close Modal is going to clean the form
     const closeModal = () => {
         let modal = document.getElementsByClassName('modal')[0];
@@ -70,7 +71,7 @@ const CompanyItem = () => {
             if (response && response.status && response.status === true) {
                 setCompanyData(response.data.company);
             }else {
-                console.log(response);
+                // console.log(response);
             }
         }
     };
@@ -82,6 +83,17 @@ const CompanyItem = () => {
             setEmail(userData.email)
             setLocation(companyData.location)
             setDescription(companyData.description)
+
+            revalidateCompany()
+        }
+
+    }
+
+    const revalidateCompany = () => {
+        if (!userData.name || !companyData.name || !userData.email || !companyData.location || !companyData.description) {
+            console.log('a')
+            console.log(userData.name, companyData.name, userData.email, companyData.location, companyData.description)
+            return setErrMsg('Please complete your company profile in order to publish any job vacant');
         }
     }
 
@@ -97,14 +109,15 @@ const CompanyItem = () => {
     }, [userData]);
 
     useEffect(() => {
+        console.log(companyData)
         setCompany()
         setTimeout(() => {
             setLoader(false);
         }, 3500);
     }, [companyData])
 
-    console.log(companyData)
-    console.log(userData)
+    // console.log(companyData)
+    // console.log(userData)
 
     const requestChanges = async () => {
         await storeApiData(`changeCompany/${companyData.id}`, { username, name, location, email, description })
@@ -114,6 +127,11 @@ const CompanyItem = () => {
     }
 
     const applyChangesHandler = () => {
+        setErrMsg('')
+        if (!username || !name || !email || !location || !description) {
+            return setErrMsg('Please fill all field to make any changes');
+        }
+
         requestChanges()
     }
 
@@ -142,17 +160,50 @@ const CompanyItem = () => {
     const [jobType, setJobType] = useState('full time');
     const [jobCategory, setJobCategory] = useState('');
 
+    const [jobErrMsg, setJobErrMsg] = useState('')
+    const [jobResponse, setJobResponse] = useState('');
+
     const postJob = () => {
-        const createJob = async () => {
-            await storeApiData(`companyCreateJob/${companyData.id}`, { jobTitle, jobSalary, jobCloseDate, jobCategory, jobDescription, jobType })
-            .then((response)=>console.log(response.data))
-            .then(setDoRefresh(!doRefresh))
-            .catch((response)=>console.log(response.data))
+        setJobErrMsg('')
+        const validation = () => {
+            if (!jobTitle || !jobSalary || !jobCloseDate || !jobDescription || !jobType || !jobCategory) {
+                return setJobErrMsg('Please fill all field before post this job')
+            }
+
+            createJob()
         }
 
-        createJob()
-        closeModal()
+        const createJob = async () => {
+            await storeApiData(`companyCreateJob/${companyData.id}`, { jobTitle, jobSalary, jobCloseDate, jobCategory, jobDescription, jobType })
+            .then((response) => { setJobResponse(response) })
+            .catch((response) => { console.log(response) })
+        }
+        setJobResponse('')
+        validation()
+        // const createJob = async () => {
+        //     await storeApiData(`companyCreateJob/${companyData.id}`, { jobTitle, jobSalary, jobCloseDate, jobCategory, jobDescription, jobType })
+        //     .then((response)=>console.log(response.data))
+        //     .then(setDoRefresh(!doRefresh))
+        //     .catch((response)=>console.log(response.data))
+        // }
+
+        // createJob()
+        // closeModal()
     }
+
+    useEffect(() => {
+        const moreValidation = () => {
+            if (jobResponse === 'Empty profile') {
+                return setJobErrMsg('Cannot post this job because your company profile is not filled yet')
+            }else if (jobResponse.data) {
+                closeModal()
+                setDoRefresh(!doRefresh)
+            }
+
+        }
+
+        moreValidation()
+    }, [jobResponse])
 
     //Fetch Job
     const [allJobs, setAllJobs] = useState([])
@@ -169,7 +220,7 @@ const CompanyItem = () => {
 
     const fetchJobs = async () => {
         await fetchApiData(`getCompanyJob/${companyData.id}/${currentPage}`)
-        .then((response) => { setAllJobs(response.data.job); setTotalPage(response.data.totalPage); setCurrentPage(response.data.currentPage); setJobCount(response.data.jobCount) })
+        .then((response) => { setAllJobs(response.data.job); setTotalPage(response.data.totalPage); setJobCount(response.data.jobCount) })
         .catch((response) => {})
     }
 
@@ -206,8 +257,13 @@ const CompanyItem = () => {
         }
     }, [companyData])
 
-    console.log(allJobs)
-    console.log(allAppliers)
+    // console.log(allJobs)
+    // console.log(allAppliers)
+
+    const logout = () => {
+        localStorage.clear();
+        window.location = '/login';
+    }
 
     useEffect(() => {
         if (doRefresh) {
@@ -260,6 +316,7 @@ const CompanyItem = () => {
                                 <label htmlFor="description">Description: </label>
                                 <textarea className='form-control' name="description" id="text-area" cols="30" rows="20" placeholder='Company Description' value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                             </div>
+                            <p className='auth-error'>{errMsg}</p>
                             <div className='button-div'>
                                 <button className="button" onClick={applyChangesHandler} type='button'>
                                     <div>
@@ -288,7 +345,13 @@ const CompanyItem = () => {
                     </div>
                     {/* Job that belong to this company are here */}
                     <>
-                        <p className='pageMsg'>Page {currentPage} of {totalPage} with total of {jobCount} jobs</p>
+                        {
+                            allJobs && allJobs === 'Nothing' ? (
+                                <></>
+                            ) : (
+                                <p className='pageMsg'>Page {currentPage} of {totalPage} with total of {jobCount} jobs</p>
+                            )
+                        }
                         <CompanyJob allJobs={allJobs} category={category} />
                         {/* <JobItem title='Check' slug='a' type='full time' company='PT Tes' icon='http://localhost:8000/files/jobs/default.png'/> */}
                         {/* <FeaturedJobItem title='Check' slug='a' type='full time' company='PT Tes' icon='http://localhost:8000/files/jobs/default.png'/> */}
@@ -310,6 +373,8 @@ const CompanyItem = () => {
                         <CompanyApplier allAppliers={allAppliers} />
                     </>
                 </div>
+
+                <button className='btn-logout button' type='button' onClick={logout}>LOGOUT</button>
             </div>
 
             <div className="modal">
@@ -367,6 +432,7 @@ const CompanyItem = () => {
                                     <option value='part time'>part time</option>
                                 </select>
                             </div>
+                            <p className='auth-error'>{jobErrMsg}</p>
                             <div className='button-div'>
                                 <button type='button' className="button" onClick={postJob}>
                                     <div>

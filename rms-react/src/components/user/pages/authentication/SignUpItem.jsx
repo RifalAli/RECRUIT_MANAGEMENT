@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { storeApiData } from '../../../../api/api'
+import Loader from '../../../../services/Loader';
 
 const SignUpItem = () => {
+    const [loader, setLoader] = useState(false);
+
     const [tokenData, setTokenData] = useState('')
     const [userData, setUserData] = useState('')
     const [name, setName] = useState('')
@@ -16,13 +19,16 @@ const SignUpItem = () => {
     const [passwordMsg, setPasswordMsg] = useState('')
 
     const registerHandler = () => {
+        setLoader(true)
         const validation = () => {
             if (name === '' || email === '' || password === '' || confirmPassword === '') {
+                setLoader(false)
                 setPasswordMsg("All field must be filled first!")
                 return;
             }
 
             if (password !== confirmPassword) {
+                setLoader(false)
                 setPasswordMsg("Password and confirm password are not same")
                 return;
             }
@@ -49,14 +55,17 @@ const SignUpItem = () => {
     const proccessData = () => {
         const moreValidation = () => {
             if (registerResponse === 'Email taken') {
+                setLoader(false)
                 setEmailMsg('Email already been taken')
                 return;
             }
             else if (registerResponse === 'Name between') {
+                setLoader(false)
                 setEmailMsg('Name must be up to 2 until 100 characters')
                 return;
             }
             else if (registerResponse === 'Password min') {
+                setLoader(false)
                 setPasswordMsg('Password must be at least 6 character')
                 return;
             }
@@ -191,7 +200,17 @@ const SignUpItem = () => {
     // //     console.log(confirmPassword);
     // //     console.log(role);
     // // }, [name, email, password, confirmPassword, role])
+    // const [loader, setLoader] = useState(true);
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setLoader(false);
+    //     }, 300)
+    // }, []);
     return (
+        <>
+            {loader ? (
+                <Loader />
+            ) : (
         <section className='login'>
             <div className="container">
                 <div className="auth-div">
@@ -244,6 +263,8 @@ const SignUpItem = () => {
                 </div>
             </div>
         </section>
+            )}
+        </>
     )
 }
 

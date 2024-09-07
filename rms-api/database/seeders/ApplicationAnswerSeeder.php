@@ -16,9 +16,9 @@ class ApplicationAnswerSeeder extends Seeder
     {
         DB::table('application_answers')->insert([
             'title'=>'Hello',
-            'description'=>'Test Description',
-            'meeting_date'=>now(),
-            'meeting_link'=>'http://www.zoom.com/qwerty',
+            'message'=>'Test Message',
+            // 'meeting_date'=>now(),
+            // 'meeting_link'=>'http://www.zoom.com/qwerty',
             'application_id'=>1,
             'created_at'=>now(),
             'updated_at'=>now()

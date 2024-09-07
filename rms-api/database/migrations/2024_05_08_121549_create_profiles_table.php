@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->string('slug')->unique();
-            $table->string('fullname');
-            $table->unsignedSmallInteger('age');
-            $table->string('address');
-            $table->string('description');
-            $table->enum('last_education', ['S3', 'S2', 'S1', 'SMA/Sederajat', 'SMP/Sederajat', 'SD/Sederajat'])->default('S1');
-            $table->string('document_url')->default('http://localhost:8000/files/applications/default.pdf');
-            $table->string('image')->default('http://localhost:8000/files/profiles/default.png');
+            $table->string('fullname')->nullable();
+            $table->unsignedSmallInteger('age')->nullable();
+            $table->string('address')->nullable();
+            $table->string('description')->nullable();
+            $table->enum('last_education', ['S3', 'S2', 'S1', 'SMA/Sederajat', 'SMP/Sederajat', 'SD/Sederajat'])->nullable();
+            // $table->enum('last_education', ['S3', 'S2', 'S1', 'SMA/Sederajat', 'SMP/Sederajat', 'SD/Sederajat'])->default('S1')->nullable();
+            $table->string('document_url')->nullable();
+            // $table->string('document_url')->nullable()->default('http://localhost:8000/files/applications/default.pdf');
+            $table->string('image')->nullable()->default('http://localhost:8000/files/profiles/default.png');
             $table->unsignedBigInteger('user_id')->nullable();
             // $table->unsignedBigInteger('dream_job')->nullable();
             // $table->enum('status', ['unemployed', 'employed'])->default('unemployed');

@@ -503,7 +503,14 @@
                 }
             }
         }
+        .btn-logout {
+            position: relative;
+            background: #a9a9a9;
+            left: 85%;
+            width: 15%;
+        }
     }
+
 
     .modal-category {
         display: none;

@@ -143,25 +143,23 @@ class AuthController extends Controller
         if ($data['user']['role'] === 'job seeker') {
             $data['profile'] = Profile::create([
                 'slug'=>Str::random(15),
-                'fullname' => 'Guest'.Str::random(5),
-                'age' => 19, 
-                'address' => 'No Address', 
-                'description' => 'No Description', 
-                'last_education' => 'SMA/Sederajat',
-                'document_url' => 'http://localhost:8000/files/applications/default.pdf',
+                // 'fullname' => 'Guest'.Str::random(5),
+                // 'age' => 19, 
+                // 'address' => 'No Address', 
+                // 'description' => 'No Description', 
+                // 'last_education' => 'SMA/Sederajat',
+                // 'document_url' => 'http://localhost:8000/files/applications/default.pdf',
                 'image' => 'http://localhost:8000/files/profiles/default.png',
                 'user_id' => $data['user']['id'],
-                'dream_job' => 1, 
-                'status' => 'unemployed',
             ]);
             
             $data['profile']->save();
         }else if ($data['user']['role'] === 'company') {
             $data['company'] = Company::create([
                 'slug'=>Str::random(15),
-                'name' => 'Company'.Str::random(5),
-                'location' => 'No Location', 
-                'description' => 'No Description',
+                // 'name' => 'Company'.Str::random(5),
+                // 'location' => 'No Location', 
+                // 'description' => 'No Description',
                 'image' => 'http://localhost:8000/files/companies/default.png',
                 'user_id' => $data['user']['id'],
             ]);
@@ -280,7 +278,8 @@ class AuthController extends Controller
                     'created_at'=>now()
                 ]);
                 PasswordResetJob::dispatchSync($details);
-                return $this->apiResponse('Password reset link has been sent to your email address',null,Response::HTTP_OK, true);
+                return $this->apiResponse('Link sent',null,Response::HTTP_OK, true);
+                // return $this->apiResponse('Password reset link has been sent to your email address',null,Response::HTTP_OK, true);
             }
         } else {
             return $this->apiResponse('Invalid email',null,Response::HTTP_OK, true);

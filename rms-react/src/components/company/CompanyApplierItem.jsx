@@ -51,9 +51,9 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
 
     const [answerStatus, setAnswerStatus] = useState('')
     const [answerTitle, setAnswerTitle] = useState('')
-    const [answerDescription, setAnswerDescription] = useState('')
-    const [meeting_date, setMeeting_date] = useState('')
-    const [meeting_link, setMeeting_link] = useState('')
+    const [answerMessage, setAnswerMessage] = useState('')
+    // const [meeting_date, setMeeting_date] = useState('')
+    // const [meeting_link, setMeeting_link] = useState('')
 
     const acceptAnswerModal = () => {
         setAnswerStatus('accepted');
@@ -77,9 +77,9 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
         const formData = new FormData();
         formData.append('status', answerStatus)
         formData.append('title', answerTitle)
-        formData.append('description', answerDescription)
-        formData.append('meeting_date', meeting_date)
-        formData.append('meeting_link', meeting_link)
+        formData.append('message', answerMessage)
+        // formData.append('meeting_date', meeting_date)
+        // formData.append('meeting_link', meeting_link)
         const createAnswer = async () => {
             await storeApiData(`answerJobApplication/${id}`, formData)
             .then((response)=>console.log(response.data))
@@ -249,11 +249,11 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
                         <div className="form">
                             <div className='form-row'>
                                 <label htmlFor="title">Title: </label>
-                                <input type="text" className='form-control' name="title" placeholder='Job Title' value={answerTitle} onChange={(e) => setAnswerTitle(e.target.value)}/>
+                                <input type="text" className='form-control' name="title" placeholder='Title' value={answerTitle} onChange={(e) => setAnswerTitle(e.target.value)}/>
                             </div>
                             <div className='form-row'>
-                                <label htmlFor="description">Message: </label>
-                                <input type="text" className='form-control' name="description" placeholder='Message' value={answerDescription} onChange={(e) => setAnswerDescription(e.target.value)}/>
+                                <label htmlFor="message">Message: </label>
+                                <textarea className='form-control' name="message" id="text-area" cols="30" rows="20" placeholder='Message' value={answerMessage} onChange={(e) => setAnswerMessage(e.target.value)}></textarea>
                             </div>
                             {
                                 answerStatus === 'accepted' ? (

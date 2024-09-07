@@ -20,9 +20,9 @@ class ApplicationAnswerController extends Controller
         
         $data['applicationAnswer'] = ApplicationAnswer::create([
             'title' => $request['title'],
-            'description' => $request['description'],
-            'meeting_date' => $request['meeting_date'],
-            'meeting_link' => $request['meeting_link'],
+            'message' => $request['message'],
+            // 'meeting_date' => $request['meeting_date'],
+            // 'meeting_link' => $request['meeting_link'],
             'application_id' => $data['jobApplication']['id']
         ]);
         

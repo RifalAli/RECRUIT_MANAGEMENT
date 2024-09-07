@@ -19,18 +19,22 @@ const ForgotPasswordItem = () => {
     // console.log(token, hashEmail)
 
     const submitHandler = () => {
+        setLoader(true)
         const checkPassword = () => {
             setErrMsg('')
             console.log(password, confirmPassword)
             if (password == '' || confirmPassword == '') {
+                setLoader(false)
                 return setErrMsg('All field must be filled first')
             }
             
             if (password.length < 6) {
+                setLoader(false)
                 return setErrMsg('Password must be at least 6 character')
             }
             
             if (password !== confirmPassword) {
+                setLoader(false)
                 return setErrMsg('Password and confirm password are not same')
             }
 
@@ -55,7 +59,8 @@ const ForgotPasswordItem = () => {
         const checkResponse = () => {
             if (updateRepsonse.message == 'Password Updated') {
                 window.location = '/login';
-            }else if (updateRepsonse.message == 'Invalid email address or token'){
+            }else if (updateRepsonse.message == 'Invalid email address or token' || updateRepsonse.message == 'The payload is invalid.'){
+                setLoader(false)
                 setErrMsg('Failed to update password, try again later')
             }
         }

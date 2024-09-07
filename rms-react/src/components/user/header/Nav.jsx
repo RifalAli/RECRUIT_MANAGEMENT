@@ -78,6 +78,9 @@ const Nav = ({cmp, addon}) => {
                     : (role === `company`) ? 'Company' : 'Admin'
                 }
             </Link>
+            {
+                addon !== 'loggedin' ? (
+                // (cmp && cmp !== 'loggedin') || (addon && addon !== 'loggedin') ? (
             <Link className={`${cmp==='auth'?'home-header-container-nav-right--active-menu'
                                 :cmp === 'loggedin' ? 'home-header-container-nav-right':''}`} 
                 to={`${
@@ -89,9 +92,9 @@ const Nav = ({cmp, addon}) => {
                     '/login'
                 }`}
                 
-                onClick={
-                    authloggedinHandler
-                }
+                // onClick={
+                //     authloggedinHandler
+                // }
                 
                 >
                 {
@@ -99,10 +102,14 @@ const Nav = ({cmp, addon}) => {
                     (location.pathname === '/forgot-password' && 'Reset Password') || 
                     (location.pathname.includes('/auth/forgot-password/') && 'New Password') || 
                     (location.pathname === '/login' && 'Login') || 
-                    (addon === 'loggedin' && "Logout") ||
+                    // (addon === 'loggedin' && "Logout") ||
                     'Login'
                 }
             </Link>
+                ) : (
+                    <></>
+                )
+            }
 
             {/* <Link className={`${cmp==='profile'?'home-header-container-nav-right--active-menu':''}`} to='/jobs'>Profile</Link> */}
 

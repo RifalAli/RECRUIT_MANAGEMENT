@@ -264,10 +264,14 @@ const AllJobs = () => {
                         </div>
                         {/* <p>{jobCount} jobs</p> */}
                         {
-                            searchJobs && searchJobs.length > 0 ? (
+                            searchJobs && searchJobs.length > 0 &&searchJobs !== 'Nothing' ? (
                                 <p className='filterPageMsg'>Page {currentFilterPage} of {totalPage} with total of {jobCount} jobs</p>
                             ) : (
-                                <p className='normalPageMsg'>Page {currentPage} of {totalPage} with total of {jobCount} jobs</p>
+                                jobs && jobs !== 'Nothing' ? (
+                                    <p className='normalPageMsg'>Page {currentPage} of {totalPage} with total of {jobCount} jobs</p>
+                                ) : (
+                                    <></>
+                                )
                             )
                         }
                         {/* <p>Page {currentPage} of {totalPage} with total of {jobCount} jobs</p> */}
@@ -292,7 +296,7 @@ const AllJobs = () => {
 
                                 jobs && jobs === 'Nothing' ? (
                                     <>
-                                        <p>No Jobs</p>
+                                        <h1 className='search-empty'>There are no jobs</h1>
                                     </>
                                 ) : (
                                     <>
@@ -321,19 +325,19 @@ const AllJobs = () => {
                         }
                         </div>
 
-                        {
+                        {/* {
                             searchJobs && searchJobs.length > 0 ? (
                                 <>
                                 
                                 </>
                             ) : (
                                 <>
-                                    {/* <div className="load-data">
+                                    <div className="load-data">
                                         <button className='button' onClick={handleClick}>Browse More</button>
-                                    </div> */}
+                                    </div>
                                 </>
                             )
-                        }
+                        } */}
                         <Footer />
                     </>
                 ))

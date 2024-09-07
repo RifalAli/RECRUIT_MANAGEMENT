@@ -8,6 +8,8 @@ const NavBar = ({ hero, cmp, job }) => {
         addon = 'loggedin'
     }
 
+    console.log(addon)
+
     return (
         <header className='header'>
             <div className='container'>

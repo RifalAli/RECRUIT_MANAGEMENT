@@ -17,7 +17,7 @@ return new class extends Migration
             // $table->longText('description')->nullable();
             // $table->string('document_url')->default('http://localhost:8000/files/applications/default.pdf');
             $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
-            $table->timestamp('application_date')->default(now());
+            // $table->timestamp('application_date')->default(now());
             $table->unsignedBigInteger('profile_id')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('job_id')->nullable();

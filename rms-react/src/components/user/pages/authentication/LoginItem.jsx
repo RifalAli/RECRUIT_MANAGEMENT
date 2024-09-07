@@ -4,8 +4,11 @@ import github from '../../../../assets/images/github.svg'
 import google from '../../../../assets/images/google.svg'
 import { storeApiData } from '../../../../api/api'
 import axios from 'axios'
+import Loader from '../../../../services/Loader'
 
 const LoginItem = () => {
+    const [loader, setLoader] = useState(false);
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [tokenData, setTokenData] = useState('')
@@ -17,9 +20,11 @@ const LoginItem = () => {
     const [passwordMsg, setPasswordMsg] = useState('')
 
     const loginHandler = () => {
+        setLoader(true)
         const validation = () => {
             if (email === '' || password === '') {
                 setPasswordMsg('All field must be filled first!')
+                setLoader(false)
                 return;
             }
 
@@ -45,14 +50,17 @@ const LoginItem = () => {
     const proccessData = () => {
         const moreValidation = () => {
             if (loginResponse === 'Invalid email') {
+                setLoader(false)
                 setEmailMsg('Invalid email address')
                 return;
             }
             else if (loginResponse === 'Password min') {
+                setLoader(false)
                 setPasswordMsg('Password must be at least 6 digit')
                 return;
             }
             else if (loginResponse === 'Unauthorized') {
+                setLoader(false)
                 setPasswordMsg('Incorrect password')
                 return;
             }
@@ -171,8 +179,19 @@ const LoginItem = () => {
     //     checkRole()
     //     console.log(userData)
     // }, [userData])
+    // const [loader, setLoader] = useState(false);
+
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setLoader(false);
+    //     }, 300)
+    // }, []);
 
     return (
+        <>
+            {loader ? (
+                <Loader />
+            ) : (
         <section className='login'>
             <div className="container">
                 <div className="auth-div">
@@ -207,6 +226,8 @@ const LoginItem = () => {
                 </div>
             </div>
         </section>
+            )}
+        </>
     )
 }
 

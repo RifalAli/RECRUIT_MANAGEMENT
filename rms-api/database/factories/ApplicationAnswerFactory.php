@@ -19,9 +19,9 @@ class ApplicationAnswerFactory extends Factory
     {
         return [
             'title'=>fake()->sentence(3, false),
-            'description'=>fake()->sentence(300),
-            'meeting_date'=>now(),
-            'meeting_link'=>fake()->url(),
+            'message'=>fake()->sentence(300),
+            // 'meeting_date'=>now(),
+            // 'meeting_link'=>fake()->url(),
             'application_id'=>fake()->randomElement(JobApplication::where('id', 1)->pluck('id')->toArray()),
             'created_at'=>now(),
             'updated_at'=>now()

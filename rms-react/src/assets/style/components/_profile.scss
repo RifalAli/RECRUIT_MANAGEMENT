@@ -58,6 +58,14 @@
                 }
             }
 
+            .auth-error {
+                position: relative;
+                color: red;
+                top: 10px;
+                left: 115px;
+                font-size: 0.8rem;
+            }
+
             #text-area {
                 width: 81%;
                 height: 100px;
@@ -108,6 +116,13 @@
                 width: 80vw;
                 text-align: center;
             }
+        }
+
+        .btn-logout {
+            position: relative;
+            background: #a9a9a9;
+            left: 85%;
+            width: 15%;
         }
     }
 

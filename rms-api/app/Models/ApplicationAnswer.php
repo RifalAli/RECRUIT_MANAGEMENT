@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ApplicationAnswer extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'meeting_date', 'meeting_link', 'application_id'];
+    protected $fillable = ['title', 'message', 'application_id'];
 
     public function application() 
     {

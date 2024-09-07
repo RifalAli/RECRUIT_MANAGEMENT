@@ -36,6 +36,14 @@
                 margin-bottom: 10px;
             }
 
+            .auth-error {
+                position: relative;
+                color: red;
+                top: 10px;
+                left: 170px;
+                font-size: 0.8rem;
+            }
+
             #text-area {
                 width: 81%;
                 height: 100px;
@@ -117,6 +125,13 @@
             //     display: flex;
             //     justify-content: space-between;
             // }
+        }
+
+        .btn-logout {
+            position: relative;
+            background: #a9a9a9;
+            left: 85%;
+            width: 15%;
         }
     }
 
@@ -261,6 +276,13 @@
                 display: flex;
                 align-items: center;
                 margin-bottom: 10px;
+            }
+
+            .auth-error {
+                position: relative;
+                color: red;
+                left: 119px;
+                top: 4px;
             }
 
             .form-row-datetime {

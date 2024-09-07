@@ -38,14 +38,14 @@ const ProfileItem = () => {
     const [loader, setLoader] = useState(true)
     const [doRefresh, setDoRefresh] = useState(false)
 
-    const [categoryData, setCategoryData] = useState([])
+    // const [categoryData, setCategoryData] = useState([])
     const [userData, setUserData] = useState('')
     const [profileData, setProfileData] = useState('')
 
     const [username, setUsername] = useState('')
     const [fullname, setFullname] = useState('')
     const [email, setEmail] = useState('')
-    const [age, setAge] = useState(0)
+    const [age, setAge] = useState('')
     const [address, setAddress] = useState('')
     const [lastEducation, setLastEducation] = useState('')
     const [description, setDescription] = useState('')
@@ -53,10 +53,12 @@ const ProfileItem = () => {
 
     const [document, setDocument] = useState(null)
 
-    const fetchCategory = async () => {
-        const response = await fetchApiData('categories')
-        setCategoryData(response.data.categories.data)
-    }
+    const [errMsg, setErrMsg] = useState('');
+
+    // const fetchCategory = async () => {
+    //     const response = await fetchApiData('categories')
+    //     setCategoryData(response.data.categories.data)
+    // }
 
     const checkProfile = async () => {
         try {
@@ -89,7 +91,7 @@ const ProfileItem = () => {
     };
 
     const setProfile = () => {
-        if (profileData && userData && categoryData) {
+        if (profileData && userData) {
             setUsername(userData.name)
             setFullname(profileData.fullname)
             setEmail(userData.email)
@@ -99,15 +101,34 @@ const ProfileItem = () => {
             setLastEducation(profileData.last_education)
             setDocumentUrl(profileData.document_url)
             
+            revalidateProfile()
             // if (profileData.dream_job !== null) {
                 // setDreamJob(categoryData[profileData.dream_job-1].name)
             // }
         }
     }
 
-    useEffect(() => {
-        fetchCategory();
-    }, [])
+    const revalidateProfile = () => {
+        // if (!userData.name && !profileData.fullname && !userData.email && !profileData.age && !ProfileApplied.address && !profileData.description && !profileData.lastEducation && !profileData.documentUrl) {
+        //     // console.log('please complete your profile')
+        //     console.log(username, fullname, email, age, address, description, lastEducation, documentUrl)
+        //     return setErrMsg('Please complete your profile in order to apply for any job');
+        // }
+
+        if (!userData.name || !profileData.fullname || !userData.email || !profileData.age || !profileData.address || !profileData.description || !profileData.last_education) {
+            // console.log('please complete your profile')
+            // console.log(userData.name, profileData.fullname, userData.email, profileData.age, profileData.address, profileData.description, profileData.last_education, profileData.document_url)
+            return setErrMsg('Please complete your profile in order to apply for any job');
+        }
+        
+        if (!profileData.document_url) {
+            return setErrMsg('You still did not add cv into your profile');
+        }
+    }
+
+    // useEffect(() => {
+    //     fetchCategory();
+    // }, [])
 
     useEffect(() => {
         if (!userData) {
@@ -161,6 +182,11 @@ const ProfileItem = () => {
         }
     }
 
+    const logout = () => {
+        localStorage.clear();
+        window.location = '/login';
+    }
+
     const requestChange = async () => {
         await storeApiData(`changeProfile/${profileData.id}`, { fullname, email, age, address, lastEducation })
             .then((response)=>console.log(response.data))
@@ -169,6 +195,13 @@ const ProfileItem = () => {
     }
 
     const applyChangesHandler = (e) => {
+        setErrMsg('')
+        // if (!username && !fullname && !email && !age && !address && !description && !lastEducation) {
+        //     return setErrMsg('Please fill all field to make any changes');
+        // }
+        if (!username || !fullname || !email || !age || !address || !description || !lastEducation) {
+            return setErrMsg('Please fill all field to make any changes');
+        }
         if (email === userData.email) {
             // console.log('Still Same')
             requestChanges(e)
@@ -283,12 +316,21 @@ const ProfileItem = () => {
                             <div className="form-row">
                                 <label htmlFor="document">CV: </label>
                                 <div className='form-column-row'>
-                                    <a href={documentUrl}>View your CV</a>
-                                    <button type='button' id='btnChange' onClick={openCVInput}>Change CV</button>
+                                    {
+                                        documentUrl && documentUrl ? (
+                                            <>
+                                            <a href={documentUrl}>View your CV</a>
+                                            <button type='button' id='btnChange' onClick={openCVInput}>Change CV</button>
+                                            </>
+                                        ) : (
+                                            <button type='button' id='btnChange' onClick={openCVInput}>Add CV</button>
+                                        )
+                                    }
                                     <button type='button' id='btnCancel' onClick={closeCVInput}>Cancel</button>
                                     <input id='changeCV' type='file' onChange={(e) => setDocument(e.target.files[0])} className='form-control' name='document' placeholder='Change CV'></input>
                                 </div>
                             </div>
+                            <p className='auth-error'>{errMsg}</p>
                             <div className='button-div'>
                                 <button type='button' className="button" onClick={applyChangesHandler}>
                                     <div>
@@ -308,6 +350,7 @@ const ProfileItem = () => {
                         <ProfileApplied allAppliedJobs = {allAppliedJobs} document_url={documentUrl} />
                     </>
                 </div>
+                <button className='btn-logout button' type='button' onClick={logout}>LOGOUT</button>
             </div>
         </section>
         

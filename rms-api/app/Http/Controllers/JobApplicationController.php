@@ -6,6 +6,7 @@ use App\Models\ApplicationAnswer;
 use App\Models\Company;
 use App\Models\JobApplication;
 use App\Models\MainJob;
+use App\Models\Profile;
 use App\Traits\ApiResponseWithHttpStatus;
 use Exception;
 use Illuminate\Http\Request;
@@ -20,6 +21,24 @@ class JobApplicationController extends Controller
     use ApiResponseWithHttpStatus;
     
     public function applyJob(Request $request) {
+        // $jobPending = JobApplication::where([['profile_id', $request['profile_id']], ['job_id', $request['job_id']], ['status', 'pending']])->first();
+
+        // if ($jobPending) {
+        //     return response()->json('Already apply', 200);
+        // }
+
+        // $data['jobApplication'] = JobApplication::create([
+        //     'profile_id' => $request['profile_id'],
+        //     'company_id' => $request['company_id'],
+        //     'job_id' => $request['job_id'],
+        // ]);
+
+        // return $this->apiResponse('Success apply job', $data, Response::HTTP_OK, true);
+        $profile = Profile::where([['id', $request['profile_id']]])->first();
+        if (!$profile['fullname'] || !$profile['age'] || !$profile['address'] || !$profile['description'] || !$profile['document_url']) {
+            return response()->json('Empty profile', 200);
+        }
+
         $jobPending = JobApplication::where([['profile_id', $request['profile_id']], ['job_id', $request['job_id']], ['status', 'pending']])->first();
 
         if ($jobPending) {

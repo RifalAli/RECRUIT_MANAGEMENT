@@ -154,6 +154,9 @@ const JobDetailsItem = ({ job, similar }) => {
                 showFailedModal()
                 setApplyResponseMsg('You already apply this job, please wait until the company give their respond')
                 // console.log('You already apply this job, please wait until the company give their respond')
+            }else if (applyResponse === 'Empty profile') {
+                showFailedModal()
+                setApplyResponseMsg('Please fill your profile before apply this job')
             }else if (applyResponse.data) {
                 showSuccessModal()
                 setApplyResponseMsg('Success apply this job')

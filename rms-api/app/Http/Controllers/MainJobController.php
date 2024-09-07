@@ -57,6 +57,10 @@ class MainJobController extends Controller
 
     public function companyCreateJob($company_id, Request $request) {
         $data['company'] = Company::where([['id', $company_id]])->first();
+        if (!$data['company']['name'] || !$data['company']['location'] || !$data['company']['description']) {
+            return response()->json('Empty profile', 200);
+        }
+
         $data['user'] = User::where([['id', $data['company']['user_id']]])->first();
 
         $validator = Validator::make($request->all(), [

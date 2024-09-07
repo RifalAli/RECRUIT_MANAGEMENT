@@ -61,7 +61,7 @@ const SameCategory = () => {
             if (response.data) {
                 setJob(response.data)
                 setTotalPage(response.data.totalPage)
-                setCurrentPage(response.data.currentPage)
+                // setCurrentPage(response.data.currentPage)
                 setJobCount(response.data.jobCount)
             }
         }

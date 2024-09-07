@@ -200,10 +200,10 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                 <div className="applier-detail-row">
                     <p>Description</p>
                     <p>: 
-                    <textarea readOnly className='form-control application-description' cols="30" rows="20" value={applicationAnswer.description}></textarea>
+                    <textarea readOnly className='form-control application-description' cols="30" rows="20" value={applicationAnswer.message}></textarea>
                     </p>
                 </div>
-                <div className="applier-detail-row">
+                {/* <div className="applier-detail-row">
                     <p>Meeting Date</p>
                     <p>: {applicationAnswer.meeting_date}</p>
                 </div>
@@ -212,7 +212,7 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                     <p>
                         : <a href={applicationAnswer.meeting_link}>{applicationAnswer.meeting_link}</a>
                     </p>
-                </div>
+                </div> */}
                 <div className="applier-detail-row">
                     <p>Status</p>
                     <p>
