@@ -15,7 +15,7 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         DB::table('categories')->insert([
-            'name'=>'Software Engineer',
+            'name'=>'Software Development',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
             'icon'=>'http://localhost:8000/files/categories/default.png',
@@ -23,7 +23,7 @@ class CategorySeeder extends Seeder
             'updated_at'=>now()
         ]);
         DB::table('categories')->insert([
-            'name'=>'Web Developer',
+            'name'=>'Data Science',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
             'icon'=>'http://localhost:8000/files/categories/default1.png',
@@ -31,7 +31,143 @@ class CategorySeeder extends Seeder
             'updated_at'=>now()
         ]);
         DB::table('categories')->insert([
+            'name'=>'Network Administration',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
             'name'=>'Cyber Security',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Healthcare Management',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Nursing',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Accounting',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default1.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Financial Analysis',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Marketing',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Sales',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Human Resource',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Civil Engineering',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Electrical Engineering',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Mechanical Engineering',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Architecture',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Customer Service',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Supply Chain Management',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Education and Teaching',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Project Management',
+            'slug'=>Str::slug(Str::random(20)),
+            'status'=>'active',
+            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+        DB::table('categories')->insert([
+            'name'=>'Business Analysis',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
             'icon'=>'http://localhost:8000/files/categories/default2.png',

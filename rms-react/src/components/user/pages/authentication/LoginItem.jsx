@@ -5,6 +5,7 @@ import google from '../../../../assets/images/google.svg'
 import { storeApiData } from '../../../../api/api'
 import axios from 'axios'
 import Loader from '../../../../services/Loader'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 const LoginItem = () => {
     const [loader, setLoader] = useState(false);
@@ -18,12 +19,28 @@ const LoginItem = () => {
     // const [loginMsg, setLoginMsg] = useState('')
     const [emailMsg, setEmailMsg] = useState('')
     const [passwordMsg, setPasswordMsg] = useState('')
+    const [captchaMsg, setCaptchaMsg] = useState('')
+
+    const [captchaStatus, setCaptchaStatus] = useState(false)
+
+    const captchaChange = () => {
+        // console.log('Changed')
+        setCaptchaStatus(true)
+    }
 
     const loginHandler = () => {
         setLoader(true)
         const validation = () => {
             if (email === '' || password === '') {
                 setPasswordMsg('All field must be filled first!')
+                setCaptchaStatus(false)
+                setLoader(false)
+                return;
+            }
+
+            if (!captchaStatus) {
+                setCaptchaMsg('Please verify that you are not a robot!')
+                setCaptchaStatus(false)
                 setLoader(false)
                 return;
             }
@@ -50,16 +67,19 @@ const LoginItem = () => {
     const proccessData = () => {
         const moreValidation = () => {
             if (loginResponse === 'Invalid email') {
+                setCaptchaStatus(false)
                 setLoader(false)
                 setEmailMsg('Invalid email address')
                 return;
             }
             else if (loginResponse === 'Password min') {
+                setCaptchaStatus(false)
                 setLoader(false)
                 setPasswordMsg('Password must be at least 6 digit')
                 return;
             }
             else if (loginResponse === 'Unauthorized') {
+                setCaptchaStatus(false)
                 setLoader(false)
                 setPasswordMsg('Incorrect password')
                 return;
@@ -207,6 +227,12 @@ const LoginItem = () => {
                                 <input type="password" className='form-control' name="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
                             </div>
                             <p className='auth-error'>{passwordMsg}</p>
+                            <ReCAPTCHA
+                                sitekey='6LcEOzsqAAAAAJsKqMe7Dj2cki4USMr5tbQlhKA3'
+                                onChange={captchaChange}
+                                className='captcha'
+                            />
+                            <p className='auth-captcha-error'>{captchaMsg}</p>
                             <button type='button' className="button" onClick={loginHandler}>
                                 <div>
                                     {/* <img src='' alt='' height='15px' width='15px'/> */}

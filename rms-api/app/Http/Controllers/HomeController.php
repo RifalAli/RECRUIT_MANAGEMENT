@@ -39,7 +39,7 @@ class HomeController extends Controller
     }
 
     public function homepage(Request $request) {
-        $data['categories'] = Category::where([['status', 'active']])->take(8)->get();
+        $data['categories'] = Category::where([['status', 'active']])->get()->random(8);
 
         $blacklist = [];
         if ($request['user_id']) {

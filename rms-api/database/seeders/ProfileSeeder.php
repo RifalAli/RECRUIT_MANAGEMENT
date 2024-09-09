@@ -41,7 +41,7 @@ class ProfileSeeder extends Seeder
             'description'=>fake()->sentence(10, true),
             'last_education'=>'S1',
             // 'user_id'=>fake()->randomElement(User::where('role', 'job seeker')->pluck('id')->toArray()),
-            'document_url'=>'http://localhost:8000/files/applications/default.pdf',
+            'document_url'=>'http://localhost:8000/files/applications/samplecvrifal.pdf',
             'image'=>'http://localhost:8000/files/profiles/default.png',
             // 'status'=>'unemployed',
             'user_id'=>6,
