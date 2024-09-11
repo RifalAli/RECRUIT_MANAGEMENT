@@ -56,8 +56,8 @@ const ProfileItem = () => {
     const [errMsg, setErrMsg] = useState('');
 
     // const fetchCategory = async () => {
-    //     const response = await fetchApiData('categories')
-    //     setCategoryData(response.data.categories.data)
+    //     const response = await fetchApiData('allCategories')
+    //     setCategoryData(response.data.categories)
     // }
 
     const checkProfile = async () => {

@@ -18,7 +18,7 @@ class CategorySeeder extends Seeder
             'name'=>'Software Development',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -26,7 +26,7 @@ class CategorySeeder extends Seeder
             'name'=>'Data Science',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default1.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -34,7 +34,7 @@ class CategorySeeder extends Seeder
             'name'=>'Network Administration',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -42,7 +42,7 @@ class CategorySeeder extends Seeder
             'name'=>'Cyber Security',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -50,7 +50,7 @@ class CategorySeeder extends Seeder
             'name'=>'Healthcare Management',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -58,7 +58,7 @@ class CategorySeeder extends Seeder
             'name'=>'Nursing',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -66,7 +66,7 @@ class CategorySeeder extends Seeder
             'name'=>'Accounting',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default1.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -74,7 +74,7 @@ class CategorySeeder extends Seeder
             'name'=>'Financial Analysis',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -82,7 +82,7 @@ class CategorySeeder extends Seeder
             'name'=>'Marketing',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -90,7 +90,7 @@ class CategorySeeder extends Seeder
             'name'=>'Sales',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -98,7 +98,7 @@ class CategorySeeder extends Seeder
             'name'=>'Human Resource',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -106,7 +106,7 @@ class CategorySeeder extends Seeder
             'name'=>'Civil Engineering',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -114,7 +114,7 @@ class CategorySeeder extends Seeder
             'name'=>'Electrical Engineering',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -122,7 +122,7 @@ class CategorySeeder extends Seeder
             'name'=>'Mechanical Engineering',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -130,7 +130,7 @@ class CategorySeeder extends Seeder
             'name'=>'Architecture',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -138,7 +138,7 @@ class CategorySeeder extends Seeder
             'name'=>'Customer Service',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -146,7 +146,7 @@ class CategorySeeder extends Seeder
             'name'=>'Supply Chain Management',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -154,7 +154,7 @@ class CategorySeeder extends Seeder
             'name'=>'Education and Teaching',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -162,7 +162,7 @@ class CategorySeeder extends Seeder
             'name'=>'Project Management',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -170,7 +170,7 @@ class CategorySeeder extends Seeder
             'name'=>'Business Analysis',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/default2.png',
+            'icon'=>fake()->randomElement(['http://localhost:8000/files/categories/default.png', 'http://localhost:8000/files/categories/default1.png', 'http://localhost:8000/files/categories/default2.png', 'http://localhost:8000/files/categories/default3.png']),
             'created_at'=>now(),
             'updated_at'=>now()
         ]);

@@ -42,6 +42,7 @@ Route::get('/home/browse/{count}', [HomeController::class, 'getAllJobs']);
 Route::post('/home/browseJobs/{page}', [HomeController::class, 'getPaginationJobs']);
 Route::get('/home/{slug}', [HomeController::class, 'getSingleJobDetails']);
 
+Route::get('/allCategories', [CategoryController::class, 'getAllCategories']);
 Route::get('/categories/jobs/{slug}', [HomeController::class, 'sameCategory']);
 Route::post('/category/jobs/{slug}/{page}', [HomeController::class, 'sameCategoryPagination']);
 

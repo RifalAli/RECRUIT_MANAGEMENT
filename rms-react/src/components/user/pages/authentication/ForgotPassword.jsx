@@ -64,7 +64,7 @@ const ForgotPassword = () => {
                                     <div className="form">
                                         <label htmlFor="email" style={{ margin: '0 0 -10px 0' }}>Email: </label>
                                         <div>
-                                            <input type="email" className='form-control' name="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/>
+                                            <input type="email" className='form-control' name="email" placeholder='name@domain.com' value={email} onChange={(e) => setEmail(e.target.value)}/>
                                         </div>
                                         <p className='auth-error' style={{ margin: '3px 0 -20px 5px' }}>{errMsg}</p>
                                         <p className='auth-success' style={{ margin: '3px 0 -20px 5px' }}>{successMsg}</p>

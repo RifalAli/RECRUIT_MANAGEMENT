@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\ApplicationAnswer;
 use App\Models\JobApplication;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,11 +19,9 @@ class ApplicationAnswerFactory extends Factory
     public function definition(): array
     {
         return [
-            'title'=>fake()->sentence(3, false),
-            'message'=>fake()->sentence(300),
-            // 'meeting_date'=>now(),
-            // 'meeting_link'=>fake()->url(),
-            'application_id'=>fake()->randomElement(JobApplication::where('id', 1)->pluck('id')->toArray()),
+            // 'title'=>fake()->sentence(3, false),
+            // 'message'=>fake()->sentence(300),
+            // 'application_id'=>fake()->randomElement(JobApplication::where('id', 1)->pluck('id')->toArray()),
             'created_at'=>now(),
             'updated_at'=>now()
         ];

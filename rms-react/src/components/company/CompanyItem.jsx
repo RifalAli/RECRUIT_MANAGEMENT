@@ -139,8 +139,8 @@ const CompanyItem = () => {
     const [category, setCategory] = useState([])
 
     const fetchCategory = async () => {
-        const response = await fetchApiData('categories')
-        setCategory(response.data.categories.data)
+        const response = await fetchApiData('allCategories')
+        setCategory(response.data.categories)
     }
 
     useEffect(() => {

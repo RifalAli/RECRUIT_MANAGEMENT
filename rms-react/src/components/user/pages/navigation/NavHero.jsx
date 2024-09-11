@@ -36,7 +36,11 @@ const NavHero = ({ hero, job }) => {
                                             <div className="posted">
                                                 <div className="company-name">
                                                     <i className="fa fa-map-marker"></i>
-                                                    <span>{job.company[0].name}</span>
+                                                    <span>   {job.company[0].name}</span>
+                                                </div>
+                                                <div className="company-location">
+                                                    <i className="fa fa-map"></i>
+                                                    <span>{job.company[0].location}</span>
                                                 </div>
                                                 <div className="company-name">
                                                     <i className="fa fa-tag"></i>

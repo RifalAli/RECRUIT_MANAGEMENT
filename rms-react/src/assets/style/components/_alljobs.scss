@@ -80,14 +80,16 @@
                         .posted {
                             margin-top: 0.6rem;
 
-                            .company-name, .post-date {
+                            .company-name, .company-location, .post-date {
                                 padding-bottom: .5rem;
                             }
     
                             .company-name span, 
+                            .company-location span,
                             .post-date span, 
                             .expire-date span,
                             .company-name i, 
+                            .company-location i,
                             .post-date i,
                             .expire-date i {
                                 margin-left: 0.8rem;

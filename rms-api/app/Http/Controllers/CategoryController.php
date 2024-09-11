@@ -24,6 +24,11 @@ class CategoryController extends Controller
         return $this->apiResponse('success', $data, Response::HTTP_OK, true);
     }
 
+    public function getAllCategories() {
+        $data['categories'] = Category::all();
+        return $this->apiResponse('success', $data, Response::HTTP_OK, true);
+    }
+
     public function adminCreateCategory(Request $request) {
         $data['categories'] = Category::create([
             'name' => $request['categoryName'], 

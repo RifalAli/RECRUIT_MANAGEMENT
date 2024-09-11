@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('fullname')->nullable();
             $table->unsignedSmallInteger('age')->nullable();
             $table->string('address')->nullable();
-            $table->string('description')->nullable();
+            $table->string('description', 1500)->nullable();
             $table->enum('last_education', ['S3', 'S2', 'S1', 'SMA/Sederajat', 'SMP/Sederajat', 'SD/Sederajat'])->nullable();
             // $table->enum('last_education', ['S3', 'S2', 'S1', 'SMA/Sederajat', 'SMP/Sederajat', 'SD/Sederajat'])->default('S1')->nullable();
             $table->string('document_url')->nullable();

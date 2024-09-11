@@ -29,10 +29,11 @@ const LoginItem = () => {
     }
 
     const loginHandler = () => {
+        setCaptchaMsg('')
         setLoader(true)
         const validation = () => {
             if (email === '' || password === '') {
-                setPasswordMsg('All field must be filled first!')
+                setCaptchaMsg('All field must be filled first!')
                 setCaptchaStatus(false)
                 setLoader(false)
                 return;

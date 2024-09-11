@@ -222,7 +222,7 @@ const JobDetailsItem = ({ job, similar }) => {
                     <div className="left">
                         <h1>Job Description</h1>
                         {/* <div>{job && job.description}</div> */}
-                        <textarea readOnly className='form-control' id="text-area" cols="30" rows="20" value={job && job.description} disabled></textarea>
+                        <textarea readOnly className='form-control long-text' id="text-area" cols="30" rows="20" value={job && job.description} disabled></textarea>
                         {/* <Link className='button' to='/'>Apply Job</Link> */}
                         <button className='button' onClick={openModal} type='button'>Apply Job</button>
                     </div>
@@ -230,7 +230,7 @@ const JobDetailsItem = ({ job, similar }) => {
                         <h1>Company Description</h1>
                         {/* <div className="location-map">{job?.company[0].description}</div> */}
                         <div className="location-map">
-                            <textarea readOnly className='form-control' id="text-area" cols="30" rows="20" value={job?.company[0].description} disabled></textarea>
+                            <textarea readOnly className='form-control long-text' id="text-area" cols="30" rows="20" value={job?.company[0].description} disabled></textarea>
                         </div>
                     </div>
                 </div>

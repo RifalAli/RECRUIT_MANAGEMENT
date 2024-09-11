@@ -158,7 +158,8 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                 </div>
                 <div className="applier-detail-row">
                     <p>Job Salary</p>
-                    <p>: {main_job.salary}</p>
+                    <p>: {Number(main_job.salary).toLocaleString("id", {currency: "IDR", style: "currency"})}</p>
+                    {/* <p>: {main_job.salary}</p> */}
                 </div>
                 <div className="applier-detail-row">
                     <p>Company Name</p>

@@ -214,7 +214,8 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
                 </div>
                 <div className="applier-detail-row">
                     <p>Salary</p>
-                    <p>: {job.salary}</p>
+                    <p>: {Number(job.salary).toLocaleString("id", {currency: "IDR", style: "currency"})}</p>
+                    {/* <p>: {job.salary}</p> */}
                 </div>
                 <div className="applier-detail-row">
                     <p>Type</p>
