@@ -11,7 +11,17 @@ const JobDetails = () => {
     const [loader, setLoader] = useState(true);
     const [job, setJob] = useState([]);
 
+    const [refreshed, setRefreshed] = useState(true)
+
     useEffect(() => {
+        if (refreshed) {
+            setRefreshed(false)
+        }
+
+        if (!refreshed) {
+            window.location.reload();
+        }
+
         const fetchData = async () => {
             const response = await fetchApiData(`home/${slug}`);
             if (response && response.status && response.status === true) {

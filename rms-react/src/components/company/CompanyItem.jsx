@@ -8,7 +8,12 @@ import Loader from '../../services/Loader';
 import CompanyBlacklist from './CompanyBlacklist';
 
 const openModal = () => {
-    let modal = document.getElementsByClassName('modal')[0];
+    let modal = document.getElementsByClassName('job-modal')[0];
+    modal.style.display = 'block';
+}
+
+const openBan = () => {
+    let modal = document.getElementsByClassName('ban-modal')[0];
     modal.style.display = 'block';
 }
 
@@ -25,7 +30,7 @@ const CompanyItem = () => {
     const [errMsg, setErrMsg] = useState('')
     //Close Modal is going to clean the form
     const closeModal = () => {
-        let modal = document.getElementsByClassName('modal')[0];
+        let modal = document.getElementsByClassName('job-modal')[0];
         modal.style.display = 'none';
     
         setJobTitle('')
@@ -95,6 +100,8 @@ const CompanyItem = () => {
             console.log(userData.name, companyData.name, userData.email, companyData.location, companyData.description)
             return setErrMsg('Please complete your company profile in order to publish any job vacant');
         }
+
+        checkBanned()
     }
 
     useEffect(() => {
@@ -167,6 +174,7 @@ const CompanyItem = () => {
         setJobErrMsg('')
         const validation = () => {
             if (!jobTitle || !jobSalary || !jobCloseDate || !jobDescription || !jobType || !jobCategory) {
+                console.log(jobTitle, jobSalary, jobCloseDate, jobDescription, jobType, jobCategory)
                 return setJobErrMsg('Please fill all field before post this job')
             }
 
@@ -195,6 +203,10 @@ const CompanyItem = () => {
         const moreValidation = () => {
             if (jobResponse === 'Empty profile') {
                 return setJobErrMsg('Cannot post this job because your company profile is not filled yet')
+            }else if (jobResponse === 'Banned user') {
+                closeModal()
+                openBan()
+                return;
             }else if (jobResponse.data) {
                 closeModal()
                 setDoRefresh(!doRefresh)
@@ -274,6 +286,14 @@ const CompanyItem = () => {
         }
 
     }, [doRefresh])
+
+    const checkBanned = () => {
+        setTimeout(() => {
+            if (userData.isBanned == 1) {
+                openBan()
+            }
+        }, 3000)
+    }
 
     return (
         <>
@@ -377,7 +397,7 @@ const CompanyItem = () => {
                 <button className='btn-logout button' type='button' onClick={logout}>LOGOUT</button>
             </div>
 
-            <div className="modal">
+            <div className="modal job-modal">
                 <div className="modal-container">
                    <div className="photo">
                         <img src={sampleIcon} alt="sample" />
@@ -444,6 +464,24 @@ const CompanyItem = () => {
                                     <div>
                                         {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Cancel</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div className="modal ban-modal">
+                <div className="modal-container">
+                    <form>
+                        <div className="form">
+                        <h2 className="message">Your account has been banned</h2>
+                        <p>Please contact our email to make an appeal</p>
+                        <div className='button-div'>
+                                <button type='button' onClick={logout} className="button">
+                                    <div>
+                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
+                                        <span>Ok</span>
                                     </div>
                                 </button>
                             </div>

@@ -85,6 +85,13 @@ const LoginItem = () => {
                 setPasswordMsg('Incorrect password')
                 return;
             }
+            else if (loginResponse === 'Banned') {
+                setCaptchaStatus(false)
+                setLoader(false)
+                setPasswordMsg('Cannot login because your account has been banned')
+                //Make proper modal for warning
+                return;
+            }
 
             if (loginResponse.data?.token) {
                 localStorage.setItem('token', loginResponse.data?.token)

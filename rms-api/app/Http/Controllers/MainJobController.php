@@ -63,6 +63,10 @@ class MainJobController extends Controller
 
         $data['user'] = User::where([['id', $data['company']['user_id']]])->first();
 
+        if ($data['user']['isBanned'] == 1) {
+            return response()->json('Banned user', 200);
+        }
+
         $validator = Validator::make($request->all(), [
             'jobTitle' => 'required|string', 
             'jobCloseDate' => 'required',
@@ -222,6 +226,9 @@ class MainJobController extends Controller
             $blacklist = Blacklist::where([['user_profile_id', $request['user_id']]])->get();
         }
 
+        $bannedUsers = [];
+        $bannedUsers = User::where([['role', 'company'], ['isBanned', 1]])->get();
+
         $query['job'] = MainJob::where([
             ['title', 'LIKE', '%'.$request['title'].'%'], 
             ['status', 'active']
@@ -236,6 +243,16 @@ class MainJobController extends Controller
         )->whereHas(
             'company', function ($query) use ($request) {
                 $query->where('location', 'LIKE', '%'.$request['location'].'%');
+            }
+        )->whereHas(
+            'company', function ($query) use ($bannedUsers) {
+                // $query->where('location', 'LIKE', '%'.$blacklist['location'].'%');
+                if ($bannedUsers) {
+                    for ($a = 0; $a < sizeof($bannedUsers); $a++) {
+                        $query->whereNot('user_id', $bannedUsers[$a]['id']);
+                    }
+                }
+                // $query->where('user_id', 2);
             }
         )->get();
 

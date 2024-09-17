@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import FeaturedJob from '../featured-jobs/FeaturedJob'
 import { fetchApiData, storeApiData } from '../../../api/api';
 import axios from 'axios';
@@ -25,6 +25,11 @@ const closeModal = () => {
     successModal.style.display = 'none';
 }
 
+const showBanModal = () => {
+    let modal = document.getElementsByClassName('ban-modal')[0];
+    modal.style.display = 'block';
+}
+
 const showFailedModal = () => {
     let modal = document.getElementsByClassName('success-modal')[0];
     modal.style.display = 'block';
@@ -37,6 +42,8 @@ const showSuccessModal = () => {
 
 
 const JobDetailsItem = ({ job, similar }) => {
+    const [applyReady, setApplyReady] = useState(false)
+
     const [role, setRole]  = useState('')
     const [message, setMessage] = useState('')
     const [user, setUser] = useState([])
@@ -148,6 +155,12 @@ const JobDetailsItem = ({ job, similar }) => {
         }
     }, [applyResponse])
 
+    useEffect(() => {
+        setTimeout(() => {
+            setApplyReady(true)
+        }, 4000)
+    }, [])
+
     const proccessData = () => {
         const moreValidation = () => {
             if (applyResponse === 'Already apply') {
@@ -157,6 +170,10 @@ const JobDetailsItem = ({ job, similar }) => {
             }else if (applyResponse === 'Empty profile') {
                 showFailedModal()
                 setApplyResponseMsg('Please fill your profile before apply this job')
+            }else if (applyResponse === 'Banned user') {
+                // showFailedModal()
+                showBanModal()
+                // setApplyResponseMsg('Your account has been banned')
             }else if (applyResponse.data) {
                 showSuccessModal()
                 setApplyResponseMsg('Success apply this job')
@@ -215,6 +232,11 @@ const JobDetailsItem = ({ job, similar }) => {
         }
     }
 
+    const logout = () => {
+        localStorage.clear();
+        window.location = '/login';
+    }
+
     return (
         <section className="details_info">
             <div className="container">
@@ -224,7 +246,14 @@ const JobDetailsItem = ({ job, similar }) => {
                         {/* <div>{job && job.description}</div> */}
                         <textarea readOnly className='form-control long-text' id="text-area" cols="30" rows="20" value={job && job.description} disabled></textarea>
                         {/* <Link className='button' to='/'>Apply Job</Link> */}
-                        <button className='button' onClick={openModal} type='button'>Apply Job</button>
+                        {/* <button className='button' onClick={openModal} type='button'>Apply Job</button> */}
+                        {
+                            applyReady ? (
+                            <button className='button' onClick={openModal} type='button'>Apply Job</button>
+                        ) : (
+                            <button className='button' style={{ background: "#a9a9a9" }} type='button'>Apply Job</button>
+                            )
+                        }
                     </div>
                     <div className="right">
                         <h1>Company Description</h1>
@@ -310,6 +339,24 @@ const JobDetailsItem = ({ job, similar }) => {
                                     <div>
                                         {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Confirm</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div className="modal ban-modal">
+                <div className="modal-container">
+                    <form>
+                        <div className="form">
+                        <h2 className="message">Cannot apply this job because your account has been banned</h2>
+                        <div className='button-div'>
+                                <button type='button' onClick={logout} className="button">
+                                    <div>
+                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
+                                        <span>Ok</span>
                                     </div>
                                 </button>
                             </div>

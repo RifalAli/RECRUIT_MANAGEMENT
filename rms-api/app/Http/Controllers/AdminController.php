@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Company;
 use App\Models\MainJob;
+use App\Models\Profile;
+use App\Models\User;
 use App\Traits\ApiResponseWithHttpStatus;
 use Exception;
 use Illuminate\Http\Request;
@@ -90,5 +92,64 @@ class AdminController extends Controller
         }
 
         return $this -> apiResponse('success', $finalData, Response::HTTP_OK, true);
+    }
+
+    public function getNormalUser() {
+        $users = User::whereNot([['role', 'admin']])->where([['isBanned', 0]])->get();
+
+        for ($i = 0; $i < sizeof($users); $i++) {
+            if ($users[$i]['role'] == 'job seeker') {
+                $profile = Profile::where([['user_id', $users[$i]['id']]])->first();
+                $users[$i]['userDetail'] = $profile;
+                $users[$i]['userRole'] = 'profile';
+            }else if ($users[$i]['role'] == 'company') {
+                $company = Company::where([['user_id', $users[$i]['id']]])->first();
+                $users[$i]['userDetail'] = $company;
+                $users[$i]['userRole'] = 'company';
+            }
+        }
+
+        if (sizeof($users)) {
+            return $this -> apiResponse('success', $users, Response::HTTP_OK, true);
+        }else {
+            return $this -> apiResponse('success', 'Nothing', Response::HTTP_OK, true);
+        }
+    }
+
+    public function getBannedUser() {
+        $users = User::whereNot([['role', 'admin']])->where([['isBanned', 1]])->get();
+
+        for ($i = 0; $i < sizeof($users); $i++) {
+            if ($users[$i]['role'] == 'job seeker') {
+                $profile = Profile::where([['user_id', $users[$i]['id']]])->first();
+                $users[$i]['userDetail'] = $profile;
+                $users[$i]['userRole'] = 'profile';
+            }else if ($users[$i]['role'] == 'company') {
+                $company = Company::where([['user_id', $users[$i]['id']]])->first();
+                $users[$i]['userDetail'] = $company;
+                $users[$i]['userRole'] = 'company';
+            }
+        }
+
+        if (sizeof($users)) {
+            return $this -> apiResponse('success', $users, Response::HTTP_OK, true);
+        }else {
+            return $this -> apiResponse('success', 'Nothing', Response::HTTP_OK, true);
+        }
+    }
+
+    public function banUser($option, $user_id) {
+        $user = User::where([['id', $user_id]])->first();
+        // $user['isBanned'] = true;
+
+        if ($option == 'ban') {
+            $user['isBanned'] = 1;
+        }else if ($option == 'unban') {
+            $user['isBanned'] = 0;
+        }
+
+        $user->save();
+
+        return $this -> apiResponse('Success', $option, Response::HTTP_OK, true);
     }
 }

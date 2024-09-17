@@ -13,7 +13,15 @@ class BlacklistController extends Controller
 {
     use ApiResponseWithHttpStatus;
     public function getAllBlacklists($user_company_id) {
-        $blacklist = Blacklist::where([['user_company_id', $user_company_id]])->with('userProfile')->get();
+        $sampleBlacklist = Blacklist::where([['user_company_id', $user_company_id]])->with('userProfile')->get();
+        $blacklist = [];
+
+        for ($i = 0, $j = 0; $i < sizeof($sampleBlacklist); $i++) {
+            if ($sampleBlacklist[$i]['userProfile']['isBanned'] == 0) {
+                $blacklist[$j] = $sampleBlacklist[$i];
+                ++$j;
+            }
+        }
 
         for ($i = 0; $i < sizeof($blacklist); $i++) {
             $profile = Profile::where([['user_id', $blacklist[$i]['userProfile']['id']]])->first();
@@ -33,7 +41,8 @@ class BlacklistController extends Controller
         $blacklist = Blacklist::where([['user_company_id', $user_company_id]])->with('userProfile')->get();
 
         $users = User::where([
-            ['role', 'job seeker']
+            ['role', 'job seeker'], 
+            ['isBanned', 0]
         ])->where(
             function ($query) use ($blacklist) {
                 if ($blacklist) {

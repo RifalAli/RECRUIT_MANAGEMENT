@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('role', ['job seeker', 'company', 'admin'])->default('job seeker');
             $table->string('image')->default('default.png');
             $table->enum('status', ['active','inactive'])->default('active');
+            $table->boolean('isBanned')->default(0);
             $table->timestamps();
         });
     }

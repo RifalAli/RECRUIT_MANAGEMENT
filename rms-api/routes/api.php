@@ -83,6 +83,9 @@ Route::group([
     Route::get('/getBlacklist/{user_company_id}', [BlacklistController::class, 'getAllBlacklists']);
     Route::post('/blacklistUser', [BlacklistController::class, 'createBlacklist']);
     Route::post('/unblacklistUser', [BlacklistController::class, 'removeBlacklist']);
+    Route::get('/getNormalUser', [AdminController::class, 'getNormalUser']);
+    Route::get('/getBannedUser', [AdminController::class, 'getBannedUser']);
+    Route::post('/banUser/{option}/{user_id}', [AdminController::class, 'banUser']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

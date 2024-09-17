@@ -73,25 +73,6 @@ const CompanyBlacklist = ( { company_id, user_id } ) => {
                                         ))
                                     )
                                 }
-                                {/* <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' />
-                                <CompanyBlacklisItem company_id={company_id} status='blacklist' /> */}
                             </div>
                         </div>
                         <hr className='blacklist-hr' />

@@ -39,13 +39,62 @@ class HomeController extends Controller
     }
 
     public function homepage(Request $request) {
-        $data['categories'] = Category::where([['status', 'active']])->get()->random(8);
+        // $data['categories'] = Category::where([['status', 'active']])->get()->random(8);
+        // $data['categories'] = Category::where([['status', 'active']])->get()->random(8);
 
+        // Fetch All Category
+        // Iterate 8 times
+        // Search MainJob with that category
+
+        
         $blacklist = [];
         if ($request['user_id']) {
             $user = User::where([['id', $request['user_id']]])->first();
             $blacklist = Blacklist::where([['user_profile_id', $request['user_id']]])->get();
         }
+
+        $bannedUsers = [];
+        $bannedUsers = User::where([['role', 'company'], ['isBanned', 1]])->get();
+
+        // --
+        
+        $data['categories'] = [];
+        $allCateg = Category::where([['status', 'active']])->get();
+        for ($i = 0, $j = 0; $i < sizeof($allCateg); $i++) {
+            $job = MainJob::where([
+                ['status', 'active'], 
+                ['cat_id', $allCateg[$i]['id']]
+            ])->whereHas(
+                'company', function ($query) use ($blacklist) {
+                    if ($blacklist) {
+                        for ($a = 0; $a < sizeof($blacklist); $a++) {
+                            $query->whereNot('user_id', $blacklist[$a]['user_company_id']);
+                        }
+                    }
+                }
+            )->whereHas(
+                'company', function ($query) use ($bannedUsers) {
+                    // $query->where('location', 'LIKE', '%'.$blacklist['location'].'%');
+                    if ($bannedUsers) {
+                        for ($a = 0; $a < sizeof($bannedUsers); $a++) {
+                            $query->whereNot('user_id', $bannedUsers[$a]['id']);
+                        }
+                    }
+                    // $query->where('user_id', 2);
+                }
+            )->first();
+
+            if ($job != null) {
+                $data['categories'][$j] = $allCateg[$i];
+                ++$j;
+            }
+
+            if (sizeof($data['categories']) == 8) {
+                break;
+            }
+        }
+
+        // --
 
         try {
             $query['job'] = MainJob::where([
@@ -58,6 +107,16 @@ class HomeController extends Controller
                         }
                     }
                 }
+            )->whereHas(
+                'company', function ($query) use ($bannedUsers) {
+                    // $query->where('location', 'LIKE', '%'.$blacklist['location'].'%');
+                    if ($bannedUsers) {
+                        for ($a = 0; $a < sizeof($bannedUsers); $a++) {
+                            $query->whereNot('user_id', $bannedUsers[$a]['id']);
+                        }
+                    }
+                    // $query->where('user_id', 2);
+                }
             )->get()->random(6);
         } catch(Exception $err) {
             $query['job'] = MainJob::where([
@@ -69,6 +128,16 @@ class HomeController extends Controller
                             $query->whereNot('user_id', $blacklist[$a]['user_company_id']);
                         }
                     }
+                }
+            )->whereHas(
+                'company', function ($query) use ($bannedUsers) {
+                    // $query->where('location', 'LIKE', '%'.$blacklist['location'].'%');
+                    if ($bannedUsers) {
+                        for ($a = 0; $a < sizeof($bannedUsers); $a++) {
+                            $query->whereNot('user_id', $bannedUsers[$a]['id']);
+                        }
+                    }
+                    // $query->where('user_id', 2);
                 }
             )->get();
         }
@@ -113,6 +182,9 @@ class HomeController extends Controller
             $blacklist = Blacklist::where([['user_profile_id', $request['user_id']]])->get();
         }
 
+        $bannedUsers = [];
+        $bannedUsers = User::where([['role', 'company'], ['isBanned', 1]])->get();
+
         // $query['rawJob'] = MainJob::where([['status', 'active']])->get();
         // $query['job'] = MainJob::where([['status', 'active']])->get();
 
@@ -126,6 +198,16 @@ class HomeController extends Controller
                 if ($blacklist) {
                     for ($a = 0; $a < sizeof($blacklist); $a++) {
                         $query->whereNot('user_id', $blacklist[$a]['user_company_id']);
+                    }
+                }
+                // $query->where('user_id', 2);
+            }
+        )->whereHas(
+            'company', function ($query) use ($bannedUsers) {
+                // $query->where('location', 'LIKE', '%'.$blacklist['location'].'%');
+                if ($bannedUsers) {
+                    for ($a = 0; $a < sizeof($bannedUsers); $a++) {
+                        $query->whereNot('user_id', $bannedUsers[$a]['id']);
                     }
                 }
                 // $query->where('user_id', 2);
@@ -186,7 +268,7 @@ class HomeController extends Controller
         // $data['job'] = MainJob::where([['slug', $slug]])->with('category')->first();
         // $data['similar'] = MainJob::where([['status', 'active'], ['cat_id', $data['job']->cat_id]])->get()->take(3);
         $query['job'] = MainJob::where([['slug', $slug]])->with('category')->first();
-        $query['similar'] = MainJob::where([['status', 'active'], ['cat_id', $query['job']->cat_id]])->get()->take(3);
+        $query['similar'] = MainJob::where([['status', 'active'], ['cat_id', $query['job']->cat_id]])->whereNot([['slug', $slug]])->get()->take(3);
         $query['job_company'] = Company::where([['id', $query['job']['company_id']]])->get();
 
         $data['job']['id'] = $query['job']['id'];
@@ -238,6 +320,9 @@ class HomeController extends Controller
             $blacklist = Blacklist::where([['user_profile_id', $request['user_id']]])->get();
         }
 
+        $bannedUsers = [];
+        $bannedUsers = User::where([['role', 'company'], ['isBanned', 1]])->get();
+
         $query['same'] = MainJob::where([
             ['status', 'active'], 
             ['cat_id', $data['categories']->id]
@@ -247,6 +332,16 @@ class HomeController extends Controller
                 if ($blacklist) {
                     for ($a = 0; $a < sizeof($blacklist); $a++) {
                         $query->whereNot('user_id', $blacklist[$a]['user_company_id']);
+                    }
+                }
+                // $query->where('user_id', 2);
+            }
+        )->whereHas(
+            'company', function ($query) use ($bannedUsers) {
+                // $query->where('location', 'LIKE', '%'.$blacklist['location'].'%');
+                if ($bannedUsers) {
+                    for ($a = 0; $a < sizeof($bannedUsers); $a++) {
+                        $query->whereNot('user_id', $bannedUsers[$a]['id']);
                     }
                 }
                 // $query->where('user_id', 2);

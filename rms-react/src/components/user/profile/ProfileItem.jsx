@@ -24,6 +24,11 @@ const closeCVInput = () => {
     btnCancel.style.display = 'none';
 }
 
+const openBan = () => {
+    let modal = document.getElementsByClassName('ban-modal')[0]
+    modal.style.display = 'block'
+}
+
 const openWarning = () => {
     let modal = document.getElementsByClassName('warning-modal')[0]
     modal.style.display = 'block'
@@ -77,6 +82,11 @@ const ProfileItem = () => {
         if (userData.verify === 0) {
             window.location = '/verify';
         }
+
+        // if (userData.isBanned === 1) {
+        //     openBan();
+        //     // console.log('a')
+        // }
     }
     
     const getCompleteProfile = async () => {
@@ -108,7 +118,7 @@ const ProfileItem = () => {
         }
     }
 
-    const revalidateProfile = () => {
+    const revalidateProfile = async () => {
         // if (!userData.name && !profileData.fullname && !userData.email && !profileData.age && !ProfileApplied.address && !profileData.description && !profileData.lastEducation && !profileData.documentUrl) {
         //     // console.log('please complete your profile')
         //     console.log(username, fullname, email, age, address, description, lastEducation, documentUrl)
@@ -124,6 +134,8 @@ const ProfileItem = () => {
         if (!profileData.document_url) {
             return setErrMsg('You still did not add cv into your profile');
         }
+
+        checkBanned()
     }
 
     // useEffect(() => {
@@ -229,6 +241,14 @@ const ProfileItem = () => {
         }
     }, [profileData])
 
+    const checkBanned = () => {
+        setTimeout(() => {
+            if (userData.isBanned == 1) {
+                openBan()
+            }
+        }, 3000)
+    }
+
     // console.log(allAppliedJobs)
     useEffect(() => {
         if (doRefresh) {
@@ -237,8 +257,13 @@ const ProfileItem = () => {
                 setDoRefresh(!doRefresh)
             }, 2000)
         }
-
     }, [doRefresh])
+
+    // useEffect(() => {
+    //     if (!doRefresh) {
+    //         checkBanned()
+    //     }
+    // }, [doRefresh])
     
     return (
         <>
@@ -371,6 +396,24 @@ const ProfileItem = () => {
                                     <div>
                                         {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Cancel</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        <div className="modal ban-modal">
+                <div className="modal-container">
+                    <form>
+                        <div className="form">
+                        <h2 className="message">Your account has been banned</h2>
+                        <p>Please contact our email to make an appeal</p>
+                        <div className='button-div'>
+                                <button type='button' onClick={logout} className="button">
+                                    <div>
+                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
+                                        <span>Ok</span>
                                     </div>
                                 </button>
                             </div>

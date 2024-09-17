@@ -55,6 +55,10 @@ class AuthController extends Controller
         if (!$userByEmail) {
             return response()->json('Invalid email', 200);
         }
+        
+        if ($userByEmail['isBanned'] == 1) {
+            return response()->json('Banned', 200);
+        }
 
         if (! $token = JWTAuth::attempt($validator->validated())) {
             // return response()->json(['error' => 'Unauthorized'], 401);

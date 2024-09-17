@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\JobApplication;
 use App\Models\MainJob;
 use App\Models\Profile;
+use App\Models\User;
 use App\Traits\ApiResponseWithHttpStatus;
 use Exception;
 use Illuminate\Http\Request;
@@ -37,6 +38,11 @@ class JobApplicationController extends Controller
         $profile = Profile::where([['id', $request['profile_id']]])->first();
         if (!$profile['fullname'] || !$profile['age'] || !$profile['address'] || !$profile['description'] || !$profile['document_url']) {
             return response()->json('Empty profile', 200);
+        }
+        
+        $user = User::where([['id', $profile['user_id']]])->first();
+        if ($user['isBanned'] == 1) {
+            return response()->json('Banned user', 200);
         }
 
         $jobPending = JobApplication::where([['profile_id', $request['profile_id']], ['job_id', $request['job_id']], ['status', 'pending']])->first();

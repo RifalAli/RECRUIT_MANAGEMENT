@@ -503,6 +503,33 @@
                 }
             }
         }
+
+        .ban-admin-div {
+            margin-top: 20px;
+            border: 1px solid $form-control-color;
+            border-radius: 30px;
+        
+            .admin_ban {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px;
+            
+                p {
+                    font-size: 1rem;
+                    padding: 6px 0 0 15px;
+                    // font-weight: bold;
+                }
+            
+                button {
+                    // padding: 5px;
+                    margin: 0;
+                    border: none;
+                    background: #a9a9a9;
+                    width: 20%;
+                }
+            }
+        }
+
         .btn-logout {
             position: relative;
             background: #a9a9a9;
@@ -524,7 +551,7 @@
         display: none;
     }
 
-    .modal, .category-child-modal, .company-child-modal, .job-child-modal {
+    .modal, .category-child-modal, .company-child-modal, .job-child-modal, .ban-modal {
         z-index: 5;
         margin: 0;
         padding: 0;
@@ -538,6 +565,84 @@
         height: 38vw;
         border: 1px solid $form-control-color;
         border-radius: 35px;
+
+        .modal-ban-hide {
+            position: relative;
+            top: 1.3rem;
+            left: 92%;
+            background-color: $color-white;
+            border: none;
+            font-size: 1.5rem;
+
+            i:hover {
+                color: red;
+            }
+        }
+
+        .ban-head-container {
+            h1 {
+                text-align: center;
+            }
+
+            .ban-container {
+                display: flex;
+                // border: 1px solid red;
+                
+                .ban-hr {
+                    // height: 90%;
+                }
+                
+                .ban-body-container, .users-body-container {
+                    padding: 5px;
+                    // border: 2px solid red;
+                    width: 100%;
+
+                    .ban-item-container, .users-item-container {
+                        // margin-top: 10px;
+                        // margin: 10px 5px 15px 5px;
+                        padding: 2px 7px 2px 7px;
+                        overflow: scroll;
+                        // column-gap: 20px;
+                        // gap: 20px;
+                        // border: 2px solid black;
+                        // border-radius: 50px;
+                        // border: 1px solid black;
+                        width: 100%;
+                        height: 50vh;
+
+                        .empty-msg {
+                            width: unset;
+                        }
+    
+                        .ban__wrapper {
+                            display: flex;
+                            justify-content: space-between;
+                            padding: 5px;
+
+                            p {
+                                padding-top: 4.5px;
+                            }
+
+                            button {
+                                border: none;
+                                padding: 7px;
+                                color: white;
+                                border-radius: 5px;
+                                width: 20%;
+                            }
+
+                            .ban-button {
+                                background: $color-green;
+                            }
+
+                            .unban-button {
+                                background: $color-danger;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         .modal-container {
             @include flexVertical;
@@ -616,7 +721,12 @@
             }
         }
     }
+
+    .ban-modal {
+        height: unset;
+    }
 }
+
 
 .info {
     display: flex;

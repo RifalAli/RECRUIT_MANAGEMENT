@@ -9,7 +9,7 @@ const Login = () => {
     useEffect(() => {
         setTimeout(() => {
             setLoader(false);
-        }, 300)
+        }, 150)
     }, []);
     return (
         <>
