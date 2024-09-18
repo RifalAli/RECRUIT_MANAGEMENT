@@ -17,6 +17,18 @@ const openBan = () => {
     modal.style.display = 'block';
 }
 
+const showLogoutModal = () => {
+    let modal = document.getElementsByClassName('logout-modal')[0];
+
+    modal.style.display = 'block';
+}
+
+const closeLogoutModal = () => {
+    let modal = document.getElementsByClassName('logout-modal')[0];
+
+    modal.style.display = 'none';
+}
+
 // const closeModal = () => {
 //     let modal = document.getElementsByClassName('modal')[0];
 //     modal.style.display = 'none';
@@ -50,6 +62,9 @@ const CompanyItem = () => {
     const [location, setLocation] = useState('')
     const [email, setEmail] = useState('')
     const [description, setDescription] = useState('')
+    const [imageUrl, setImageUrl] = useState('');
+
+    const [image, setImage] = useState(null);
 
     const checkCompany = async () => {
         try {
@@ -88,6 +103,7 @@ const CompanyItem = () => {
             setEmail(userData.email)
             setLocation(companyData.location)
             setDescription(companyData.description)
+            setImageUrl(userData.image)
 
             revalidateCompany()
         }
@@ -96,7 +112,7 @@ const CompanyItem = () => {
 
     const revalidateCompany = () => {
         if (!userData.name || !companyData.name || !userData.email || !companyData.location || !companyData.description) {
-            console.log('a')
+            // console.log('a')
             console.log(userData.name, companyData.name, userData.email, companyData.location, companyData.description)
             return setErrMsg('Please complete your company profile in order to publish any job vacant');
         }
@@ -126,20 +142,30 @@ const CompanyItem = () => {
     // console.log(companyData)
     // console.log(userData)
 
-    const requestChanges = async () => {
-        await storeApiData(`changeCompany/${companyData.id}`, { username, name, location, email, description })
+    const requestChanges = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('username', username)
+        formData.append('name', name)
+        formData.append('email', email)
+        formData.append('location', location)
+        formData.append('description', description)
+        formData.append('image', image)
+
+        await storeApiData(`changeCompany/${companyData.id}`, formData)
             .then((response)=>console.log(response.data))
             .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
     }
 
-    const applyChangesHandler = () => {
+    const applyChangesHandler = (e) => {
         setErrMsg('')
         if (!username || !name || !email || !location || !description) {
             return setErrMsg('Please fill all field to make any changes');
         }
 
-        requestChanges()
+        requestChanges(e)
     }
 
     //Fetch Category
@@ -166,11 +192,14 @@ const CompanyItem = () => {
     const [jobDescription, setJobDescription] = useState('')
     const [jobType, setJobType] = useState('full time');
     const [jobCategory, setJobCategory] = useState('');
+    const [jobImageUrl, setJobImageUrl] = useState('');
+
+    const [jobImage, setJobImage] = useState(null)
 
     const [jobErrMsg, setJobErrMsg] = useState('')
     const [jobResponse, setJobResponse] = useState('');
 
-    const postJob = () => {
+    const postJob = (e) => {
         setJobErrMsg('')
         const validation = () => {
             if (!jobTitle || !jobSalary || !jobCloseDate || !jobDescription || !jobType || !jobCategory) {
@@ -178,11 +207,22 @@ const CompanyItem = () => {
                 return setJobErrMsg('Please fill all field before post this job')
             }
 
-            createJob()
+            createJob(e)
         }
 
-        const createJob = async () => {
-            await storeApiData(`companyCreateJob/${companyData.id}`, { jobTitle, jobSalary, jobCloseDate, jobCategory, jobDescription, jobType })
+        const createJob = async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData();
+            formData.append('jobTitle', jobTitle)
+            formData.append('jobSalary', jobSalary)
+            formData.append('jobCloseDate', jobCloseDate)
+            formData.append('jobCategory', jobCategory)
+            formData.append('jobDescription', jobDescription)
+            formData.append('jobType', jobType)
+            formData.append('jobImage', jobImage)
+
+            await storeApiData(`companyCreateJob/${companyData.id}`, formData)
             .then((response) => { setJobResponse(response) })
             .catch((response) => { console.log(response) })
         }
@@ -308,7 +348,8 @@ const CompanyItem = () => {
             <div className="container">
                 <div className="configure-profile-div">
                     <div className="photo">
-                        <img src={sampleIcon} alt="sample" />
+                        <img src={imageUrl} alt="sample" />
+                        <input type='file' onChange={(e) => setImage(e.target.files[0])} className='btn-image-change'></input>
                     </div>
                     <form>
                         <div className="form">
@@ -394,13 +435,14 @@ const CompanyItem = () => {
                     </>
                 </div>
 
-                <button className='btn-logout button' type='button' onClick={logout}>LOGOUT</button>
+                <button className='btn-logout button' type='button' onClick={showLogoutModal}>LOGOUT</button>
             </div>
 
             <div className="modal job-modal">
                 <div className="modal-container">
                    <div className="photo">
                         <img src={sampleIcon} alt="sample" />
+                        <input type='file' onChange={(e) => setJobImage(e.target.files[0])} className='btn-image-change'></input>
                     </div>
                     <form>
                         <div className="form">
@@ -489,6 +531,41 @@ const CompanyItem = () => {
                     </form>
                 </div>
             </div>
+            <div className="modal logout-modal">
+        <div className="modal-container">
+                    <form>
+                        <div className="form">
+                            {/* <div className='form-row'>
+                                <label htmlFor="title">Title: </label>
+                                <input type="text" value={title} onChange={(e)=>setTitle(e.target.value)} className='form-control' name="title" placeholder='Job Title'/>
+                            </div>
+                            <div className='form-row'>
+                                <label htmlFor="description">Description: </label>
+                                <input type="text" value={description} onChange={(e)=>setDescription(e.target.value)} className='form-control' name="tag" placeholder='Job Tag'/>
+                            </div>
+                            <div className='form-row'>
+                                <label htmlFor="CV">Curriculum Vitae: </label>
+                                <input type="file" onChange={(e)=>setDocument(e.target.files[0])} className='form-control' name="CV" placeholder='Job Document'/>
+                            </div> */}
+                            <h1>Are you sure want to logout?</h1>
+                            <div className='button-div'>
+                                <button type='button' onClick={logout} className="button">
+                                    <div>
+                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
+                                        <span>Logout</span>
+                                    </div>
+                                </button>
+                                <button type='button' onClick={closeLogoutModal} className="button button-cancel">
+                                    <div>
+                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
+                                        <span>Cancel</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+    </div>
         </section>
                     </>
                 )

@@ -22,19 +22,6 @@ const AdminCustomJob = () => {
     const [companyData, setCompanyData] = useState([]);
 
     const iniateData = async () => {
-        // const getCategory = async () => {
-        //     await fetchApiData(`loadCategory`)
-        //     .then((response) => console.log(response.data.category))
-        //     .then((response) => setCategoryData(response.data.category))
-        //     .catch((response) => console.log(response))
-        // }
-
-        // const getCompany = async () => {
-        //     await fetchApiData(`loadCompany`)
-        //     .then((response) => console.log(response.data.company))
-        //     .then((response) => setCompanyData(response.data.company))
-        //     .catch((response) => console.log(response))
-        // }
         const getCategory = async () => {
             const categoryResponse = await fetchApiData(`loadCategory`)
             setCategoryData(categoryResponse.data.category)
@@ -62,9 +49,24 @@ const AdminCustomJob = () => {
     const [jobDescription, setJobDescription] = useState('')
     const [jobStatus, setJobStatus] = useState('active')
 
-    const postJob = () => {
+    const [jobImage, setJobImage] = useState(null)
+
+    const postJob = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('company_id', company_id)
+        formData.append('category_id', category_id)
+        formData.append('jobTitle', jobTitle)
+        formData.append('jobCloseDate', jobCloseDate)
+        formData.append('jobType', jobType)
+        formData.append('jobSalary', jobSalary)
+        formData.append('jobDescription', jobDescription)
+        formData.append('jobStatus', jobStatus)
+        formData.append('jobImage', jobImage)
+
         const createJob = async () => {
-            await storeApiData(`adminCreateJob`, { company_id, category_id, jobTitle, jobCloseDate, jobType, jobSalary, jobDescription, jobStatus })
+            await storeApiData(`adminCreateJob`, formData)
             .then((response)=>console.log(response.data))
             .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
@@ -103,81 +105,14 @@ const AdminCustomJob = () => {
         fillData()
         setPageArray(totalPageArray)
     }, [totalPage])
-    // const [jobData, setJobData] = useState([]);
-    // const [newJobDataFormat, setNewJobDataFormat] = useState([]);
-    // const [toLoadData, setToLoadData] = useState([]);
-    // const [currentPage, setCurrentPage] = useState(1)
-
-    // const fetchJob = async () => {
-    //     const response = await fetchApiData(`loadJob`)
-    //     setJobData(response.data.job)
-    // }
 
     useEffect(() => {
         setFetchState(false);
         fetchJob()
-        // iniateData()
-        // console.log(jobData)
         setTimeout(() => {
             setLoader(false);
         }, 500);
     }, [fetchState, currentPage])
-
-    // function formatJobData() {
-    //     let otherTempJobData = [];
-    //     let displayCount = 4;
-    //     let totalPage = Math.ceil(jobData.length / displayCount);
-    //     let page = 0;
-
-    //     for (page; page < totalPage; page++) {
-    //         let leftFlag = page * displayCount;
-    //         let rightFlag = leftFlag + displayCount;
-
-    //         let tempJob = [];
-    //         let tempJobLength = 0;
-
-    //         for (leftFlag; leftFlag < rightFlag; leftFlag++) {
-    //             if (jobData[leftFlag] != null) {
-    //                 tempJob[tempJobLength] = jobData[leftFlag];
-    //                 ++tempJobLength;
-    //             }
-    //         }
-
-    //         otherTempJobData[page] = tempJob;
-    //     }
-
-    //     setNewJobDataFormat(otherTempJobData)
-    // }
-
-    // useEffect(() => {
-    //     formatJobData()
-    //     // console.log(newJobDataFormat)
-    //     // console.log("a")
-    // }, [jobData])
-
-    // function movePage() {
-    //     setToLoadData(newJobDataFormat[currentPage-1])
-    //     // console.log(toLoadData)
-    // }
-
-    // useEffect(() => {
-    //     movePage()
-    //     // console.log(currentPage)
-    //     // console.log(toLoadData)
-    // }, [jobData, currentPage])
-
-    // console.log(currentPage)
-    // console.log(toLoadData)
-
-    // function calculateToLoadData() {
-    //     // setToLoadData(jobData[1], jobData[2]);
-    //     setToLoadData(Array.prototype.concat(jobData[0], jobData[1], jobData[2], jobData[3]))
-    // }
-
-    // useEffect(() => {
-    //     calculateToLoadData()
-    //     console.log(toLoadData)
-    // }, [jobData])
 
     useEffect(() => {
         if (doRefresh) {
@@ -224,9 +159,6 @@ const AdminCustomJob = () => {
                     </div>
                     <div className="page__wrapper">
                         {
-                            // newJobDataFormat && newJobDataFormat.map((item, i) => (
-                            //     <button type="button" key={i} value={i+1} onClick={e => setCurrentPage(e.target.value)}>{i+1}</button>
-                            // ))
                             pageArray && pageArray.map((item, i) => (
                                 <button type='button' className={item == currentPage ? 'button-current' : ''} key={i} value={item} onClick={(e) => setCurrentPage(e.target.value)}>{item}</button>
                             ))
@@ -239,7 +171,8 @@ const AdminCustomJob = () => {
             <div className="modal modal-job">
                 <div className="modal-container">
                    <div className="photo">
-                        <img src={sampleIcon} alt="sample" />
+                        <img src={ sampleIcon } alt="sample" />
+                        <input type='file' onChange={(e) => setJobImage(e.target.files[0])} className='btn-image-change'></input>
                     </div>
                     <form>
                         <div className="form">
@@ -262,18 +195,10 @@ const AdminCustomJob = () => {
                                 <label htmlFor="salary">Salary: </label>
                                 <input type="text" value={jobSalary} onChange={(e)=>setJobSalary(e.target.value)} className='form-control' name="salary" placeholder='Job Salary'/>
                             </div>
-                            {/* <div className='form-row'>
-                                <label htmlFor="expire_at">Close Date: </label>
-                                <input type="date" value={jobCloseDate} onChange={(e)=>setJobCloseDate(e.target.value)} className='form-control' name="expire_at" placeholder='close date'/>
-                            </div> */}
                             <div className='form-row'>
                                 <label htmlFor="expire_at">Expire at: </label>
                                 <input type="datetime-local" value={jobCloseDate} onChange={(e)=>setJobCloseDate(e.target.value)} className='form-control' name="expire_at" placeholder='close date'/>
                             </div>
-                            {/* <div className='form-row'>
-                                <label htmlFor="description">Description: </label>
-                                <input type="text" value={jobDescription} onChange={(e)=>setJobDescription(e.target.value)} className='form-control' name="address" placeholder='Job Description'/>
-                            </div> */}
                             <div className='form-row'>
                             <label htmlFor="description">Description: </label>
                             <textarea className='form-control' name="description" id="text-area" cols="30" rows="20" placeholder='Job Description' value={jobDescription} onChange={(e) => setJobDescription(e.target.value)}></textarea>

@@ -46,8 +46,15 @@ class ProfileController extends Controller
         if ($request->hasFile('file')) {
             $file = $request['file'];
             $filename = time().'_'.$file->getClientOriginalName();
-            $path = $file->move(public_path('files/applications'), $filename);
-            $data['profile']['document_url'] = 'http://localhost:8000/files/applications/'.$filename;
+            $path = $file->move(public_path('files/users/cv'), $filename);
+            $data['profile']['document_url'] = 'http://localhost:8000/files/users/cv/'.$filename;
+        }
+
+        if ($request->hasFile('image')) {
+            $image = $request['image'];
+            $imagename = time().'_'.$image->getClientOriginalName();
+            $path = $image->move(public_path('files/users/photo'), $imagename);
+            $data['user']['image'] = 'http://localhost:8000/files/users/photo/'.$imagename;
         }
 
         if ($data['user']['email'] != $request['email']) {

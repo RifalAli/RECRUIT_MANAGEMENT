@@ -22,7 +22,7 @@ class UserTableSeeder extends Seeder
             'role' => 'admin',
             'verify' => 1,
             'otp' => null,
-            'image' => 'http://localhost:8000/files/users/default.png',
+            'image' => 'http://localhost:8000/files/users/userDefault.png',
             'status' => 'active',
             'created_at' => now(),
             'updated_at' => now()
@@ -36,7 +36,7 @@ class UserTableSeeder extends Seeder
             'role' => 'company',
             'verify' => 1,
             'otp' => null,
-            'image' => 'http://localhost:8000/files/users/default.png',
+            'image' => 'http://localhost:8000/files/users/photo/companyDefault.jpeg',
             'status' => 'active',
             'created_at' => now(),
             'updated_at' => now()
@@ -50,7 +50,7 @@ class UserTableSeeder extends Seeder
             'role' => 'job seeker',
             'verify' => 1,
             'otp' => null,
-            'image' => 'http://localhost:8000/files/users/default.png',
+            'image' => 'http://localhost:8000/files/users/photo/userDefault.png',
             'status' => 'active',
             'created_at' => now(),
             'updated_at' => now()
@@ -64,7 +64,7 @@ class UserTableSeeder extends Seeder
             'role' => 'company',
             'verify' => 1,
             'otp' => null,
-            'image' => 'http://localhost:8000/files/users/default.png',
+            'image' => 'http://localhost:8000/files/users/photo/companyDefault.jpeg',
             'status' => 'active',
             'created_at' => now(),
             'updated_at' => now()
@@ -78,7 +78,7 @@ class UserTableSeeder extends Seeder
             'role' => 'company',
             'verify' => 1,
             'otp' => null,
-            'image' => 'http://localhost:8000/files/users/default.png',
+            'image' => 'http://localhost:8000/files/users/photo/companyDefault.jpeg',
             'status' => 'active',
             'created_at' => now(),
             'updated_at' => now()
@@ -92,7 +92,7 @@ class UserTableSeeder extends Seeder
             'role' => 'job seeker',
             'verify' => 1,
             'otp' => null,
-            'image' => 'http://localhost:8000/files/users/default.png',
+            'image' => 'http://localhost:8000/files/users/photo/userDefault.png',
             'status' => 'active',
             'created_at' => now(),
             'updated_at' => now()

@@ -22,7 +22,7 @@ return new class extends Migration
             // $table->enum('last_education', ['S3', 'S2', 'S1', 'SMA/Sederajat', 'SMP/Sederajat', 'SD/Sederajat'])->default('S1')->nullable();
             $table->string('document_url')->nullable();
             // $table->string('document_url')->nullable()->default('http://localhost:8000/files/applications/default.pdf');
-            $table->string('image')->nullable()->default('http://localhost:8000/files/profiles/default.png');
+            // $table->string('image')->nullable()->default('http://localhost:8000/files/profiles/default.png');
             $table->unsignedBigInteger('user_id')->nullable();
             // $table->unsignedBigInteger('dream_job')->nullable();
             // $table->enum('status', ['unemployed', 'employed'])->default('unemployed');

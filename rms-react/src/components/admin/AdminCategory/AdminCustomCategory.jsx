@@ -22,6 +22,9 @@ const AdminCustomCategory = () => {
 
     const [categoryStatus, setCategoryStatus] = useState('active')
     const [categoryName, setCategoryName] = useState('')
+    const [imageUrl, setImageUrl] = useState('')
+
+    const [image, setImage] = useState(null)
     
     const [fetchState, setFetchState] = useState(true);
     const [categoryData, setCategoryData] = useState([]);
@@ -40,9 +43,16 @@ const AdminCustomCategory = () => {
         }, 4000);
     }, [fetchState])
 
-    const postCategory = () => {
+    const postCategory = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('categoryName', categoryName)
+        formData.append('categoryStatus', categoryStatus)
+        formData.append('image', image)
+
         const createCateg = async () => {
-            await storeApiData(`adminCreateCategory`, { categoryName, categoryStatus })
+            await storeApiData(`adminCreateCategory`, formData)
             .then((response)=>console.log(response.data))
             .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
@@ -98,6 +108,7 @@ const AdminCustomCategory = () => {
                 <div className="modal-container">
                    <div className="photo">
                         <img src={sampleIcon} alt="sample" />
+                        <input type='file' onChange={(e) => setImage(e.target.files[0])} className='btn-image-change'></input>
                     </div>
                     <form>
                         <div className="form">

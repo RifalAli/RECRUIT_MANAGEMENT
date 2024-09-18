@@ -321,20 +321,6 @@
                             margin-left: 0.5rem;
                         }
     
-                        // a {
-                        //     margin-top: 1rem;
-                        //     font-size: 14px;
-                        //     display: inline-block;
-                        //     padding: 5px 15px;
-                        //     border-radius: 50px;
-                        //     cursor: pointer;
-                        //     text-transform: uppercase;
-                        //     background: $color-white-light;
-                        //     color: $color-green;
-                        //     font-weight: bolder;
-                        //     transition: all .3s ease-in-out;
-                        // }
-    
                         &__part-1 {
                             h1 {
                                 font-size: 20px;
@@ -423,9 +409,15 @@
             border: 1px solid $form-control-color;
 
             .photo {
+                position: relative;
+                top: 5px;
+                left: 20px;
+                
                 img {
                     width: 200px;
                     height: 200px;
+                    border-radius: 50%;
+                    border: 2px solid #e9e9e9;
                     cursor: pointer;
                 }
             }
@@ -460,7 +452,6 @@
 
             input {
                 flex: 4;
-                // margin-left: 100px;
             }
 
             select {
@@ -479,9 +470,6 @@
 
         .job-profile-div {
             margin-top: 20px;
-            // display: flex;
-            // flex-direction: row;
-            // gap: 20px;
             border: 1px solid $form-control-color;
             border-radius: 30px;
 
@@ -517,11 +505,9 @@
                 p {
                     font-size: 1rem;
                     padding: 6px 0 0 15px;
-                    // font-weight: bold;
                 }
             
                 button {
-                    // padding: 5px;
                     margin: 0;
                     border: none;
                     background: #a9a9a9;
@@ -536,19 +522,6 @@
             left: 85%;
             width: 15%;
         }
-    }
-
-
-    .modal-category {
-        display: none;
-    }
-
-    .modal-company {
-        display: none;
-    }
-
-    .modal-job {
-        display: none;
     }
 
     .modal, .category-child-modal, .company-child-modal, .job-child-modal, .ban-modal {
@@ -598,15 +571,8 @@
                     width: 100%;
 
                     .ban-item-container, .users-item-container {
-                        // margin-top: 10px;
-                        // margin: 10px 5px 15px 5px;
                         padding: 2px 7px 2px 7px;
                         overflow: scroll;
-                        // column-gap: 20px;
-                        // gap: 20px;
-                        // border: 2px solid black;
-                        // border-radius: 50px;
-                        // border: 1px solid black;
                         width: 100%;
                         height: 50vh;
 
@@ -646,12 +612,18 @@
 
         .modal-container {
             @include flexVertical;
-            // padding: 20px;
 
             .photo {
+                position: relative;
+                top: 10px;
+                left: 50px;
+                
                 img {
                     width: 200px;
                     height: 200px;
+                    border-radius: 50%;
+                    border: 2px solid #e9e9e9;
+                    cursor: pointer;
                 }
             }
 
@@ -663,7 +635,6 @@
                 padding: 2rem;
                 font-size: 12px;
                 border-radius: 30px;
-                // border: 1px solid $form-control-color;
                 transform: all .3s;
             }
             
@@ -699,7 +670,6 @@
 
             input {
                 flex: 4;
-                // margin-left: 100px;
             }
 
             select {
@@ -720,6 +690,23 @@
                 background: #a9a9a9;
             }
         }
+    }
+
+    .category-child-modal {
+        height: 48vh;
+    }
+
+    .modal-category {
+        display: none;
+        height: 48vh;
+    }
+
+    .modal-company {
+        display: none;
+    }
+
+    .modal-job {
+        display: none;
     }
 
     .ban-modal {

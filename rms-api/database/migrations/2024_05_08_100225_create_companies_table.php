@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('location')->nullable();
             $table->string('description', 1500)->nullable();
-            $table->string('image')->nullable()->default('http://localhost:8000/files/companies/default.png');
+            // $table->string('image')->nullable()->default('http://localhost:8000/files/companies/default.png');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');//SET NULL
             $table->timestamps();

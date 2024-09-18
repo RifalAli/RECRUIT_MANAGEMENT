@@ -129,7 +129,7 @@ class AuthController extends Controller
                     'token'=>Str::random(20),
                     'status'=>'active', 
                     'otp'=>random_int(100000, 999999),
-                    'image'=>'http://localhost:8000/files/users/default.png',
+                    'image'=>'http://localhost:8000/files/users/photo/default.png',
                     'role'=>$request['role']]
                 ));
         if ($user) {
@@ -153,7 +153,7 @@ class AuthController extends Controller
                 // 'description' => 'No Description', 
                 // 'last_education' => 'SMA/Sederajat',
                 // 'document_url' => 'http://localhost:8000/files/applications/default.pdf',
-                'image' => 'http://localhost:8000/files/profiles/default.png',
+                // 'image' => 'http://localhost:8000/files/users/default.png',-----
                 'user_id' => $data['user']['id'],
             ]);
             
@@ -164,7 +164,7 @@ class AuthController extends Controller
                 // 'name' => 'Company'.Str::random(5),
                 // 'location' => 'No Location', 
                 // 'description' => 'No Description',
-                'image' => 'http://localhost:8000/files/companies/default.png',
+                // 'image' => 'http://localhost:8000/files/companies/default.png',-----
                 'user_id' => $data['user']['id'],
             ]);
 
@@ -263,8 +263,8 @@ class AuthController extends Controller
     protected function createNewToken($token){
         $data['token'] = $token;
         $data['token_type'] = 'bearer';
-        // $data['expires_in'] = JWTAuth::factory()->getTTL() * 60;
-        $data['expires_in'] = JWTAuth::factory()->getTTL() * 120;
+        // $data['expires_in'] = JWTAuth::factory()->getTTL() * 120;
+        $data['expires_in'] = JWTAuth::factory()->getTTL() * 360;
         $data['user'] = auth() -> user();
         return $this->apiResponse('success',$data,Response::HTTP_OK, true);
     }

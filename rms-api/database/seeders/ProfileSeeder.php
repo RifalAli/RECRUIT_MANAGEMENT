@@ -27,8 +27,8 @@ class ProfileSeeder extends Seeder
             \n\nI am excited to explore new opportunities and partner with organizations that share my commitment to excellence. Together, I believe we can drive innovation and create meaningful impact for all.",
             'last_education'=>'S1',
             // 'user_id'=>fake()->randomElement(User::where('role', 'job seeker')->pluck('id')->toArray()),
-            'document_url'=>'http://localhost:8000/files/applications/default.pdf',
-            'image'=>'http://localhost:8000/files/profiles/default.png',
+            'document_url'=>'http://localhost:8000/files/users/cv/samplecvrifal.pdf',
+            // 'image'=>'http://localhost:8000/files/profiles/default.png',
             // 'status'=>'unemployed',
             'user_id'=>3,
             // 'dream_job'=>fake()->randomElement(Category::where('status', 'active')->pluck('id')->toArray()),
@@ -47,8 +47,8 @@ class ProfileSeeder extends Seeder
             \n\nI am excited to explore new opportunities and partner with organizations that share my commitment to excellence. Together, I believe we can drive innovation and create meaningful impact for all.",
             'last_education'=>'S1',
             // 'user_id'=>fake()->randomElement(User::where('role', 'job seeker')->pluck('id')->toArray()),
-            'document_url'=>'http://localhost:8000/files/applications/samplecvrifal.pdf',
-            'image'=>'http://localhost:8000/files/profiles/default.png',
+            'document_url'=>'http://localhost:8000/files/users/cv/samplecvrifal.pdf',
+            // 'image'=>'http://localhost:8000/files/profiles/default.png',
             // 'status'=>'unemployed',
             'user_id'=>6,
             // 'dream_job'=>fake()->randomElement(Category::where('status', 'active')->pluck('id')->toArray()),
@@ -56,6 +56,6 @@ class ProfileSeeder extends Seeder
             'updated_at'=>now()
         ]);
 
-        \App\Models\Profile::factory(2)->create();
+        // \App\Models\Profile::factory(2)->create();
     }
 }

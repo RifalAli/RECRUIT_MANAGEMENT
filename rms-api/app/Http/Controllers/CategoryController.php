@@ -37,6 +37,13 @@ class CategoryController extends Controller
             'status' => $request['categoryStatus']
         ]);
 
+        if ($request->hasFile('image')) {
+            $image = $request['image'];
+            $imagename = time().'_'.$image->getClientOriginalName();
+            $path = $image->move(public_path('files/categories'), $imagename);
+            $data['categories']['icon'] = 'http://localhost:8000/files/categories/'.$imagename;
+        }
+
         $data['categories']->save();
         return $this->apiResponse('Success create new category', $data, Response::HTTP_OK, true);
     }
@@ -46,6 +53,13 @@ class CategoryController extends Controller
 
         $data['categories']['name'] = $request['categoryName'];
         $data['categories']['status'] = $request['categoryStatus'];
+
+        if ($request->hasFile('image')) {
+            $image = $request['image'];
+            $imagename = time().'_'.$image->getClientOriginalName();
+            $path = $image->move(public_path('files/categories'), $imagename);
+            $data['categories']['icon'] = 'http://localhost:8000/files/categories/'.$imagename;
+        }
         
         $data['categories'] -> save();
 

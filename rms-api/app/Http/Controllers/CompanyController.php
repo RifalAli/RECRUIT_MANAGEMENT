@@ -39,6 +39,14 @@ class CompanyController extends Controller
         //
         $data['company']['location'] = $request['location'];
         $data['company']['description'] = $request['description'];
+
+        if ($request->hasFile('image')) {
+            $image = $request['image'];
+            $imagename = time().'_'.$image->getClientOriginalName();
+            $path = $image->move(public_path('files/users/photo'), $imagename);
+            $data['user']['image'] = 'http://localhost:8000/files/users/photo/'.$imagename;
+        }
+
         $data['company']->save();
         $data['user']->save();
         return $this->apiResponse('success', $data, Response::HTTP_OK, true);
@@ -86,7 +94,15 @@ class CompanyController extends Controller
             'job_count' => 0,
         ]);
 
+        if ($request->hasFile('image')) {
+            $image = $request['image'];
+            $imagename = time().'_'.$image->getClientOriginalName();
+            $path = $image->move(public_path('files/users/photo'), $imagename);
+            $data['user']['image'] = 'http://localhost:8000/files/users/photo/'.$imagename;
+        }
+
         $data['company']->save();
+        $data['user']->save();
 
         if (! $token = JWTAuth::attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
@@ -107,6 +123,13 @@ class CompanyController extends Controller
 
         if ($request['companyVerify'] == 1) {
             $data['user']['verify'] = $request['companyVerify'];
+        }
+
+        if ($request->hasFile('companyImage')) {
+            $image = $request['companyImage'];
+            $imagename = time().'_'.$image->getClientOriginalName();
+            $path = $image->move(public_path('files/users/photo'), $imagename);
+            $data['user']['image'] = 'http://localhost:8000/files/users/photo/'.$imagename;
         }
 
         $data['user'] -> save();

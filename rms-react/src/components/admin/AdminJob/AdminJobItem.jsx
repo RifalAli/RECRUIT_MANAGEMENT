@@ -48,6 +48,9 @@ const AdminJobItem = ({index, id, title, closeDate, type, salary, description, s
     const [jobSalary, setJobSalary] = useState('')
     const [jobDescription, setJobDescription] = useState('')
     const [jobStatus, setJobStatus] = useState('active')
+    const [jobImageUrl, setJobImageUrl] = useState('')
+
+    const [jobImage, setJobImage] = useState(null)
 
     const closeModal = () => {
         let modal = document.getElementsByClassName('job-child-modal')[index];
@@ -76,6 +79,7 @@ const AdminJobItem = ({index, id, title, closeDate, type, salary, description, s
             setJobSalary(salary)
             setJobDescription(description)
             setJobStatus(status)
+            setJobImageUrl(icon)
         }
 
         const showModal = () => {
@@ -89,9 +93,22 @@ const AdminJobItem = ({index, id, title, closeDate, type, salary, description, s
 
     // console.log(id, title)
 
-    const applyJobChanges = () => {
+    const applyJobChanges = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('company_id', company_id)
+        formData.append('category_id', category_id)
+        formData.append('jobTitle', jobTitle)
+        formData.append('jobCloseDate', jobCloseDate)
+        formData.append('jobType', jobType)
+        formData.append('jobSalary', jobSalary)
+        formData.append('jobDescription', jobDescription)
+        formData.append('jobStatus', jobStatus)
+        formData.append('jobImage', jobImage)
+
         const editJob = async () => {
-            await storeApiData(`adminEditJob/${id}`, { jobTitle, jobCloseDate, jobType, jobSalary, jobDescription, company_id, category_id, jobStatus })
+            await storeApiData(`adminEditJob/${id}`, formData)
             .then((response)=>console.log(response.data))
             .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
@@ -163,7 +180,8 @@ const AdminJobItem = ({index, id, title, closeDate, type, salary, description, s
         <div className="modal job-child-modal">
                 <div className="modal-container">
                    <div className="photo">
-                        <img src={sampleIcon} alt="sample" />
+                        <img src={jobImageUrl} alt="sample" />
+                        <input type='file' onChange={(e) => setJobImage(e.target.files[0])} className='btn-image-change'></input>
                     </div>
                     <form>
                         <div className="form">

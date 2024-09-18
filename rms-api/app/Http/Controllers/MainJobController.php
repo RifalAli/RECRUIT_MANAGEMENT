@@ -84,11 +84,18 @@ class MainJobController extends Controller
             'expire_at' => $request['jobCloseDate'],
             'cat_id' => $request['jobCategory'],
             'company_id' => $company_id, 
-            'icon'=>'http://localhost:8000/files/users/default.png',
+            'icon'=>'http://localhost:8000/files/jobs/default.png',
             'description' => $request['jobDescription'],
             'status' => 'active', 
             'type' => $request['jobType']
         ]);
+
+        if ($request->hasFile('jobImage')) {
+            $image = $request['jobImage'];
+            $imagename = time().'_'.$image->getClientOriginalName();
+            $path = $image->move(public_path('files/jobs'), $imagename);
+            $data['job']['icon'] = 'http://localhost:8000/files/jobs/'.$imagename;
+        }
 
         $data['job']->save();
 
@@ -127,6 +134,13 @@ class MainJobController extends Controller
         $data['job']['description'] = $request['jobDescription'];
         $data['job']['type'] = $request['jobType'];
 
+        if ($request->hasFile('jobImage')) {
+            $image = $request['jobImage'];
+            $imagename = time().'_'.$image->getClientOriginalName();
+            $path = $image->move(public_path('files/jobs'), $imagename);
+            $data['job']['icon'] = 'http://localhost:8000/files/jobs/'.$imagename;
+        }
+
         $data['job']->save();
         
         return $this->apiResponse('Success edit job', $data, Response::HTTP_OK, true);
@@ -154,11 +168,18 @@ class MainJobController extends Controller
             'expire_at' => $request['jobCloseDate'],
             'cat_id' => $request['category_id'],
             'company_id' => $data['company']['id'], 
-            'icon'=>'http://localhost:8000/files/users/default.png',
+            'icon'=>'http://localhost:8000/files/jobs/default.png',
             'description' => $request['jobDescription'],
             'status' => $request['jobStatus'], 
             'type' => $request['jobType']
         ]);
+
+        if ($request->hasFile('jobImage')) {
+            $image = $request['jobImage'];
+            $imagename = time().'_'.$image->getClientOriginalName();
+            $path = $image->move(public_path('files/jobs'), $imagename);
+            $data['job']['icon'] = 'http://localhost:8000/files/jobs/'.$imagename;
+        }
 
         $data['job'] -> save();
 
@@ -186,6 +207,13 @@ class MainJobController extends Controller
         $data['job']['description'] = $request['jobDescription'];
         $data['job']['status'] = $request['jobStatus'];
         $data['job']['type'] = $request['jobType'];
+
+        if ($request->hasFile('jobImage')) {
+            $image = $request['jobImage'];
+            $imagename = time().'_'.$image->getClientOriginalName();
+            $path = $image->move(public_path('files/jobs'), $imagename);
+            $data['job']['icon'] = 'http://localhost:8000/files/jobs/'.$imagename;
+        }
 
         $data['job']->save();
         

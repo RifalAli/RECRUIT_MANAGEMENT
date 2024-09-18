@@ -24,6 +24,9 @@ const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail
     const [companyName, setCompanyName] = useState('')
     const [companyLocation, setCompanyLocation] = useState('')
     const [companyDescription, setCompanyDescription] = useState('')
+    const [imageUrl, setImageUrl] = useState('')
+
+    const [companyImage, setCompanyImage] = useState(null)
 
     const [companyVerify, setCompanyVerify] = useState('')
 
@@ -43,6 +46,7 @@ const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail
             setCompanyName(name)
             setCompanyLocation(location)
             setCompanyDescription(description)
+            setImageUrl(image)
 
             if (verify === 0) {
                 setCompanyVerify(verify)
@@ -58,9 +62,21 @@ const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail
         showModal()
     }
 
-    const applyCompanyChanges = () => {
+    const applyCompanyChanges = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('username', username)
+        formData.append('email', email)
+        formData.append('status', status)
+        formData.append('companyName', companyName)
+        formData.append('companyLocation', companyLocation)
+        formData.append('companyDescription', companyDescription)
+        formData.append('companyVerify', companyVerify)
+        formData.append('companyImage', companyImage)
+        
         const editCompany = async () => {
-            await storeApiData(`adminEditCompany/${id}`, {username, email, status, companyName, companyLocation, companyDescription, companyVerify})
+            await storeApiData(`adminEditCompany/${id}`, formData)
             .then((response)=>console.log(response.data))
             .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
@@ -135,7 +151,8 @@ const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail
         <div className="company-child-modal">
                 <div className="modal-container">
                    <div className="photo">
-                        <img src={sampleIcon} alt="sample" />
+                        <img src={image} alt="sample" />
+                        <input type='file' onChange={(e) => setCompanyImage(e.target.files[0])} className='btn-image-change'></input>
                     </div>
                     <form>
                         <div className="form">

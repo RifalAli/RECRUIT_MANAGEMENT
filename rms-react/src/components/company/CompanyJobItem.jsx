@@ -61,11 +61,23 @@ const CompanyJobItem = ({index, id, title, slug, closeDate, company, description
         setJobDescription('')
         setJobCategory('')
         setJobType('')
+        setJobImageUrl('')
     }
 
-    const applyJobChanges = () => {
-        const editJob = async () => {
-            await storeApiData(`companyEditJob/${company_id}/${id}`, { jobTitle, jobSalary, jobCloseDate, jobCategory, jobDescription, jobType })
+    const applyJobChanges = (e) => {
+        e.preventDefault();
+        const editJob = async (e) => {
+
+            const formData = new FormData();
+            formData.append('jobTitle', jobTitle)
+            formData.append('jobSalary', jobSalary)
+            formData.append('jobCloseDate', jobCloseDate)
+            formData.append('jobCategory', jobCategory)
+            formData.append('jobDescription', jobDescription)
+            formData.append('jobType', jobType)
+            formData.append('image', jobImage)
+
+            await storeApiData(`companyEditJob/${company_id}/${id}`, formData)
             .then((response)=>console.log(response.data))
             .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
@@ -89,6 +101,7 @@ const CompanyJobItem = ({index, id, title, slug, closeDate, company, description
             setJobCloseDate(formatDate(closeDate))
             setJobDescription(description)
             setJobType(type)
+            setJobImageUrl(icon)
 
             // console.log(formatDate(closeDate))
             // console.log(closeDate)
@@ -114,6 +127,9 @@ const CompanyJobItem = ({index, id, title, slug, closeDate, company, description
     const [jobStatus, setJobStatus] = useState('active');
     const [jobType, setJobType] = useState('full time');
     const [jobCategory, setJobCategory] = useState('');
+    const [jobImageUrl, setJobImageUrl] = useState('')
+
+    const [jobImage, setJobImage] = useState(null);
 
     const [jobExpireDate, setJobExpireDate] = useState('')
     const [jobExpireTime, setJobExpireTime] = useState('')
@@ -164,7 +180,8 @@ const CompanyJobItem = ({index, id, title, slug, closeDate, company, description
             <div className="child-modal">
                 <div className="modal-container">
                    <div className="photo">
-                        <img src={sampleIcon} alt="sample" />
+                        <img src={jobImageUrl} alt="sample" />
+                        <input type='file' onChange={(e) => setJobImage(e.target.files[0])} className='btn-image-change'></input>
                     </div>
                     <form>
                         <div className="form">

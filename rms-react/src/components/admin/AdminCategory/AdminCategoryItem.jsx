@@ -20,6 +20,9 @@ const AdminCategoryItem = ({index, id, name, slug, icon, status, job_count}) => 
 
     const [categoryName, setCategoryName] = useState(name)
     const [categoryStatus, setCategoryStatus] = useState(status)
+    const [imageUrl, setImageUrl] = useState(icon)
+
+    const [image, setImage] = useState(null)
 
     const closeModal = () => {
         let modal = document.getElementsByClassName('category-child-modal')[index];
@@ -44,9 +47,16 @@ const AdminCategoryItem = ({index, id, name, slug, icon, status, job_count}) => 
         showModal()
     }
 
-    const applyCategoryChanges = () => {
+    const applyCategoryChanges = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('categoryName', categoryName)
+        formData.append('categoryStatus', categoryStatus)
+        formData.append('image', image)
+
         const editCategory = async () => {
-            await storeApiData(`adminEditCategory/${id}`, {categoryName, categoryStatus})
+            await storeApiData(`adminEditCategory/${id}`, formData)
             .then((response)=>console.log(response.data))
             .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
@@ -104,7 +114,8 @@ const AdminCategoryItem = ({index, id, name, slug, icon, status, job_count}) => 
         <div className="category-child-modal">
                 <div className="modal-container">
                    <div className="photo">
-                        <img src={sampleIcon} alt="sample" />
+                        <img src={imageUrl} alt="sample" />
+                        <input type='file' onChange={(e) => setImage(e.target.files[0])} className='btn-image-change'></input>
                     </div>
                     <form>
                         <div className="form">

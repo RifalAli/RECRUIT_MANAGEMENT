@@ -44,9 +44,24 @@ const AdminCustomCompany = () => {
     const [companyLocation, setCompanyLocation] = useState('');
     const [companyDescription, setCompanyDescription] = useState('');
 
-    const postCompany = () => {
+    const [image, setImage] = useState(null)
+
+    const postCompany = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('name', name)
+        formData.append('email', email)
+        formData.append('password', password)
+        formData.append('confirmPassword', confirmPassword)
+        formData.append('status', status)
+        formData.append('companyName', companyName)
+        formData.append('companyLocation', companyLocation)
+        formData.append('companyDescription', companyDescription)
+        formData.append('image', image)
+        
         const createJob = async () => {
-            await storeApiData(`adminCreateCompany`, { name, email, password, confirmPassword, status, companyName, companyLocation, companyDescription })
+            await storeApiData(`adminCreateCompany`, formData)
             .then((response)=>console.log(response.data))
             .then(setDoRefresh(!doRefresh))
             .catch((response)=>console.log(response.data))
@@ -102,6 +117,7 @@ const AdminCustomCompany = () => {
                 <div className="modal-container">
                    <div className="photo">
                         <img src={sampleIcon} alt="sample" />
+                        <input type='file' onChange={(e) => setImage(e.target.files[0])} className='btn-image-change'></input>
                     </div>
                     <form>
                         <div className="form">

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import sampleIcon from '../../../assets/images/default.png'
 import axios from 'axios'
 import { fetchApiData, storeApiData } from '../../../api/api'
 import ProfileApplied from './ProfileApplied'
@@ -55,8 +54,10 @@ const ProfileItem = () => {
     const [lastEducation, setLastEducation] = useState('')
     const [description, setDescription] = useState('')
     const [documentUrl, setDocumentUrl] = useState('')
+    const [imageUrl, setImageUrl] = useState('')
 
     const [document, setDocument] = useState(null)
+    const [image, setImage] = useState(null)
 
     const [errMsg, setErrMsg] = useState('');
 
@@ -110,6 +111,7 @@ const ProfileItem = () => {
             setDescription(profileData.description)
             setLastEducation(profileData.last_education)
             setDocumentUrl(profileData.document_url)
+            setImageUrl(userData.image)
             
             revalidateProfile()
             // if (profileData.dream_job !== null) {
@@ -178,6 +180,7 @@ const ProfileItem = () => {
         formData.append('description', description)
         formData.append('lastEducation', lastEducation)
         formData.append('file', document)
+        formData.append('image', image)
 
         try {
             const response = await axios.post(`http://localhost:8000/changeProfile/${profileData.id}`, formData, {
@@ -276,8 +279,14 @@ const ProfileItem = () => {
             <div className="container">
                 <div className="configure-div">
                     <div className="photo">
-                        <img src={sampleIcon} alt="sample" />
+                        <img src={imageUrl} alt="sample" />
+                        <input type='file' onChange={(e) => setImage(e.target.files[0])} className='btn-image-change'></input>
                     </div>
+                    {/* <div className="btn-change-image">
+                        <button type='button'>
+                            <i className="fa fa-chain"></i>
+                        </button>
+                    </div> */}
                     <form>
                         <div className="form">
                             <div className='form-row'>
