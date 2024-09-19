@@ -39,14 +39,6 @@ class HomeController extends Controller
     }
 
     public function homepage(Request $request) {
-        // $data['categories'] = Category::where([['status', 'active']])->get()->random(8);
-        // $data['categories'] = Category::where([['status', 'active']])->get()->random(8);
-
-        // Fetch All Category
-        // Iterate 8 times
-        // Search MainJob with that category
-
-        
         $blacklist = [];
         if ($request['user_id']) {
             $user = User::where([['id', $request['user_id']]])->first();
@@ -56,7 +48,6 @@ class HomeController extends Controller
         $bannedUsers = [];
         $bannedUsers = User::where([['role', 'company'], ['isBanned', 1]])->get();
 
-        // --
         
         $data['categories'] = [];
         $allCateg = Category::where([['status', 'active']])->get();
@@ -74,13 +65,11 @@ class HomeController extends Controller
                 }
             )->whereHas(
                 'company', function ($query) use ($bannedUsers) {
-                    // $query->where('location', 'LIKE', '%'.$blacklist['location'].'%');
                     if ($bannedUsers) {
                         for ($a = 0; $a < sizeof($bannedUsers); $a++) {
                             $query->whereNot('user_id', $bannedUsers[$a]['id']);
                         }
                     }
-                    // $query->where('user_id', 2);
                 }
             )->first();
 
@@ -93,8 +82,6 @@ class HomeController extends Controller
                 break;
             }
         }
-
-        // --
 
         try {
             $query['job'] = MainJob::where([
@@ -109,13 +96,11 @@ class HomeController extends Controller
                 }
             )->whereHas(
                 'company', function ($query) use ($bannedUsers) {
-                    // $query->where('location', 'LIKE', '%'.$blacklist['location'].'%');
                     if ($bannedUsers) {
                         for ($a = 0; $a < sizeof($bannedUsers); $a++) {
                             $query->whereNot('user_id', $bannedUsers[$a]['id']);
                         }
                     }
-                    // $query->where('user_id', 2);
                 }
             )->get()->random(6);
         } catch(Exception $err) {
@@ -131,13 +116,11 @@ class HomeController extends Controller
                 }
             )->whereHas(
                 'company', function ($query) use ($bannedUsers) {
-                    // $query->where('location', 'LIKE', '%'.$blacklist['location'].'%');
                     if ($bannedUsers) {
                         for ($a = 0; $a < sizeof($bannedUsers); $a++) {
                             $query->whereNot('user_id', $bannedUsers[$a]['id']);
                         }
                     }
-                    // $query->where('user_id', 2);
                 }
             )->get();
         }
@@ -185,44 +168,29 @@ class HomeController extends Controller
         $bannedUsers = [];
         $bannedUsers = User::where([['role', 'company'], ['isBanned', 1]])->get();
 
-        // $query['rawJob'] = MainJob::where([['status', 'active']])->get();
-        // $query['job'] = MainJob::where([['status', 'active']])->get();
-
-        // return $this -> apiResponse('success', $blacklist, Response::HTTP_OK, true);
-
         $query['job'] = MainJob::where([
             ['status', 'active']
         ])->whereHas(
             'company', function ($query) use ($blacklist) {
-                // $query->where('location', 'LIKE', '%'.$blacklist['location'].'%');
                 if ($blacklist) {
                     for ($a = 0; $a < sizeof($blacklist); $a++) {
                         $query->whereNot('user_id', $blacklist[$a]['user_company_id']);
                     }
                 }
-                // $query->where('user_id', 2);
             }
         )->whereHas(
             'company', function ($query) use ($bannedUsers) {
-                // $query->where('location', 'LIKE', '%'.$blacklist['location'].'%');
                 if ($bannedUsers) {
                     for ($a = 0; $a < sizeof($bannedUsers); $a++) {
                         $query->whereNot('user_id', $bannedUsers[$a]['id']);
                     }
                 }
-                // $query->where('user_id', 2);
             }
         )->get();
 
-        // if (empty($data['job']) || sizeof($data['job']) <= 0) {
-        //     $data['job'] = 'Nothing Match';
-        // }
-        // $query['job'] = MainJob::all();
         $jobCount = sizeof($query['job']);
         $totalPage = ceil($jobCount / 6);
 
-        // $firstPage = [];
-        // $pageDestination = 1;
         $pageDestination = $page;
 
         for ($i = ($pageDestination - 1) * 6, $num = 0; $i < ($pageDestination) * 6; $i++, $num++) {
@@ -236,7 +204,7 @@ class HomeController extends Controller
                 $data['job'][$num]['icon'] = $query['job'][$i]['icon'];
                 $data['job'][$num]['company'] = $query['company'][$i];
             } catch (Exception $err) {
-                // $data['job'][$num] = '';
+                // 
             }
         }
 
@@ -245,28 +213,12 @@ class HomeController extends Controller
         } catch(Exception $err) {
             $finalData = ['jobs' => 'Nothing', 'jobCount' => $jobCount, 'totalPage' => $totalPage, 'currentPage' => $pageDestination];
         }
-        
-        // $check = ['firstPage' => $firstPage, 'user' => $user, 'blacklist' => $blacklist, 'count' => $jobCount, 'totalPage' => $totalPage, 'jobs' => $query['job']];
-        //if guest then ignore user slug
-        //actually use slug to get user id
-        
-        // return $this -> apiResponse('success', $request['user_profile_id'], Response::HTTP_OK, true);
-        return $this -> apiResponse('success', $finalData, Response::HTTP_OK, true);
-        // try {
-        //     return $this -> apiResponse('success', $finalData, Response::HTTP_OK, true);
-        // } catch(Exception $err) {
-        //     return $this -> apiResponse('success', 'Nothing', Response::HTTP_OK, true);
-        // }
 
-        //return 6 jobs each page
-        //in addition also return how many page did have and current page
+        return $this -> apiResponse('success', $finalData, Response::HTTP_OK, true);
     }
 
     public function getSingleJobDetails($slug) 
     {
-        // icon, title, company, salary, description
-        // $data['job'] = MainJob::where([['slug', $slug]])->with('category')->first();
-        // $data['similar'] = MainJob::where([['status', 'active'], ['cat_id', $data['job']->cat_id]])->get()->take(3);
         $query['job'] = MainJob::where([['slug', $slug]])->with('category')->first();
         $query['similar'] = MainJob::where([['status', 'active'], ['cat_id', $query['job']->cat_id]])->whereNot([['slug', $slug]])->get()->take(3);
         $query['job_company'] = Company::where([['id', $query['job']['company_id']]])->get();
@@ -312,7 +264,6 @@ class HomeController extends Controller
 
     public function sameCategoryPagination(Request $request, $slug, $page) {
         $data['categories'] = Category::where([['slug', $slug]])->first();
-        // $query['same'] = MainJob::where([['status', 'active'], ['cat_id', $data['categories']->id]])->get();
 
         $blacklist = [];
         if ($request['user_id']) {
@@ -328,31 +279,25 @@ class HomeController extends Controller
             ['cat_id', $data['categories']->id]
         ])->whereHas(
             'company', function ($query) use ($blacklist) {
-                // $query->where('location', 'LIKE', '%'.$blacklist['location'].'%');
                 if ($blacklist) {
                     for ($a = 0; $a < sizeof($blacklist); $a++) {
                         $query->whereNot('user_id', $blacklist[$a]['user_company_id']);
                     }
                 }
-                // $query->where('user_id', 2);
             }
         )->whereHas(
             'company', function ($query) use ($bannedUsers) {
-                // $query->where('location', 'LIKE', '%'.$blacklist['location'].'%');
                 if ($bannedUsers) {
                     for ($a = 0; $a < sizeof($bannedUsers); $a++) {
                         $query->whereNot('user_id', $bannedUsers[$a]['id']);
                     }
                 }
-                // $query->where('user_id', 2);
             }
         )->get();
 
         $jobCount = sizeof($query['same']);
         $totalPage = ceil($jobCount / 6);
 
-        // $firstPage = [];
-        // $pageDestination = 1;
         $pageDestination = $page;
 
         for ($i = ($pageDestination - 1) * 6, $num = 0; $i < ($pageDestination) * 6; $i++, $num++) {
@@ -365,7 +310,7 @@ class HomeController extends Controller
                 $data['same'][$num]['icon'] = $query['same'][$i]['icon'];
                 $data['same'][$num]['company'] = $query['company'][$i];
             } catch (Exception $err) {
-                // $data['job'][$num] = '';
+                // 
             }
         }
 

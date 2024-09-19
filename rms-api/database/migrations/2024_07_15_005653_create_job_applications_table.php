@@ -21,6 +21,8 @@ return new class extends Migration
             $table->unsignedBigInteger('profile_id')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('job_id')->nullable();
+            $table->boolean('profile_archived')->default(0);
+            $table->boolean('company_archived')->default(0);
 
             $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('cascade');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');//SET NULL

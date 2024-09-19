@@ -12,11 +12,8 @@ const ForgotPasswordItem = () => {
     const [errMsg, setErrMsg] = useState('');
     const [updateRepsonse, setUpdateResponse] = useState('');
     let url = useParams()
-    // console.log(url)
 
     const { token, hashEmail } = url
-
-    // console.log(token, hashEmail)
 
     const submitHandler = () => {
         setLoader(true)
@@ -92,7 +89,6 @@ const ForgotPasswordItem = () => {
                                         <p className='auth-error' style={{ margin: '-10px 0 -10px 0' }}>{errMsg}</p>
                                         <button type='button' className="button" onClick={submitHandler}>
                                             <div>
-                                                {/* <img src='' alt='' height='15px' width='15px'/> */}
                                                 <span>Submit</span>
                                             </div>
                                         </button>

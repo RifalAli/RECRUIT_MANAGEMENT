@@ -12,7 +12,6 @@ const hideBanModal = () => {
 }
 
 const AdminCustomBan = () => {
-    // console.log(company_id, user_id)
     const [bannedUsers , setBannedUsers] = useState();
     const [normalUsers, setNormalUsers] = useState();
 
@@ -31,15 +30,10 @@ const AdminCustomBan = () => {
         .catch((response) => { console.log(response) } )
     }
 
-    // console.log(normalResponse)
-    // console.log(blacklistResponse)
-
     useEffect(() => {
         getNormalUser();
         getBannedUser();
     }, [])
-
-    // console.log(blacklistResponse)
 
     return (
         <>
@@ -47,7 +41,6 @@ const AdminCustomBan = () => {
             <div className="container">
         <div className="ban-admin-div">
             <div className="admin_ban">
-                {/* <p>Ban user that exploit  </p> */}
                 <button type='button' className='button ban' onClick={showBanModal}>View Banned User</button>
             </div>
 

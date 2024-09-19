@@ -70,7 +70,6 @@ const ForgotPassword = () => {
                                         <p className='auth-success' style={{ margin: '3px 0 -20px 5px' }}>{successMsg}</p>
                                         <button type='button' className="button" onClick={submitEmailHandler}>
                                             <div>
-                                                {/* <img src='' alt='' height='15px' width='15px'/> */}
                                                 <span>Submit</span>
                                             </div>
                                         </button>

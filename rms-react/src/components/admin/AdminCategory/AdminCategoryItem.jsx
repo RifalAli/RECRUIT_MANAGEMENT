@@ -133,13 +133,11 @@ const AdminCategoryItem = ({index, id, name, slug, icon, status, job_count}) => 
                             <div className='button-div'>
                                 <button type='button' className="button" onClick={applyCategoryChanges}>
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Save Changes</span>
                                     </div>
                                 </button>
                                 <button type='button' onClick={closeModal} className="button button-cancel">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Cancel</span>
                                     </div>
                                 </button>

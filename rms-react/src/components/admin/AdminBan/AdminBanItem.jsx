@@ -2,8 +2,6 @@ import React from 'react'
 import { storeApiData } from '../../../api/api'
 
 const AdminBanItem = ( { refresh_normal, refresh_banned, user_id, userDetail, userRole, status } ) => {
-    // console.log(company_id, user_id)
-    // console.log(user_id, user_profile)
     const banUser = () => {
         const createBan = async () => {
             await storeApiData(`banUser/ban/${user_id}`)
@@ -29,7 +27,6 @@ const AdminBanItem = ( { refresh_normal, refresh_banned, user_id, userDetail, us
     return (
         <>
             <div className='ban__wrapper'>
-                {/* <p>1</p> */}
                 {
                     userRole === 'profile' ? (
                         <p>{userDetail.fullname}</p>
@@ -37,7 +34,6 @@ const AdminBanItem = ( { refresh_normal, refresh_banned, user_id, userDetail, us
                         <p>{userDetail.name}</p>
                     )
                 }
-                {/* Button for user & profile detail, placed before the action button */}
                 {
                     status === 'normal' ? (
                         <>
@@ -45,7 +41,6 @@ const AdminBanItem = ( { refresh_normal, refresh_banned, user_id, userDetail, us
                         </>
                     ) : (
                         <>
-                            {/* <p>{blacklist_id}</p> */}
                             <button className='unban-button' onClick={unbanUser} type='button'>Unban</button>
                         </>
                     )

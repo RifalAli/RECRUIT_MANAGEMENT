@@ -6,18 +6,10 @@ import ProfileApplied from './ProfileApplied'
 import Loader from '../../../services/Loader'
 
 const Profile = () => {
-    // const [loader, setLoader] = useState(true)
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         setLoader(false);
-    //     }, 300);
-    // }, []);
     return (
         <>
             <NavBar hero='user profile' cmp="loggedin" />
             <ProfileItem />
-            {/* <ProfileItem /> */}
-            {/* <ProfileApplied /> */}
             <Footer />
         </>
     )

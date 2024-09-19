@@ -16,7 +16,6 @@ const hideBlacklistModal = () => {
 }
 
 const CompanyBlacklist = ( { company_id, user_id } ) => {
-    // console.log(company_id, user_id)
     const [blacklistUser , setBlacklistUser ] = useState();
     const [normalUsers, setNormalUsers] = useState();
 
@@ -35,17 +34,12 @@ const CompanyBlacklist = ( { company_id, user_id } ) => {
         .catch((response) => { console.log(response) } )
     }
 
-    // console.log(normalResponse)
-    // console.log(blacklistResponse)
-
     useEffect(() => {
         if (company_id && user_id) {
             getNormalUser();
             getBlacklistUser();
         }
     }, [company_id, user_id])
-
-    // console.log(blacklistResponse)
 
     return (
         <>

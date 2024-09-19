@@ -24,8 +24,34 @@ const toggleAnswerModal = (state, index) => {
     if (state == 'hide') dropdown.style.display = 'none';
 }
 
-const CompanyApplierItem = ({index, id, title, description, status, applicationDate, profile, company, job}) => {
+const CompanyApplierItem = ({index, id, title, description, image, status, applicationDate, profile, company, job, fetchAllAppliers, fetchArchivedAppliers, applicationStatus}) => {
+    const [dropdownState, setDropdownState] = useState(false)
     const [doRefresh, setDoRefresh] = useState(false)
+
+    const toggleDropdown = () => {
+        let dropdown = document.getElementsByClassName('company_applier__wrapper__card--center__dropdown')[index];
+        if (dropdownState) {
+            dropdown.style.display = 'none';
+        }else {
+            dropdown.style.display = 'block';
+        }
+
+        setDropdownState(!dropdownState);
+    }
+
+    const archiveHandler = async () => {
+        await storeApiData(`archiveApplication/company/archive/${id}`)
+        .then((response) => console.log(response))
+        .then((response) => fetchAllAppliers())
+        .catch((response) => console.log(response))
+    }
+
+    const unarchiveHandler = async () => {
+        await storeApiData(`archiveApplication/company/unarchive/${id}`)
+        .then((response) => console.log(response))
+        .then((response) => fetchArchivedAppliers())
+        .catch((response) => console.log(response))
+    }
 
     const showApplierDetail = () => {
         toggleApplierDetail('show', index)
@@ -52,8 +78,6 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
     const [answerStatus, setAnswerStatus] = useState('')
     const [answerTitle, setAnswerTitle] = useState('')
     const [answerMessage, setAnswerMessage] = useState('')
-    // const [meeting_date, setMeeting_date] = useState('')
-    // const [meeting_link, setMeeting_link] = useState('')
 
     const acceptAnswerModal = () => {
         setAnswerStatus('accepted');
@@ -69,17 +93,11 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
         toggleAnswerModal('hide', index)
     }
 
-    // useEffect(() => {
-    //     console.log(answerStatus)
-    // }, [answerStatus])
-
     const postAnswer = () => {
         const formData = new FormData();
         formData.append('status', answerStatus)
         formData.append('title', answerTitle)
         formData.append('message', answerMessage)
-        // formData.append('meeting_date', meeting_date)
-        // formData.append('meeting_link', meeting_link)
         const createAnswer = async () => {
             await storeApiData(`answerJobApplication/${id}`, formData)
             .then((response)=>console.log(response.data))
@@ -91,9 +109,6 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
         closeAllDetail()
     }
 
-    // const loadURLToInputField = () => {
-    //     let file = new File()
-    // }
     useEffect(() => {
         if (doRefresh) {
             setTimeout(() => {
@@ -106,13 +121,12 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
 
     return (
         <>
-        <button onClick={showApplierDetail}>
+        <div>
             <div className="company_applier__wrapper__card">
                 <div className="company_applier__wrapper__card--center">
-                    <div className="company_applier__wrapper__card--center__part-1">
+                    <div className="company_applier__wrapper__card--center__part-1" onClick={showApplierDetail}>
                         <h1>{profile.fullname}</h1>
                         <p>{job.title}</p>
-                        {/* <Link className={status === "pending" ? "half-time" : "full-time"} to={'#'}>{status}</Link> */}
                         <Link className={
                         status === "pending" ? 
                             "status-pending" 
@@ -123,15 +137,36 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
                             "status-rejected"
                         } to={'#'}>{status}</Link>
                     </div>
+                    {
+                        applicationStatus && applicationStatus == 'normal' ? (
+                            <>
+                                <div className="company_applier__wrapper__card--center__part-2">
+                                    <i className="fa fa-caret-down" onClick={toggleDropdown}></i>
+                                </div>
+                                <ul className="company_applier__wrapper__card--center__dropdown">
+                                    <li>
+                                        <button type="button" onClick={archiveHandler}              className="company_applier__wrapper__card--center__dropdown_item"><i className="fa fa-pencil fa-fw"></i><span>Archive</span></button>
+                                    </li>
+                                </ul>
+                            </>
+                        ) : (
+                            <>
+                            <button type="button" onClick={unarchiveHandler}  className="btn-unarchive"><i className="fa fa-pencil fa-fw"></i><span>Unarchive</span></button>
+                            </>
+                        )
+                    }
                 </div>
             </div>
-        </button>
+        </div>
         <div className="applier-detail">
             <button className="applier-detail-hide" type="button" onClick={hideApplierDetail}>
                 <i className="fa fa-close fa-fw"></i>
             </button>
+            <h1>Applier's Message</h1>
+            <br />
+            <div className="applier-detail-parent">
+            <img className="applier-photo" src={image} alt="" />
             <div className="applier-detail-container">
-                <h1>Applier's Message</h1>
                 <div className="applier-detail-row">
                     <p>Applier Name</p>
                     <p>: {profile.fullname}</p>
@@ -142,7 +177,6 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
                 </div>
                 <div className="applier-detail-row">
                     <p>Document</p>
-                    {/* <iframe src={document} frameborder="0" style={{ width: '100%', height: '500px' }}></iframe> */}
                     <p>
                         : <a href={profile.document_url} download="applier's CV">View Applier's CV</a>
                     </p>
@@ -153,7 +187,9 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
                         : <button type="button" onClick={showProfileDetail} className="applier-detail-button">More Details</button>
                     </p>
                 </div>
-                <br /><br />
+                <br />
+            </div>
+            </div>
                 <div className="applier-detail-container-button">
                     {
                         status === 'pending' ? (
@@ -166,7 +202,6 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
                         )
                     }
                 </div>
-            </div>
         </div>
         <div className="profile-detail">
             <button className="applier-detail-hide" type="button" onClick={hideProfileDetail}>
@@ -187,10 +222,6 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
                     <p>Address</p>
                     <p>: {profile.address}</p>
                 </div>
-                {/* <div className="applier-detail-row">
-                    <p>Description</p>
-                    <p>: {profile.description}</p>
-                </div> */}
                 <div className="applier-detail-row">
                     <p>Description</p>
                     <p>: 
@@ -201,10 +232,6 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
                     <p>Last Education</p>
                     <p>: {profile.last_education}</p>
                 </div>
-                {/* <div className="applier-detail-row">
-                    <p>Status</p>
-                    <p>: {profile.status}</p>
-                </div> */}
                 <br />
                 <h1>Job Applied Detail</h1>
                 <br />
@@ -215,16 +242,11 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
                 <div className="applier-detail-row">
                     <p>Salary</p>
                     <p>: {Number(job.salary).toLocaleString("id", {currency: "IDR", style: "currency"})}</p>
-                    {/* <p>: {job.salary}</p> */}
                 </div>
                 <div className="applier-detail-row">
                     <p>Type</p>
                     <p>: {job.type}</p>
                 </div>
-                {/* <div className="applier-detail-row">
-                    <p>Description</p>
-                    <p>: {job.description}</p>
-                </div> */}
                 <div className="applier-detail-row">
                     <p>Description</p>
                     <p>: 
@@ -256,32 +278,14 @@ const CompanyApplierItem = ({index, id, title, description, status, applicationD
                                 <label htmlFor="message">Message: </label>
                                 <textarea className='form-control' name="message" id="text-area" cols="30" rows="20" placeholder='Message' value={answerMessage} onChange={(e) => setAnswerMessage(e.target.value)}></textarea>
                             </div>
-                            {
-                                answerStatus === 'accepted' ? (
-                                    <>
-                            {/* <div className='form-row'>
-                                <label htmlFor="meeting_date">Meeting Date: </label>
-                                <input type="date" className='form-control' name="expire_at" placeholder='meeting date' value={meeting_date} onChange={(e) => setMeeting_date(e.target.value)}/>
-                            </div> */}
-                            {/* <div className='form-row'>
-                                <label htmlFor="meeting_link">Meeting Link: </label>
-                                <input type="text" className='form-control' name="meeting_link" placeholder='Meeting Link' value={meeting_link} onChange={(e) => setMeeting_link(e.target.value)}/>
-                            </div>   */}
-                                    </>
-                                ) : (
-                                    <></>
-                                )
-                            }
                             <div className='button-div'>
                                 <button type='button' className="button" onClick={postAnswer}>
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Post Answer</span>
                                     </div>
                                 </button>
                                 <button type='button' onClick={hideAnswerModal} className="button button-cancel">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Cancel</span>
                                     </div>
                                 </button>

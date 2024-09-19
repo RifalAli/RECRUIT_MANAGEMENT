@@ -22,19 +22,6 @@ class JobApplicationController extends Controller
     use ApiResponseWithHttpStatus;
     
     public function applyJob(Request $request) {
-        // $jobPending = JobApplication::where([['profile_id', $request['profile_id']], ['job_id', $request['job_id']], ['status', 'pending']])->first();
-
-        // if ($jobPending) {
-        //     return response()->json('Already apply', 200);
-        // }
-
-        // $data['jobApplication'] = JobApplication::create([
-        //     'profile_id' => $request['profile_id'],
-        //     'company_id' => $request['company_id'],
-        //     'job_id' => $request['job_id'],
-        // ]);
-
-        // return $this->apiResponse('Success apply job', $data, Response::HTTP_OK, true);
         $profile = Profile::where([['id', $request['profile_id']]])->first();
         if (!$profile['fullname'] || !$profile['age'] || !$profile['address'] || !$profile['description'] || !$profile['document_url']) {
             return response()->json('Empty profile', 200);
@@ -60,14 +47,31 @@ class JobApplicationController extends Controller
         return $this->apiResponse('Success apply job', $data, Response::HTTP_OK, true);
     }
     
-    public function companyViewApplier($company_id) {
-        $data['applier'] = JobApplication::where([['company_id', $company_id]])->with('profile')->with('company')->with('main_job')->get();
+    public function companyViewApplier($option, $company_id) {
+        if ($option == 'normal') {
+            $data['applier'] = JobApplication::where([['company_id', $company_id], ['company_archived', 0]])->with('profile')->with('company')->with('main_job')->get();
+        }else if ($option == 'archive') {
+            $data['applier'] = JobApplication::where([['company_id', $company_id], ['company_archived', 1]])->with('profile')->with('company')->with('main_job')->get();
+        }
+
+        if ($data['applier'] != null && sizeof($data['applier'])) {
+            for ($i = 0; $i < sizeof($data['applier']); $i++) {
+                $profile = Profile::where([['id', $data['applier'][$i]['profile_id']]])->first();
+                $user = User::where([['id', $profile->user_id]])->first();
+
+                $data['applier'][$i]['image'] = $user['image'];
+            }
+        }
 
         return $this->apiResponse('Success apply job', $data, Response::HTTP_OK, true);
     }
 
-    public function getProfileJobApplication($profile_id) {
-        $query['jobApplication'] = JobApplication::where([['profile_id', $profile_id]])->get();
+    public function getProfileJobApplication($option, $profile_id) {
+        if ($option == 'normal') {
+            $query['jobApplication'] = JobApplication::where([['profile_id', $profile_id], ['profile_archived', 0]])->get();
+        }else if ($option == 'archive') {
+            $query['jobApplication'] = JobApplication::where([['profile_id', $profile_id], ['profile_archived', 1]])->get();
+        }
 
         $data['jobApplication'][0] = 'Nothing';
 
@@ -83,5 +87,30 @@ class JobApplicationController extends Controller
         }
 
         return $this->apiResponse('Success Fetch Applied Jobs', $data, Response::HTTP_OK, true);
+    }
+
+    public function archiveApplication($instance, $option, $job_application_id) {
+        $data['jobApplication'] = JobApplication::where([['id', $job_application_id]])->first();
+
+        if ($data['jobApplication'] == null) {
+            return $this->apiResponse('Failed archive job application', 'failed', Response::HTTP_OK, true);
+        }
+        
+        if ($instance == 'profile') {
+            if ($option == 'archive') {
+                $data['jobApplication']['profile_archived'] = 1;
+            }else if ($option) {
+                $data['jobApplication']['profile_archived'] = 0;
+            }
+        }else if ($instance == 'company') {
+            if ($option == 'archive') {
+                $data['jobApplication']['company_archived'] = 1;
+            }else if ($option == 'unarchive') {
+                $data['jobApplication']['company_archived'] = 0;
+            }
+        }
+
+        $data['jobApplication']->save();
+        return $this->apiResponse('Success archive job application', $data, Response::HTTP_OK, true);
     }
 }

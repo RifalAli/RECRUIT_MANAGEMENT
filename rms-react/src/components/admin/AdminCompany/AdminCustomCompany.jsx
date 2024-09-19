@@ -152,10 +152,6 @@ const AdminCustomCompany = () => {
                                 <label htmlFor="location">Company Location: </label>
                                 <input type="text" className='form-control' name="location" placeholder='Company Location' value={companyLocation} onChange={(e)=>setCompanyLocation(e.target.value)}/>
                             </div>
-                            {/* <div className='form-row'>
-                                <label htmlFor="description">Company Description: </label>
-                                <input type="text" className='form-control' name="description" placeholder='Company Description' value={companyDescription} onChange={(e)=>setCompanyDescription(e.target.value)}/>
-                            </div> */}
                             <div className='form-row'>
                                 <label htmlFor="description">Description: </label>
                                 <textarea className='form-control' name="description" id="text-area" cols="30" rows="20" placeholder='Company Description' value={companyDescription} onChange={(e) => setCompanyDescription(e.target.value)}></textarea>

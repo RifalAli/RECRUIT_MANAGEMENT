@@ -42,7 +42,6 @@ const ProfileItem = () => {
     const [loader, setLoader] = useState(true)
     const [doRefresh, setDoRefresh] = useState(false)
 
-    // const [categoryData, setCategoryData] = useState([])
     const [userData, setUserData] = useState('')
     const [profileData, setProfileData] = useState('')
 
@@ -61,11 +60,6 @@ const ProfileItem = () => {
 
     const [errMsg, setErrMsg] = useState('');
 
-    // const fetchCategory = async () => {
-    //     const response = await fetchApiData('allCategories')
-    //     setCategoryData(response.data.categories)
-    // }
-
     const checkProfile = async () => {
         try {
             const response = await axios.get('http://localhost:8000/auth/user-profile', {
@@ -83,11 +77,6 @@ const ProfileItem = () => {
         if (userData.verify === 0) {
             window.location = '/verify';
         }
-
-        // if (userData.isBanned === 1) {
-        //     openBan();
-        //     // console.log('a')
-        // }
     }
     
     const getCompleteProfile = async () => {
@@ -114,22 +103,11 @@ const ProfileItem = () => {
             setImageUrl(userData.image)
             
             revalidateProfile()
-            // if (profileData.dream_job !== null) {
-                // setDreamJob(categoryData[profileData.dream_job-1].name)
-            // }
         }
     }
 
     const revalidateProfile = async () => {
-        // if (!userData.name && !profileData.fullname && !userData.email && !profileData.age && !ProfileApplied.address && !profileData.description && !profileData.lastEducation && !profileData.documentUrl) {
-        //     // console.log('please complete your profile')
-        //     console.log(username, fullname, email, age, address, description, lastEducation, documentUrl)
-        //     return setErrMsg('Please complete your profile in order to apply for any job');
-        // }
-
         if (!userData.name || !profileData.fullname || !userData.email || !profileData.age || !profileData.address || !profileData.description || !profileData.last_education) {
-            // console.log('please complete your profile')
-            // console.log(userData.name, profileData.fullname, userData.email, profileData.age, profileData.address, profileData.description, profileData.last_education, profileData.document_url)
             return setErrMsg('Please complete your profile in order to apply for any job');
         }
         
@@ -139,10 +117,6 @@ const ProfileItem = () => {
 
         checkBanned()
     }
-
-    // useEffect(() => {
-    //     fetchCategory();
-    // }, [])
 
     useEffect(() => {
         if (!userData) {
@@ -161,12 +135,6 @@ const ProfileItem = () => {
             setLoader(false);
         }, 3000);
     }, [profileData])
-
-    // console.log(profileData)
-    // console.log(userData)
-    // console.log(categoryData)
-    // console.log(dreamJob)
-    // console.log(profileData.dream_job)
 
     const requestChanges = async (e) => {
         e.preventDefault();
@@ -202,28 +170,16 @@ const ProfileItem = () => {
         window.location = '/login';
     }
 
-    const requestChange = async () => {
-        await storeApiData(`changeProfile/${profileData.id}`, { fullname, email, age, address, lastEducation })
-            .then((response)=>console.log(response.data))
-            .then(setDoRefresh(!doRefresh))
-            .catch((response)=>console.log(response.data))
-    }
-
     const applyChangesHandler = (e) => {
         setErrMsg('')
-        // if (!username && !fullname && !email && !age && !address && !description && !lastEducation) {
-        //     return setErrMsg('Please fill all field to make any changes');
-        // }
         if (!username || !fullname || !email || !age || !address || !description || !lastEducation) {
             return setErrMsg('Please fill all field to make any changes');
         }
         if (email === userData.email) {
-            // console.log('Still Same')
             requestChanges(e)
         }else {
             openWarning()
         }
-        // requestChanges(e)
     }
 
     const changeNow = (e) => {
@@ -234,7 +190,7 @@ const ProfileItem = () => {
     const [allAppliedJobs, setAllAppliedJobs] = useState([])
 
     const fetchAllAppliedJobs = async () => {
-        const response = await fetchApiData(`getAppliedJobs/${profileData.id}`)
+        const response = await fetchApiData(`getAppliedJobs/normal/${profileData.id}`)
         setAllAppliedJobs(response?.data.jobApplication)
     }
     
@@ -252,7 +208,6 @@ const ProfileItem = () => {
         }, 3000)
     }
 
-    // console.log(allAppliedJobs)
     useEffect(() => {
         if (doRefresh) {
             setTimeout(() => {
@@ -261,12 +216,6 @@ const ProfileItem = () => {
             }, 2000)
         }
     }, [doRefresh])
-
-    // useEffect(() => {
-    //     if (!doRefresh) {
-    //         checkBanned()
-    //     }
-    // }, [doRefresh])
     
     return (
         <>
@@ -282,11 +231,6 @@ const ProfileItem = () => {
                         <img src={imageUrl} alt="sample" />
                         <input type='file' onChange={(e) => setImage(e.target.files[0])} className='btn-image-change'></input>
                     </div>
-                    {/* <div className="btn-change-image">
-                        <button type='button'>
-                            <i className="fa fa-chain"></i>
-                        </button>
-                    </div> */}
                     <form>
                         <div className="form">
                             <div className='form-row'>
@@ -309,10 +253,6 @@ const ProfileItem = () => {
                                 <label htmlFor="address">Address: </label>
                                 <input type="text" className='form-control' name="address" placeholder='Address' value={address} onChange={(e) => setAddress(e.target.value)}/>
                             </div>
-                            {/* <div className='form-row'>
-                                <label htmlFor="description">Description: </label>
-                                <input type="text" className='form-control' name="description" placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)}/>
-                            </div> */}
                             <div className='form-row'>
                                 <label htmlFor="description">Description: </label>
                                 <textarea className='form-control' name="description" id="text-area" cols="30" rows="20" placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
@@ -329,24 +269,6 @@ const ProfileItem = () => {
                                     <option value='SD/Sederajat'>SD/Sederajat</option>
                                 </select>
                             </div>
-                            {/* <div className='form-row'>
-                                <label htmlFor="dreamJob">Dream Job: </label>
-                                <select className='form-control' value={dreamJob} onChange={(e)=>setDreamJob(e.target.value)}>
-                                    <option value=''>Select an Option</option>
-                                    {
-                                        categoryData.map((item) => (
-                                            <option key={item.id} value={item.id}>{item.name}</option>
-                                        ))
-                                    }
-                                </select>
-                            </div>
-                            <div className='form-row'>
-                                <label htmlFor="status">Status: </label>
-                                <select className='form-control' value={status} onChange={(e)=>setStatus(e.target.value)}>
-                                    <option value='unemployed'>Unemployed</option>
-                                    <option value='employed'>Employed</option>
-                                </select>
-                            </div> */}
                             <div className="form-row">
                                 <label htmlFor="document">CV: </label>
                                 <div className='form-column-row'>
@@ -368,7 +290,6 @@ const ProfileItem = () => {
                             <div className='button-div'>
                                 <button type='button' className="button" onClick={applyChangesHandler}>
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Apply Changes</span>
                                     </div>
                                 </button>
@@ -397,13 +318,11 @@ const ProfileItem = () => {
                         <div className='button-div'>
                                 <button type='button' onClick={changeNow} className="button">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Confirm</span>
                                     </div>
                                 </button>
                                 <button type='button' onClick={closeWarning} className="button button-cancel">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Cancel</span>
                                     </div>
                                 </button>
@@ -421,7 +340,6 @@ const ProfileItem = () => {
                         <div className='button-div'>
                                 <button type='button' onClick={logout} className="button">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Ok</span>
                                     </div>
                                 </button>

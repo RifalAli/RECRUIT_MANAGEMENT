@@ -40,14 +40,12 @@ const SameCategory = () => {
         }
 
         fillData()
-        // console.log(totalPageArray)
         setPageArray(totalPageArray)
     }, [totalPage])
 
     useEffect(() => {
         const checkUser = () => {
             if (user !== 'no') {
-            // if (user !== 'none') {
                 const formData = new FormData();
                 formData.append('user_id', user.id);
                 
@@ -61,7 +59,6 @@ const SameCategory = () => {
             if (response.data) {
                 setJob(response.data)
                 setTotalPage(response.data.totalPage)
-                // setCurrentPage(response.data.currentPage)
                 setJobCount(response.data.jobCount)
             }
         }
@@ -86,27 +83,10 @@ const SameCategory = () => {
             }
         }
         getUser();
-        // fetchData();
-        // fetchCategory()s
         setTimeout(() => {
             setLoader(false);
         }, 4000)
     }, [currentPage]);
-
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         const fetchData = async() => {
-    //             const response = await fetchApiData(`categories/jobs/${slug}`);
-    //             if (response && response.status && response.status === true) {
-    //                 setJob(response.data);
-    //             }else {
-    //                 console.log(response);
-    //             }
-    //             setLoader(false);
-    //         };
-    //         fetchData();
-    //     }, 300);
-    // }, [slug]);
     console.log(job && job)
     return (
         <>
@@ -118,7 +98,6 @@ const SameCategory = () => {
                     {
                         job.same && job.same ? (
                             <>
-                                {/* <p>Page {currentPage} of {totalPage} with total of {jobCount} jobs</p> */}
                                 <FeaturedJob featured={job.same} count={job.same.length} similar={'category'} name={job.categories.name} pageObjects={pageObjects} />
                             </>
                         ) : (

@@ -106,23 +106,6 @@ const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail
     }, [doRefresh])
 
     return (
-        // <div className="company__wrapper__card">
-        //     <div className="company__wrapper__card--left">
-        //         <img src={ icon } alt="icon" />
-        //     </div>
-        //     <div className="company__wrapper__card--line"></div>
-        //     <div className="company__wrapper__card--right">
-        //         <div className="company__wrapper__card--right__part-1">
-        //             <h1>{title}</h1>
-        //             <p>{job}</p>
-        //             <Link className={type === "full time" ? "full-time" : "half-time"} to={`/job-details/${slug}`}>{type}</Link>
-        //         </div>
-        //         <div className="company__wrapper__card--right__part-2">
-        //             <i className="fa fa-heart-o"></i>
-        //         </div>
-        //     </div>
-        // </div>
-
         <section>
             <div className="company__wrapper__card">
             <div className="company__wrapper__card--left">
@@ -133,7 +116,6 @@ const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail
                 <div className="company__wrapper__card--right__part-1">
                     <h1>{name}</h1>
                     <p>{location}</p>
-                    {/* <Link className={type === "full time" ? "full-time" : "half-time"} to={`/job-details/abcdefghi`}>full time</Link> */}
                 </div>
                 <div className="company__wrapper__card--right__part-2">
                     <i className="fa fa-caret-down" onClick={toggleDropdown}></i>
@@ -195,10 +177,6 @@ const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail
                                 <label htmlFor="companyLocation">Company Location: </label>
                                 <input type="text" className='form-control' name="companyLocation" placeholder='Company Location' value={companyLocation} onChange={(e) => setCompanyLocation(e.target.value)}/>
                             </div>
-                            {/* <div className='form-row'>
-                                <label htmlFor="companyDescription">Company Description: </label>
-                                <input type="text" className='form-control' name="companyDescription" placeholder='Company Description' value={companyDescription} onChange={(e) => setCompanyDescription(e.target.value)}/>
-                            </div> */}
                             <div className='form-row'>
                                 <label htmlFor="companyDescription">Company Description: </label>
                                 <textarea className='form-control' name="companyDescription" id="text-area-expand" cols="30" rows="20" placeholder='Company Description' value={companyDescription} onChange={(e) => setCompanyDescription(e.target.value)}></textarea>
@@ -206,13 +184,11 @@ const AdminCompanyItem = ({index, id, name, slug, user_id, usersName, usersEmail
                             <div className='button-div'>
                                 <button type='button' className="button" onClick={applyCompanyChanges}>
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Save Changes</span>
                                     </div>
                                 </button>
                                 <button type='button' onClick={closeModal} className="button button-cancel">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Cancel</span>
                                     </div>
                                 </button>

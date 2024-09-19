@@ -56,7 +56,6 @@ const JobDetailsItem = ({ job, similar }) => {
         setRole(localStorage.getItem('role'))
 
         if (role == null) {
-            // setMessage('Please Login or Register Before Apply Job')
             setMessage('You Need an Account to Apply Job')
         }else if (role == 'company') {
             setMessage('Company can\'t Apply Job')
@@ -103,15 +102,6 @@ const JobDetailsItem = ({ job, similar }) => {
     const [description, setDescription] = useState('')
     const [document, setDocument] = useState(null)
     const [status, setStatus] = useState('pending')
-    // const [profile_id, setProfile_id] = useState('')
-    // const [company_id, setCompany_id] = useState('')
-    // const [job_id, setJob_id] = useState('')
-
-    // console.log(job)
-
-    // useEffect(() => {
-    //     console.log(role)
-    // }, [role])
 
     function openModal() {
         checkRole(role)
@@ -166,18 +156,14 @@ const JobDetailsItem = ({ job, similar }) => {
             if (applyResponse === 'Already apply') {
                 showFailedModal()
                 setApplyResponseMsg('You already apply this job, please wait until the company give their respond')
-                // console.log('You already apply this job, please wait until the company give their respond')
             }else if (applyResponse === 'Empty profile') {
                 showFailedModal()
                 setApplyResponseMsg('Please fill your profile before apply this job')
             }else if (applyResponse === 'Banned user') {
-                // showFailedModal()
                 showBanModal()
-                // setApplyResponseMsg('Your account has been banned')
             }else if (applyResponse.data) {
                 showSuccessModal()
                 setApplyResponseMsg('Success apply this job')
-                // console.log('Success apply this job')
             }
         }
 
@@ -243,10 +229,7 @@ const JobDetailsItem = ({ job, similar }) => {
                 <div className="row">
                     <div className="left">
                         <h1>Job Description</h1>
-                        {/* <div>{job && job.description}</div> */}
                         <textarea readOnly className='form-control long-text' id="text-area" cols="30" rows="20" value={job && job.description} disabled></textarea>
-                        {/* <Link className='button' to='/'>Apply Job</Link> */}
-                        {/* <button className='button' onClick={openModal} type='button'>Apply Job</button> */}
                         {
                             applyReady ? (
                             <button className='button' onClick={openModal} type='button'>Apply Job</button>
@@ -257,7 +240,6 @@ const JobDetailsItem = ({ job, similar }) => {
                     </div>
                     <div className="right">
                         <h1>Company Description</h1>
-                        {/* <div className="location-map">{job?.company[0].description}</div> */}
                         <div className="location-map">
                             <textarea readOnly className='form-control long-text' id="text-area" cols="30" rows="20" value={job?.company[0].description} disabled></textarea>
                         </div>
@@ -283,7 +265,6 @@ const JobDetailsItem = ({ job, similar }) => {
                             }
                                 <button type='button' onClick={closeModal} className="button button-cancel">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Cancel</span>
                                     </div>
                                 </button>
@@ -310,7 +291,6 @@ const JobDetailsItem = ({ job, similar }) => {
                             }
                                 <button type='button' onClick={closeModal} className="button">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Confirm</span>
                                     </div>
                                 </button>
@@ -337,7 +317,6 @@ const JobDetailsItem = ({ job, similar }) => {
                             }
                                 <button type='button' onClick={closeModal} className="button">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Confirm</span>
                                     </div>
                                 </button>
@@ -355,7 +334,6 @@ const JobDetailsItem = ({ job, similar }) => {
                         <div className='button-div'>
                                 <button type='button' onClick={logout} className="button">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Ok</span>
                                     </div>
                                 </button>
@@ -369,29 +347,15 @@ const JobDetailsItem = ({ job, similar }) => {
                 <div className="modal-container">
                     <form>
                         <div className="form">
-                            {/* <div className='form-row'>
-                                <label htmlFor="title">Title: </label>
-                                <input type="text" value={title} onChange={(e)=>setTitle(e.target.value)} className='form-control' name="title" placeholder='Job Title'/>
-                            </div>
-                            <div className='form-row'>
-                                <label htmlFor="description">Description: </label>
-                                <input type="text" value={description} onChange={(e)=>setDescription(e.target.value)} className='form-control' name="tag" placeholder='Job Tag'/>
-                            </div>
-                            <div className='form-row'>
-                                <label htmlFor="CV">Curriculum Vitae: </label>
-                                <input type="file" onChange={(e)=>setDocument(e.target.files[0])} className='form-control' name="CV" placeholder='Job Document'/>
-                            </div> */}
                             <h1>Are you sure want to apply this job?</h1>
                             <div className='button-div'>
                                 <button type='button' onClick={applyJobHandler} className="button">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Apply Job</span>
                                     </div>
                                 </button>
                                 <button type='button' onClick={closeModal} className="button button-cancel">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Cancel</span>
                                     </div>
                                 </button>

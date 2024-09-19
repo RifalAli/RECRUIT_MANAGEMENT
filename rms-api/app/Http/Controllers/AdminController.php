@@ -25,9 +25,7 @@ class AdminController extends Controller
     }
 
     public function loadCompany() {
-        // $data['company'] = Company::with('user')->first();
         $data['company'] = DB::table("companies")->join("users", "companies.user_id", "=", "users.id")->select("users.*", "companies.*", "users.name as username")->get();
-        // $data['company'] = DB::table('companies')->all();
         return $this -> apiResponse('success', $data, Response::HTTP_OK, true);
     }
 
@@ -81,7 +79,7 @@ class AdminController extends Controller
                 $data['job'][$num]['cat_id'] = $query['job'][$i]['cat_id'];
                 $data['job'][$num]['company'] = $query['company'][$i];
             } catch (Exception $err) {
-                // $data['job'][$num] = '';
+                // 
             }
         }
 
@@ -140,7 +138,6 @@ class AdminController extends Controller
 
     public function banUser($option, $user_id) {
         $user = User::where([['id', $user_id]])->first();
-        // $user['isBanned'] = true;
 
         if ($option == 'ban') {
             $user['isBanned'] = 1;

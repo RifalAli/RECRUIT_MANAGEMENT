@@ -3,7 +3,6 @@ import Search from '../../header/Search'
 import defaultImg from '../../../../assets/images/default.png'
 
 const NavHero = ({ hero, job }) => {
-    // console.log(job);
     return (
         <div className='hero_section'>
             <>
@@ -13,9 +12,6 @@ const NavHero = ({ hero, job }) => {
                             <div className='title'>
                                 <h1>Find Job</h1>
                             </div>
-                            {/* <div className='search_nav'>
-                                <Search />    
-                            </div> */}
                         </> 
                     ) : hero === 'contact' || 
                     hero === 'Login' || 
@@ -52,11 +48,11 @@ const NavHero = ({ hero, job }) => {
                                                 </div>
                                                 <div className="post-date">
                                                     <i className="fa fa-calendar"></i>
-                                                    <span>Posted: {new Date(job.created_at).toISOString().slice(0, 10)}</span>
+                                                    <span>Posted: {new Date(job.created_at).toLocaleDateString('en-GB').replace(/\//g, '-') + ' ' + new Date(job.created_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
                                                 </div>
                                                 <div className="expire-date">
                                                     <i className="fa fa-hourglass"></i>
-                                                    <span>Expires: {new Date(job.expire_at).toISOString().slice(0, 10)}</span>
+                                                    <span>Expires: {new Date(job.expire_at).toLocaleDateString('en-GB').replace(/\//g, '-') + ' ' + new Date(job.created_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
                                                 </div>
                                             </div>
                                         </div>

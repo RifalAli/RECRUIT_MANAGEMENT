@@ -32,11 +32,6 @@ const toggleAnswerModal = (state, index) => {
 }
 
 const ProfileAppliedItem = ({index, id, title, description, document_url, status, application_date, profile_id, company_id, job_id, main_job, applicationAnswer, company}) => {
-    // const [doRefresh, setDoRefresh] = useState(false)
-    // console.log(main_job)
-    // console.log(applicationAnswer)
-    // console.log(main_job)
-
     const showApplierDetail = () => {
         toggleAppliedDetail('show', index)
     }
@@ -88,10 +83,6 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
         toggleAnswerModal('hide', index)
     }
 
-    // useEffect(() => {
-    //     console.log(answerStatus)
-    // }, [answerStatus])
-
     const postAnswer = () => {
         const formData = new FormData();
         formData.append('status', answerStatus)
@@ -108,12 +99,6 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
         createAnswer()
         closeAllDetail()
     }
-
-    // const loadURLToInputField = () => {
-    //     let file = new File()
-    // }
-
-    // console.log(document_url)
 
     return (
         <>
@@ -146,10 +131,6 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                     <p>Job Title</p>
                     <p>: {main_job.title}</p>
                 </div>
-                {/* <div className="applier-detail-row">
-                    <p>Job Description</p>
-                    <p>: {main_job.description}</p>
-                </div> */}
                 <div className="applier-detail-row">
                     <p>Description</p>
                     <p>: 
@@ -159,7 +140,6 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                 <div className="applier-detail-row">
                     <p>Job Salary</p>
                     <p>: {Number(main_job.salary).toLocaleString("id", {currency: "IDR", style: "currency"})}</p>
-                    {/* <p>: {main_job.salary}</p> */}
                 </div>
                 <div className="applier-detail-row">
                     <p>Company Name</p>
@@ -194,26 +174,12 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                     <p>Title</p>
                     <p>: {applicationAnswer.title}</p>
                 </div>
-                {/* <div className="applier-detail-row">
-                    <p>Description</p>
-                    <p>: {applicationAnswer.description}</p>
-                </div> */}
                 <div className="applier-detail-row">
                     <p>Description</p>
                     <p>: 
                     <textarea readOnly className='form-control application-description' cols="30" rows="20" value={applicationAnswer.message}></textarea>
                     </p>
                 </div>
-                {/* <div className="applier-detail-row">
-                    <p>Meeting Date</p>
-                    <p>: {applicationAnswer.meeting_date}</p>
-                </div>
-                <div className="applier-detail-row">
-                    <p>Meeting Link</p>
-                    <p>
-                        : <a href={applicationAnswer.meeting_link}>{applicationAnswer.meeting_link}</a>
-                    </p>
-                </div> */}
                 <div className="applier-detail-row">
                     <p>Status</p>
                     <p>
@@ -227,8 +193,6 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                         <p className="pending">Your request is still pending</p>
                     </>
                 )}
-                {/* <button type="button" onClick={showProfileDetail} className="applier-detail-profile-button">Click to See Applier's Profile Detail</button> */}
-                {/* <button type="button" onClick={showJobDetail} className="applier-detail-job-button">Click to See Job Applied Detail</button> */}
             </div>
         </div>
         <div className="profile-detail">
@@ -245,10 +209,6 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                     <p>Location</p>
                     <p>: {company.location}</p>
                 </div>
-                {/* <div className="applier-detail-row">
-                    <p>Description</p>
-                    <p>: {company.description}</p>
-                </div> */}
                 <div className="applier-detail-row">
                     <p>Description</p>
                     <p>: 
@@ -263,12 +223,8 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                 </div>
                 <div className="applier-detail-row">
                     <p>Salary</p>
-                    <p>: {main_job.salary}</p>
+                    <p>: {Number(main_job.salary).toLocaleString("id", {currency: "IDR", style: "currency"})}</p>
                 </div>
-                {/* <div className="applier-detail-row">
-                    <p>Description</p>
-                    <p>: {main_job.description}</p>
-                </div> */}
                 <div className="applier-detail-row">
                     <p>Description</p>
                     <p>: 
@@ -285,78 +241,6 @@ const ProfileAppliedItem = ({index, id, title, description, document_url, status
                 </div>
             </div>
         </div>
-        {  /* <div className="job-detail">
-            <button className="applier-detail-hide" type="button" onClick={hideJobDetail}>
-                <i className="fa fa-close fa-fw"></i>
-            </button>
-            <div className="applier-detail-container">
-                <h1>Job Applied Detail</h1>
-                <div className="applier-detail-row">
-                    <p>Title: </p>
-                    <p>{job.title}</p>
-                </div>
-                <div className="applier-detail-row">
-                    <p>Tag: </p>
-                    <p>{job.tag}</p>
-                </div>
-                <div className="applier-detail-row">
-                    <p>Salary: </p>
-                    <p>{job.salary}</p>
-                </div>
-                <div className="applier-detail-row">
-                    <p>Type: </p>
-                    <p>{job.type}</p>
-                </div>
-                <div className="applier-detail-row">
-                    <p>Description: </p>
-                    <p>{job.description}</p>
-                </div>
-            </div>
-        </div>
-        <div className="answer-modal">
-                <div className="modal-container">
-                    <form>
-                        <div className="form">
-                            <div className='form-row'>
-                                <label htmlFor="title">Title: </label>
-                                <input type="text" className='form-control' name="title" placeholder='Job Title' value={answerTitle} onChange={(e) => setAnswerTitle(e.target.value)}/>
-                            </div>
-                            <div className='form-row'>
-                                <label htmlFor="description">Description: </label>
-                                <input type="text" className='form-control' name="description" placeholder='Description' value={answerDescription} onChange={(e) => setAnswerDescription(e.target.value)}/>
-                            </div>
-                            {
-                                answerStatus === 'accepted' ? (
-                                    <>
-                            <div className='form-row'>
-                                <label htmlFor="meeting_date">Meeting Date: </label>
-                                <input type="date" className='form-control' name="expire_at" placeholder='meeting date' value={meeting_date} onChange={(e) => setMeeting_date(e.target.value)}/>
-                            </div>
-                            <div className='form-row'>
-                                <label htmlFor="meeting_link">Meeting Link: </label>
-                                <input type="text" className='form-control' name="meeting_link" placeholder='Meeting Link' value={meeting_link} onChange={(e) => setMeeting_link(e.target.value)}/>
-                            </div>  
-                                    </>
-                                ) : (
-                                    <></>
-                                )
-                            }
-                            <div className='button-div'>
-                                <button type='button' className="button" onClick={postAnswer}>
-                                    <div>
-                                        <span>Post Answer</span>
-                                    </div>
-                                </button>
-                                <button type='button' onClick={hideAnswerModal} className="button button-cancel">
-                                    <div>
-                                        <span>Cancel</span>
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div> */}
         </>
     )
 }

@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\MainJobController;
 use App\Http\Controllers\ProfileController;
+use App\Models\JobApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
  
@@ -46,8 +47,6 @@ Route::get('/allCategories', [CategoryController::class, 'getAllCategories']);
 Route::get('/categories/jobs/{slug}', [HomeController::class, 'sameCategory']);
 Route::post('/category/jobs/{slug}/{page}', [HomeController::class, 'sameCategoryPagination']);
 
-// Route::get('/user-complete-profile/{user_id}', [ProfileController::class, 'getProfile']);
-
 Route::group([
     'middleware' => 'api', 
 ], function ($router) {
@@ -74,10 +73,9 @@ Route::group([
     Route::post('/adminEditJob/{job_id}', [MainJobController::class, 'adminEditJob']);
     Route::post('/adminDeleteJob/{job_id}', [MainJobController::class, 'adminDeleteJob']);
     Route::post('/applyJob', [JobApplicationController::class, 'applyJob']);
-    Route::get('/companyViewApplier/{company_id}', [JobApplicationController::class, 'companyViewApplier']);
+    Route::get('/companyViewApplier/{option}/{company_id}', [JobApplicationController::class, 'companyViewApplier']);
     Route::post('/answerJobApplication/{jobApplication_id}', [ApplicationAnswerController::class, 'answerJobApplication']);
-    Route::get('/getAppliedJobs/{profile_id}', [JobApplicationController::class, 'getProfileJobApplication']);
-    // Route::post('/filterJobs/{count}', [MainJobController::class, 'filterJobs']);
+    Route::get('/getAppliedJobs/{option}/{profile_id}', [JobApplicationController::class, 'getProfileJobApplication']);
     Route::post('/filterJobs/{page}', [MainJobController::class, 'filterPaginationJobs']);
     Route::get('/getUsers/{user_company_id}', [BlacklistController::class, 'getAllUsers']);
     Route::get('/getBlacklist/{user_company_id}', [BlacklistController::class, 'getAllBlacklists']);
@@ -86,6 +84,7 @@ Route::group([
     Route::get('/getNormalUser', [AdminController::class, 'getNormalUser']);
     Route::get('/getBannedUser', [AdminController::class, 'getBannedUser']);
     Route::post('/banUser/{option}/{user_id}', [AdminController::class, 'banUser']);
+    Route::post('/archiveApplication/{instance}/{option}/{application_id}', [JobApplicationController::class, 'archiveApplication']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

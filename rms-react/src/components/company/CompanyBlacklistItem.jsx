@@ -5,8 +5,6 @@ import Footer from '../user/footer/Footer'
 import { storeApiData } from '../../api/api'
 
 const CompanyBlacklisItem = ( { refresh_normal, refresh_blacklist, blacklist_id, company_id, user_id, profile, status } ) => {
-    // console.log(company_id, user_id)
-    // console.log(user_id, user_profile)
     const blacklistUser = () => {
         const createBlacklist = async () => {
             await storeApiData(`blacklistUser`, { user_id, company_id })
@@ -32,9 +30,7 @@ const CompanyBlacklisItem = ( { refresh_normal, refresh_blacklist, blacklist_id,
     return (
         <>
             <div className='blacklist__wrapper'>
-                {/* <p>1</p> */}
                 <p>{profile.fullname}</p>
-                {/* Button for user & profile detail, placed before the action button */}
                 {
                     status === 'normal' ? (
                         <>
@@ -42,7 +38,6 @@ const CompanyBlacklisItem = ( { refresh_normal, refresh_blacklist, blacklist_id,
                         </>
                     ) : (
                         <>
-                            {/* <p>{blacklist_id}</p> */}
                             <button className='unblacklist-button' onClick={unblacklistUser} type='button'>Unblacklist</button>
                         </>
                     )

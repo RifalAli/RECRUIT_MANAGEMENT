@@ -48,7 +48,6 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return response()->json($validator->errors()->first(), 200);
-            // return response()->json($validator->errors(), 422);
         }
 
         $userByEmail = User::where([['email', $request['email']]])->first();
@@ -61,24 +60,10 @@ class AuthController extends Controller
         }
 
         if (! $token = JWTAuth::attempt($validator->validated())) {
-            // return response()->json(['error' => 'Unauthorized'], 401);
             return response()->json('Unauthorized', 200);
         }
 
         return $this->createNewToken($token);
-
-    	// $validator = Validator::make($request->all(), [
-        //     'email' => 'required|email',
-        //     'password' => 'required|string|min:6',
-        // ]);
-        // if ($validator->fails()) {
-        //     return response()->json($validator->errors(), 422);
-        // }
-        // if (! $token = JWTAuth::attempt($validator->validated())) {
-        //     // return response()->json(['error' => 'Unauthorized'], 401);
-        //     return response()->json('Unauthorized', 200);
-        // }
-        // return $this->createNewToken($token);
     }
     /**
      * Register a User.
@@ -86,24 +71,6 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function register(Request $request) {
-        // $validator = Validator::make($request->all(), [
-        //     'name' => 'required|string|between:2,100',
-        //     'email' => 'required|string|email|max:100|unique:users',
-        //     'password' => 'required|string|confirmed|min:6',
-        // ]);
-        // if($validator->fails()){
-        //     return response()->json($validator->errors()->toJson(), 400);
-        // }
-        // $user = User::create(array_merge(
-        //             $validator->validated(),
-        //             ['password' => bcrypt($request->password),'slug'=>Str::random(15),'token'=>Str::random(20),'status'=>'active', 'image'=>'http://localhost:8000/files/users/default.png']
-        //         ));
-        // if ($user) {
-        //     $details = ['name'=>$user->name, 'email'=>$user->email, 'hashEmail'=>Crypt::encryptString($user->email), 'token'=>$user->token];
-        //     dispatch(new VerifyUserJobs($details));
-        // }
-        // return $this->apiResponse('User succesfully registered',$data=$user,Response::HTTP_OK, true);
-
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:users',
@@ -129,17 +96,12 @@ class AuthController extends Controller
                     'token'=>Str::random(20),
                     'status'=>'active', 
                     'otp'=>random_int(100000, 999999),
-                    'image'=>'http://localhost:8000/files/users/photo/default.png',
+                    'image'=>'http://localhost:8000/files/users/photo/profileGuest.png',
                     'role'=>$request['role']]
                 ));
         if ($user) {
             $details = ['name'=>$user->name, 'email'=>$user->email, 'hashEmail'=>Crypt::encryptString($user->email), 'token'=>$user->token, 'otp'=>$user->otp];
             VerifyUserJobs::dispatchSync($details);
-            // // dispatch(new VerifyUserJobs($details));
-            // VerifyUserJobs::dispatchSync(Mail::to($details['email'])->send(new VerifyUserMail($details)));
-            // Mail::to($details['email'])->send(new VerifyUserMail($details));
-            // $details = ['slug' => $user->slug, 'role' => $user->role];
-            // $asyncMail = Http::async()->post(url('/send-otp'), $details);
         }
 
         $data['user'] = $user;
@@ -147,13 +109,6 @@ class AuthController extends Controller
         if ($data['user']['role'] === 'job seeker') {
             $data['profile'] = Profile::create([
                 'slug'=>Str::random(15),
-                // 'fullname' => 'Guest'.Str::random(5),
-                // 'age' => 19, 
-                // 'address' => 'No Address', 
-                // 'description' => 'No Description', 
-                // 'last_education' => 'SMA/Sederajat',
-                // 'document_url' => 'http://localhost:8000/files/applications/default.pdf',
-                // 'image' => 'http://localhost:8000/files/users/default.png',-----
                 'user_id' => $data['user']['id'],
             ]);
             
@@ -161,10 +116,6 @@ class AuthController extends Controller
         }else if ($data['user']['role'] === 'company') {
             $data['company'] = Company::create([
                 'slug'=>Str::random(15),
-                // 'name' => 'Company'.Str::random(5),
-                // 'location' => 'No Location', 
-                // 'description' => 'No Description',
-                // 'image' => 'http://localhost:8000/files/companies/default.png',-----
                 'user_id' => $data['user']['id'],
             ]);
 
@@ -175,15 +126,11 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         
-        return $this->createNewToken($token);
-
-        // return $this->apiResponse('User succesfully registered',$data=$user,Response::HTTP_OK, true);
+        return $this->createNewToken($token);;
     }
 
     public function compareOTP(Request $request) {
         $data['user'] = User::where([['slug', $request['slug']], ['role', $request['role']]])->first();
-        // $data['user'] = \App\Models\User::where([['slug', $request['slug']]])->first();
-        // return $this->apiResponse('Success Verify', $data['user'], Response::HTTP_OK, true);
 
         if ($data['user']['otp'] == $request['otp']) {
             $data['user']['verify'] = true;
@@ -202,7 +149,6 @@ class AuthController extends Controller
         
         if ($data['user']['otp'] != null) {
             $details = ['name'=>$data['user']['name'], 'email'=>$data['user']['email'], 'hashEmail'=>Crypt::encryptString($data['user']['email']), 'token'=>$data['user']['token'], 'otp'=>$data['user']['otp']];
-            // dispatch(new VerifyUserJobs($details));
             Mail::to($details['email'])->send(new VerifyUserMail($details));
 
             return $this->apiResponse('Success send OTP', $data['user'], Response::HTTP_OK, true);
@@ -283,7 +229,6 @@ class AuthController extends Controller
                 ]);
                 PasswordResetJob::dispatchSync($details);
                 return $this->apiResponse('Link sent',null,Response::HTTP_OK, true);
-                // return $this->apiResponse('Password reset link has been sent to your email address',null,Response::HTTP_OK, true);
             }
         } else {
             return $this->apiResponse('Invalid email',null,Response::HTTP_OK, true);

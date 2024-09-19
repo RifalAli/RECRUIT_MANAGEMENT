@@ -35,12 +35,8 @@ class MainJobController extends Controller
         for ($i = ($pageDestination - 1) * 6, $num = 0; $i < ($pageDestination) * 6; $i++, $num++) {
             try {
                 $data['job'][$num] = $query['job'][$i];
-                // $data['job'][$num]['title'] = $query['job'][$i]['title'];
-                // $data['job'][$num]['type'] = $query['job'][$i]['type'];
-                // $data['job'][$num]['slug'] = $query['job'][$i]['slug'];
-                // $data['job'][$num]['icon'] = $query['job'][$i]['icon'];
             } catch (Exception $err) {
-                // $data['job'][$num] = '';
+                // 
             }
         }
 
@@ -51,8 +47,6 @@ class MainJobController extends Controller
         }
 
         return $this -> apiResponse('success', $finalData, Response::HTTP_OK, true);
-
-        // return $this->apiResponse('Success fetch all job that belong to this company', $data, Response::HTTP_OK, true);
     }
 
     public function companyCreateJob($company_id, Request $request) {
@@ -100,13 +94,6 @@ class MainJobController extends Controller
         $data['job']->save();
 
         return $this->apiResponse('Success create new job', $data, Response::HTTP_OK, true);
-        
-        // return $this->apiResponse('Check', $data, Response::HTTP_OK, true);
-        // $data['profile'] = Profile::where([['user_id', $user_id]])->first();
-        //$data['categories'] = Category::where([['slug', $slug]])->first();
-        //$data['same'] = MainJob::where([['status', 'active'], ['cat_id', $data['categories']->id]])->get();
-
-        // return $this->apiResponse('success', $data, Response::HTTP_OK, true);
     }
 
     public function companyDeleteJob($company_id, $job_id) {
@@ -228,7 +215,6 @@ class MainJobController extends Controller
     public function filterJobs($count, Request $request) {
         $data['job'] = MainJob::where([
             ['title', 'LIKE', '%'.$request['title'].'%'], 
-            // ['type', $request['type']], 
             ['status', 'active']
         ])->whereHas(
             'category', function ($query) use ($request) {
@@ -274,13 +260,11 @@ class MainJobController extends Controller
             }
         )->whereHas(
             'company', function ($query) use ($bannedUsers) {
-                // $query->where('location', 'LIKE', '%'.$blacklist['location'].'%');
                 if ($bannedUsers) {
                     for ($a = 0; $a < sizeof($bannedUsers); $a++) {
                         $query->whereNot('user_id', $bannedUsers[$a]['id']);
                     }
                 }
-                // $query->where('user_id', 2);
             }
         )->get();
 
@@ -300,7 +284,7 @@ class MainJobController extends Controller
                 $data['job'][$num]['icon'] = $query['job'][$i]['icon'];
                 $data['job'][$num]['company'] = $query['company'][$i];
             } catch (Exception $err) {
-                // $data['job'][$num] = '';
+                // 
             }
         }
 

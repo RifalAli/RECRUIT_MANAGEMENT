@@ -37,7 +37,6 @@ const AdminCustomCategory = () => {
     useEffect(() => {
         setFetchState(false);
         fetchCategory()
-        // console.log(categoryData)
         setTimeout(() => {
             setLoader(false);
         }, 4000);

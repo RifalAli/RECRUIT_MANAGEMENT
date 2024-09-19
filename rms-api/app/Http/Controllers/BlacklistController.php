@@ -37,7 +37,6 @@ class BlacklistController extends Controller
     }
 
     public function getAllUsers($user_company_id) {
-        //All users that not blacklist yet
         $blacklist = Blacklist::where([['user_company_id', $user_company_id]])->with('userProfile')->get();
 
         $users = User::where([
@@ -66,7 +65,6 @@ class BlacklistController extends Controller
     }
     
     public function createBlacklist(Request $request) {
-        //user company id & user profile id
         $blacklist = Blacklist::create([
             'user_profile_id' => $request['user_id'],
             'user_company_id' => $request['company_id'],
@@ -78,7 +76,6 @@ class BlacklistController extends Controller
     }
     
     public function removeBlacklist(Request $request) {
-        //blacklist id
         $blacklist = Blacklist::where([['id', $request['blacklist_id']]])->delete();
         
         return $this -> apiResponse('success', $blacklist, Response::HTTP_OK, true);

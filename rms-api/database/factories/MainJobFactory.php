@@ -25,7 +25,7 @@ class MainJobFactory extends Factory
             'Cyber Security' => ['Cybersecurity Analyst', 'Security Engineer', 'Penetration Tester', 'Information Security Officer'],
             'Healthcare Management' => ['Healthcare Manager', 'Clinical Manager', 'Hospital Administrator', 'Health Services Manager'],
             'Nursing' => ['Registered Nurse', 'Nurse Practitioner', 'Clinical Nurse Specialist', 'Pediatric Nurse'],
-            'Accounting' => ['Accountant', 'Financial Auditor', 'Tax Specialist', 'Bookkeeper'],
+            'Accounting' => ['Accountant', 'Financial Auditor', 'Tax Specialist'],
             'Financial Analysis' => ['Financial Analyst', 'Investment Analyst', 'Risk Analyst', 'Budget Analyst'],
             'Marketing' => ['Digital Marketing Specialist', 'SEO Specialist', 'Content Marketer', 'Brand Manager'],
             'Sales' => ['Sales Executive', 'Account Manager', 'Business Development Representative', 'Sales Consultant'],
@@ -225,6 +225,109 @@ class MainJobFactory extends Factory
                 'As a game designer, you will develop game concepts, storylines, and gameplay elements. You will work with developers and artists to bring your vision to life.',
             ],
         ];
+
+        $jobIconMap = [
+            'Software Development' => [
+                'http://localhost:8000/files/jobs/seeder/software/OIP.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/software/th1.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/software/th2.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/software/th.jpeg', ],
+            'Data Science' => [
+                'http://localhost:8000/files/jobs/seeder/data/OIP.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/data/OIP2.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/data/th3.jpeg', ],
+            'Cyber Security' => [
+                'http://localhost:8000/files/jobs/seeder/cyber/OIP.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/cyber/OIP2.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/cyber/unduhan.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/cyber/unduhan2.jpeg', ],
+            'Healthcare Management' => [
+                'http://localhost:8000/files/jobs/seeder/health/OIP.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/health/OIP2.jpeg', ],
+            'Nursing' => [
+                'http://localhost:8000/files/jobs/seeder/nursing/OIP.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/nursing/OIP2.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/nursing/unduhan1.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/nursing/unduhan2.jpeg', ],
+            'Accounting' => [
+                'http://localhost:8000/files/jobs/seeder/accounting/OIP.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/accounting/unduhan.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/accounting/unduhan1.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/accounting/unduhan2.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/accounting/unduhan3.jpeg', ],
+            'Financial Analysis' => [
+                'http://localhost:8000/files/jobs/seeder/finance/OIP.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/finance/unduhan.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/finance/unduhan1.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/finance/unduhan2.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/finance/unduhan3.jpeg', ],
+            'Marketing' => [
+                'http://localhost:8000/files/jobs/seeder/marketing/OIP.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/marketing/OIP2.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/marketing/OIP3.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/marketing/unduhan.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/marketing/unduhan5.jpeg', ],
+            'Sales' => [
+                'http://localhost:8000/files/jobs/seeder/sales/OIP.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/sales/OIP2.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/sales/unduhan.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/sales/unduhan1.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/sales/unduhan2.jpeg', ],
+            'Human Resource' => [
+                'http://localhost:8000/files/jobs/seeder/human/humanres1.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/human/humanres2.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/human/humanres3.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/human/humanres4.jpeg', ],
+            'Civil Engineering' => [
+                'http://localhost:8000/files/jobs/seeder/civil/civi.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/civil/civileng.jpeg',
+                'http://localhost:8000/files/jobs/seeder/civil/enginering.jpeg', ],
+            'Electrical Engineering' => [
+                'http://localhost:8000/files/jobs/seeder/electro/elek.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/electro/elet.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/electro/lek.jpeg', ],
+            'Mechanical Engineering' => [
+                'http://localhost:8000/files/jobs/seeder/mechanic/mechanical.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/mechanic/mek.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/mechanic/mekanik.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/mechanic/mekanikal.jpeg', ],
+            'Architecture' => [
+                'http://localhost:8000/files/jobs/seeder/architecture/arc.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/architecture/archi.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/architecture/architctur.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/architecture/architectu.jpeg', ],
+            'Customer Service' => [
+                'http://localhost:8000/files/jobs/seeder/customer/cust.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/customer/customerservice.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/customer/customersr.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/customer/serv.jpeg', ],
+            'Supply Chain Management' => [
+                'http://localhost:8000/files/jobs/seeder/supply/chin.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/supply/management.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/supply/sup.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/supply/supply.jpeg', ],
+            'Education and Teaching' => [
+                'http://localhost:8000/files/jobs/seeder/education/edu.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/education/education.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/education/educt.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/education/tec.jpeg', ],
+            'Project Management' => [
+                'http://localhost:8000/files/jobs/seeder/project/m.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/project/manag.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/project/proj.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/project/projectman.jpeg', ],
+            'Business Analysis' => [
+                'http://localhost:8000/files/jobs/seeder/business/an.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/business/busi.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/business/bussine.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/business/bussines.jpeg', ],
+            'Network Administration' => [
+                'http://localhost:8000/files/jobs/seeder/network/OIP.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/network/OIP1.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/network/OIP3.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/network/OIP4.jpeg',
+                'http://localhost:8000/files/jobs/seeder/network/unduhan.jpeg', ],
+        ];
         
         
         // return [
@@ -244,12 +347,14 @@ class MainJobFactory extends Factory
         // ];
 
         // $category = fake()->randomElement(Category::where('status', 'active')->pluck('id')->toArray());
+
+        // fake()->randomElement(['http://localhost:8000/files/jobs/default.png', 'http://localhost:8000/files/jobs/default1.png', 'http://localhost:8000/files/jobs/default2.png', 'http://localhost:8000/files/jobs/default3.png'])
         $category = fake()->randomElement(Category::where('status', 'active')->get());
         $title = fake()->randomElement($jobCategoryMap[$category->name]);
 
         return [
             'cat_id'=>$category->id,
-            'icon'=>fake()->randomElement(['http://localhost:8000/files/jobs/default.png', 'http://localhost:8000/files/jobs/default1.png', 'http://localhost:8000/files/jobs/default2.png', 'http://localhost:8000/files/jobs/default3.png']),
+            'icon'=>fake()->randomElement($jobIconMap[$category->name]),
             'salary'=>fake()->numberBetween(3000000, 50000000),
             'expire_at'=>fake()->dateTimeBetween('+1 month', '+2 month'),
             'company_id'=>fake()->randomElement(Company::where('id', fake()->numberBetween(1, 3))->pluck('id')->toArray()),

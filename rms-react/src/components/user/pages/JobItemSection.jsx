@@ -32,9 +32,6 @@ const JobItemSection = ({jobs, condition}) => {
                         ))
                     }
                 </div>
-                {/* <div className="load-data">
-                    <button className='button'>Browse More</button>
-                </div> */}
             </div>
         </div>
     )

@@ -8,12 +8,6 @@ const CompanyJobItem = ({index, id, title, slug, closeDate, company, description
     const [doRefresh, setDoRefresh] = useState(false)
 
     const toggleDropdown = () => {
-        // let dropdowns = document.getElementsByClassName('company_job__wrapper__card--right__dropdown');
-        // for (let i = 0; i < dropdowns.length; i++) {
-        //     dropdowns.item(i).style.display = 'none';
-        //     console.log(dropdowns.item(i).dropdownState);
-        // }
-
         let dropdown = document.getElementsByClassName('company_job__wrapper__card--right__dropdown')[index];
         if (dropdownState) {
             dropdown.style.display = 'none';
@@ -21,14 +15,7 @@ const CompanyJobItem = ({index, id, title, slug, closeDate, company, description
             dropdown.style.display = 'block';
         }
 
-        //1 - 0
-        //2 - 1
-
-        // console.log(index)
-
         setDropdownState(!dropdownState);
-
-        // console.log(dropdownState)
     }
 
     const jobDeleteHandler = async () => {
@@ -48,9 +35,6 @@ const CompanyJobItem = ({index, id, title, slug, closeDate, company, description
 
     }, [doRefresh])
 
-    // console.log(company_id)
-
-    //Edit Job
     const closeModal = () => {
         let modal = document.getElementsByClassName('child-modal')[index];
         modal.style.display = 'none';
@@ -103,11 +87,7 @@ const CompanyJobItem = ({index, id, title, slug, closeDate, company, description
             setJobType(type)
             setJobImageUrl(icon)
 
-            // console.log(formatDate(closeDate))
-            // console.log(closeDate)
-
             if (category == null) return
-            // setJobCategory(category[cat_id-1].name)
             setJobCategory(cat_id)
         }
 
@@ -135,22 +115,6 @@ const CompanyJobItem = ({index, id, title, slug, closeDate, company, description
     const [jobExpireTime, setJobExpireTime] = useState('')
 
     return (
-        // <div className="job__wrapper__card">
-        //     <div className="job__wrapper__card--left">
-        //         <img src={ icon } alt="icon" />
-        //     </div>
-        //     <div className="job__wrapper__card--line"></div>
-        //     <div className="job__wrapper__card--right">
-        //         <div className="job__wrapper__card--right__part-1">
-        //             <h1>{title}</h1>
-        //             <p>{company}</p>
-        //             <Link className={type === "full time" ? "full-time" : "half-time"} to={`/job-details/${slug}`}>{type}</Link>
-        //         </div>
-        //         <div className="job__wrapper__card--right__part-2">
-        //             <i className="fa fa-heart-o"></i>
-        //         </div>
-        //     </div>
-        // </div>
         <section>
             <div className="company_job__wrapper__card">
                 <div className="company_job__wrapper__card--left">
@@ -197,21 +161,6 @@ const CompanyJobItem = ({index, id, title, slug, closeDate, company, description
                                 <label htmlFor="expire_at">Expire at: </label>
                                 <input type="datetime-local" className='form-control' name="expire_at" placeholder='close date' value={jobCloseDate} onChange={(e) => setJobCloseDate(e.target.value)}/>
                             </div>
-                            {/* <div className='form-row-datetime'>
-                                <label htmlFor="expire_at">Expire at: </label>
-                                <div>
-                                    <label htmlFor="">Date: </label>
-                                    <input type="date" className='form-control' name="expire_at" placeholder='close date' value={jobExpireDate} onChange={(e) => setJobExpireDate(e.target.value)}/>
-                                </div>
-                                <div>
-                                    <label htmlFor="">Time: </label>
-                                    <input type="time" className='form-control' name="expire_at" placeholder='close date' value={jobExpireTime} onChange={(e) => setJobExpireTime(e.target.value)}/>
-                                </div>
-                            </div> */}
-                            {/* <div className='form-row'>
-                                <label htmlFor="description">Description: </label>
-                                <input type="text" className='form-control' name="address" placeholder='Job Description' value={jobDescription} onChange={(e) => setJobDescription(e.target.value)}/>
-                            </div> */}
                             <div className='form-row'>
                                 <label htmlFor="description">Description: </label>
                                 <textarea className='form-control' name="description" id="text-area" cols="30" rows="20" placeholder='Description' value={jobDescription} onChange={(e) => setJobDescription(e.target.value)}></textarea>
@@ -221,15 +170,9 @@ const CompanyJobItem = ({index, id, title, slug, closeDate, company, description
                                 <select className='form-control' value={jobCategory} onChange={(e)=>setJobCategory(e.target.value)}>
                                     <option value=''>Select an Option</option>
                                     {
-                                        // category.map((item) => (
-                                        //     <option key={item.id} value={item.name}>{item.name}</option>
-                                        // ))
                                         category.map((item) => (
                                             <option key={item.id} value={item.id}>{item.name}</option>
                                         ))
-                                        // reamData.map(item => {
-                                        //     <option key={item.id} value={item.name}>{item.name}</option>
-                                        // })
                                     }
                                 </select>
                             </div>
@@ -243,13 +186,11 @@ const CompanyJobItem = ({index, id, title, slug, closeDate, company, description
                             <div className='button-div'>
                                 <button type='button' className="button" onClick={applyJobChanges}>
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Apply Changes</span>
                                     </div>
                                 </button>
                                 <button type='button' onClick={closeModal} className="button button-cancel">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Cancel</span>
                                     </div>
                                 </button>

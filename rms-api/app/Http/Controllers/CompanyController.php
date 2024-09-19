@@ -23,8 +23,6 @@ class CompanyController extends Controller
     
     public function getCompany($user_id) {
         $data['company'] = Company::where([['user_id', $user_id]])->first();
-        //$data['categories'] = Category::where([['slug', $slug]])->first();
-        //$data['same'] = MainJob::where([['status', 'active'], ['cat_id', $data['categories']->id]])->get();
         return $this->apiResponse('success', $data, Response::HTTP_OK, true);
     }
 

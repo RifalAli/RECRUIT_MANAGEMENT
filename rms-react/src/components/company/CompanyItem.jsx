@@ -6,6 +6,7 @@ import { fetchApiData, storeApiData } from '../../api/api';
 import CompanyApplier from './CompanyApplier';
 import Loader from '../../services/Loader';
 import CompanyBlacklist from './CompanyBlacklist';
+import CompanyApplierItem from './CompanyApplierItem';
 
 const openModal = () => {
     let modal = document.getElementsByClassName('job-modal')[0];
@@ -29,18 +30,22 @@ const closeLogoutModal = () => {
     modal.style.display = 'none';
 }
 
-// const closeModal = () => {
-//     let modal = document.getElementsByClassName('modal')[0];
-//     modal.style.display = 'none';
+const openArchiveModal = () => {
+    let modal = document.getElementsByClassName('archive-modal')[0];
 
-//     setJobTitle('')
-// }
+    modal.style.display = 'block';
+}
+
+const closeArchiveModal = () => {
+    let modal = document.getElementsByClassName('archive-modal')[0];
+
+    modal.style.display = 'none';
+}
 
 const CompanyItem = () => {
     const [loader, setLoader] = useState(true)
     const [doRefresh, setDoRefresh] = useState(false)
     const [errMsg, setErrMsg] = useState('')
-    //Close Modal is going to clean the form
     const closeModal = () => {
         let modal = document.getElementsByClassName('job-modal')[0];
         modal.style.display = 'none';
@@ -53,7 +58,6 @@ const CompanyItem = () => {
         setJobType('')
     }
 
-    //Company Profile
     const [userData, setUserData] = useState('')
     const [companyData, setCompanyData] = useState('')
 
@@ -112,7 +116,6 @@ const CompanyItem = () => {
 
     const revalidateCompany = () => {
         if (!userData.name || !companyData.name || !userData.email || !companyData.location || !companyData.description) {
-            // console.log('a')
             console.log(userData.name, companyData.name, userData.email, companyData.location, companyData.description)
             return setErrMsg('Please complete your company profile in order to publish any job vacant');
         }
@@ -138,9 +141,6 @@ const CompanyItem = () => {
             setLoader(false);
         }, 3500);
     }, [companyData])
-
-    // console.log(companyData)
-    // console.log(userData)
 
     const requestChanges = async (e) => {
         e.preventDefault();
@@ -168,7 +168,6 @@ const CompanyItem = () => {
         requestChanges(e)
     }
 
-    //Fetch Category
     const [category, setCategory] = useState([])
 
     const fetchCategory = async () => {
@@ -185,7 +184,6 @@ const CompanyItem = () => {
 
     console.log(category)
 
-    //Add Job
     const [jobTitle, setJobTitle] = useState('')
     const [jobSalary, setJobSalary] = useState('')
     const [jobCloseDate, setJobCloseDate] = useState('')
@@ -228,15 +226,6 @@ const CompanyItem = () => {
         }
         setJobResponse('')
         validation()
-        // const createJob = async () => {
-        //     await storeApiData(`companyCreateJob/${companyData.id}`, { jobTitle, jobSalary, jobCloseDate, jobCategory, jobDescription, jobType })
-        //     .then((response)=>console.log(response.data))
-        //     .then(setDoRefresh(!doRefresh))
-        //     .catch((response)=>console.log(response.data))
-        // }
-
-        // createJob()
-        // closeModal()
     }
 
     useEffect(() => {
@@ -257,18 +246,12 @@ const CompanyItem = () => {
         moreValidation()
     }, [jobResponse])
 
-    //Fetch Job
     const [allJobs, setAllJobs] = useState([])
     const [jobCount, setJobCount] = useState(0)
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0)
     const totalPageArray = []
     const [pageArray, setPageArray] = useState([])
-
-    // const fetchAllJobs = async () => {
-    //     const response = await fetchApiData(`getCompanyJob/${companyData.id}`)
-    //     setAllJobs(response.data.job)
-    // }
 
     const fetchJobs = async () => {
         await fetchApiData(`getCompanyJob/${companyData.id}/${currentPage}`)
@@ -284,16 +267,25 @@ const CompanyItem = () => {
         }
 
         fillData()
-        // console.log(totalPageArray)
         setPageArray(totalPageArray)
     }, [totalPage])
     
-    //Fetch Applier
     const [allAppliers, setAllAppliers] = useState([])
+    const [archivedAppliers, setArchivedAppliers] = useState([])
 
     const fetchAllAppliers = async () => {
-        const response = await fetchApiData(`companyViewApplier/${companyData.id}`)
+        const response = await fetchApiData(`companyViewApplier/normal/${companyData.id}`)
         setAllAppliers(response.data.applier)
+    }
+
+    const fetchArchivedAppliers = async () => {
+        const response = await fetchApiData(`companyViewApplier/archive/${companyData.id}`)
+        setArchivedAppliers(response.data.applier)
+    }
+
+    const handleCloseArchiveModal = async () => {
+        fetchAllAppliers();
+        closeArchiveModal();
     }
     
     useEffect(() => {
@@ -308,9 +300,6 @@ const CompanyItem = () => {
             fetchAllAppliers()
         }
     }, [companyData])
-
-    // console.log(allJobs)
-    // console.log(allAppliers)
 
     const logout = () => {
         localStorage.clear();
@@ -333,6 +322,11 @@ const CompanyItem = () => {
                 openBan()
             }
         }, 3000)
+    }
+
+    const archiveHandler = async () => {
+        fetchArchivedAppliers();
+        openArchiveModal();
     }
 
     return (
@@ -369,10 +363,6 @@ const CompanyItem = () => {
                                 <label htmlFor="email">Email: </label>
                                 <input type="email" className='form-control' name="email" placeholder='company email' value={email} onChange={(e) => setEmail(e.target.value)}/>
                             </div>
-                            {/* <div className='form-row'>
-                                <label htmlFor="description">Description: </label>
-                                <input type="text" className='form-control' name="address" placeholder='company description' value={description} onChange={(e) => setDescription(e.target.value)}/>
-                            </div> */}
                             <div className='form-row'>
                                 <label htmlFor="description">Description: </label>
                                 <textarea className='form-control' name="description" id="text-area" cols="30" rows="20" placeholder='Company Description' value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
@@ -381,7 +371,6 @@ const CompanyItem = () => {
                             <div className='button-div'>
                                 <button className="button" onClick={applyChangesHandler} type='button'>
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Apply Changes</span>
                                     </div>
                                 </button>
@@ -398,13 +387,11 @@ const CompanyItem = () => {
                         <div className='button-div'>
                         <button type='button' onClick={openModal} className="button">
                             <div>
-                                {/* <img src='' alt='' height='15px' width='15px'/> */}
                                 <span>Add Job</span>
                             </div>
                         </button>
                         </div>
                     </div>
-                    {/* Job that belong to this company are here */}
                     <>
                         {
                             allJobs && allJobs === 'Nothing' ? (
@@ -414,8 +401,6 @@ const CompanyItem = () => {
                             )
                         }
                         <CompanyJob allJobs={allJobs} category={category} />
-                        {/* <JobItem title='Check' slug='a' type='full time' company='PT Tes' icon='http://localhost:8000/files/jobs/default.png'/> */}
-                        {/* <FeaturedJobItem title='Check' slug='a' type='full time' company='PT Tes' icon='http://localhost:8000/files/jobs/default.png'/> */}
                         <div className='page__wrapper'>
                         {
                             pageArray && pageArray.map((item, i) => (
@@ -428,10 +413,14 @@ const CompanyItem = () => {
                 <div className="job-applier-div">
                     <div className="info">
                         <h1>Job Applier</h1>
+                        <button type='button' onClick={archiveHandler} className="button">
+                            <div>
+                                <span>Archive Applier</span>
+                            </div>
+                        </button>
                     </div>
                     <>
-                        {/* <CompanyJob allJobs={allJobs} category={category} /> */}
-                        <CompanyApplier allAppliers={allAppliers} />
+                        <CompanyApplier applicationStatus='normal' allAppliers={allAppliers} fetchAllAppliers={fetchAllAppliers} fetchArchivedAppliers={fetchArchivedAppliers} />
                     </>
                 </div>
 
@@ -454,18 +443,10 @@ const CompanyItem = () => {
                                 <label htmlFor="salary">Salary: </label>
                                 <input type="text" className='form-control' name="salary" placeholder='Job Salary' value={jobSalary} onChange={(e) => setJobSalary(e.target.value)}/>
                             </div>
-                            {/* <div className='form-row'>
-                                <label htmlFor="expire_at">Close Date: </label>
-                                <input type="date" className='form-control' name="expire_at" placeholder='close date' value={jobCloseDate} onChange={(e) => setJobCloseDate(e.target.value)}/>
-                            </div> */}
                             <div className='form-row'>
                                 <label htmlFor="expire_at">Expire at: </label>
                                 <input type="datetime-local" className='form-control' name="expire_at" placeholder='close date' value={jobCloseDate} onChange={(e) => setJobCloseDate(e.target.value)}/>
                             </div>
-                            {/* <div className='form-row'>
-                                <label htmlFor="description">Description: </label>
-                                <input type="text" className='form-control' name="address" placeholder='Job Description' value={jobDescription} onChange={(e) => setJobDescription(e.target.value)}/>
-                            </div> */}
                             <div className='form-row'>
                                 <label htmlFor="description">Description: </label>
                                 <textarea className='form-control' name="description" id="text-area" cols="30" rows="20" placeholder='Job Description' value={jobDescription} onChange={(e) => setJobDescription(e.target.value)}></textarea>
@@ -475,15 +456,9 @@ const CompanyItem = () => {
                                 <select className='form-control' value={jobCategory} onChange={(e)=>setJobCategory(e.target.value)}>
                                     <option value=''>Select an Option</option>
                                     {
-                                        // category.map((item) => (
-                                        //     <option key={item.id} value={item.name}>{item.name}</option>
-                                        // ))
                                         category.map((item) => (
                                             <option key={item.id} value={item.id}>{item.name}</option>
                                         ))
-                                        // reamData.map(item => {
-                                        //     <option key={item.id} value={item.name}>{item.name}</option>
-                                        // })
                                     }
                                 </select>
                             </div>
@@ -498,13 +473,11 @@ const CompanyItem = () => {
                             <div className='button-div'>
                                 <button type='button' className="button" onClick={postJob}>
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Post Job</span>
                                     </div>
                                 </button>
                                 <button type='button' onClick={closeModal} className="button button-cancel">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Cancel</span>
                                     </div>
                                 </button>
@@ -522,7 +495,6 @@ const CompanyItem = () => {
                         <div className='button-div'>
                                 <button type='button' onClick={logout} className="button">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Ok</span>
                                     </div>
                                 </button>
@@ -532,32 +504,18 @@ const CompanyItem = () => {
                 </div>
             </div>
             <div className="modal logout-modal">
-        <div className="modal-container">
+                <div className="modal-container">
                     <form>
                         <div className="form">
-                            {/* <div className='form-row'>
-                                <label htmlFor="title">Title: </label>
-                                <input type="text" value={title} onChange={(e)=>setTitle(e.target.value)} className='form-control' name="title" placeholder='Job Title'/>
-                            </div>
-                            <div className='form-row'>
-                                <label htmlFor="description">Description: </label>
-                                <input type="text" value={description} onChange={(e)=>setDescription(e.target.value)} className='form-control' name="tag" placeholder='Job Tag'/>
-                            </div>
-                            <div className='form-row'>
-                                <label htmlFor="CV">Curriculum Vitae: </label>
-                                <input type="file" onChange={(e)=>setDocument(e.target.files[0])} className='form-control' name="CV" placeholder='Job Document'/>
-                            </div> */}
                             <h1>Are you sure want to logout?</h1>
                             <div className='button-div'>
                                 <button type='button' onClick={logout} className="button">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Logout</span>
                                     </div>
                                 </button>
                                 <button type='button' onClick={closeLogoutModal} className="button button-cancel">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Cancel</span>
                                     </div>
                                 </button>
@@ -565,7 +523,18 @@ const CompanyItem = () => {
                         </div>
                     </form>
                 </div>
-    </div>
+            </div>
+
+            <div className="modal archive-modal">
+                <button className="applier-detail-hide" type="button" onClick={handleCloseArchiveModal}>
+                    <i className="fa fa-close fa-fw"></i>
+                </button>
+                <div className='modal-container'>
+                    <div className="archive-container">
+                        <CompanyApplier applicationStatus='archive' allAppliers={archivedAppliers} fetchAllAppliers={fetchAllAppliers} fetchArchivedAppliers={fetchArchivedAppliers} />
+                    </div>
+                </div>
+            </div>
         </section>
                     </>
                 )

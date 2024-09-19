@@ -29,15 +29,6 @@ const OTPAuth = () => {
     };
 
     const checkVerify = () => {
-        // if (user === 'Invalid') {
-        //     // console.log("OTP Is Invalid")
-        //     setMsg('Invalid OTP, consider check back your email')
-        // }else {
-        //     setMsg('')
-        //     setTimeout(() => {
-        //         window.location.reload()
-        //     }, 1500)
-        // }
         if (user === 'Invalid') {
             setMsg('Invalid OTP, consider check back your email')
             toggleError('visible')
@@ -56,21 +47,6 @@ const OTPAuth = () => {
                 window.location = `/${realRole}/${slug}`
             }
         }
-        // if (user?.verify === 1) {
-        //     const role = localStorage.getItem('role')
-        //     const slug = localStorage.getItem('slug')
-        //     let realRole = null
-
-        //     if (role == 'job seeker') {
-        //         realRole = 'user'
-        //     }
-
-        //     window.location = `/${realRole}/${slug}`
-        // }else {
-        //     if (user === 'Invalid') {
-        //         setMsg('Invalid OTP, consider check back your email')
-        //     }
-        // }
     }
 
     const toggleError = (state) => {
@@ -129,18 +105,6 @@ const OTPAuth = () => {
                                 <form>
                                     <div className="form">
                                         <h1>Please input OTP that already sent to your email</h1>
-                                        {/* <div>
-                                            <input type="email" className='form-control' name="email" placeholder='user email'/>
-                                        </div>
-                                        <button className="button">
-                                            <div>
-                                                <img src='' alt='' height='15px' width='15px'/>
-                                                <span>Submit</span>
-                                            </div>
-                                        </button>
-                                       <div className="forgot">
-                                            <Link to='/login'>Login form here</Link>
-                                        </div> */}
                                         <br />
                                         <OTPInput
                                         
@@ -157,8 +121,6 @@ const OTPAuth = () => {
                                         <p className='otp-error-msg'>{msg}</p>
 
                                         <p className='otp-quest-msg'>Didn't receive OTP mail yet? <span className='otp-resend' onClick={resendOTP}>Resend OTP</span></p>
-
-                                        {/* <p>{msg}</p> */}
 
                                         <button type='button' className="button otp-submit" onClick={submitOTP}>
                                             <div>

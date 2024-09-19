@@ -34,6 +34,10 @@
                 &--left {
                     width: 15%;
                     padding: 10px;
+
+                    img {
+                        border-radius: 50%;
+                    }
                 }
 
                 &--right {

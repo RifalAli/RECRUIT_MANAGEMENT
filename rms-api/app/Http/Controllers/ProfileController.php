@@ -20,8 +20,6 @@ class ProfileController extends Controller
 
     public function getProfile($user_id) {
         $data['profile'] = Profile::where([['user_id', $user_id]])->first();
-        //$data['categories'] = Category::where([['slug', $slug]])->first();
-        //$data['same'] = MainJob::where([['status', 'active'], ['cat_id', $data['categories']->id]])->get();
         return $this->apiResponse('success', $data, Response::HTTP_OK, true);
     }
 
@@ -35,13 +33,6 @@ class ProfileController extends Controller
         $data['profile']['address'] = $request['address'];
         $data['profile']['description'] = $request['description'];
         $data['profile']['last_education'] = $request['lastEducation'];
-        
-        // $data['user']['email'] = $request['email'];
-        // $data['profile']['fullname'] = $request['fullname']; Email is belong to the user
-        //
-        // $data['profile']['dream_job'] = $request['dreamJob'];
-        // $data['profile']['dream_job'] = $request['dream_job']; dream job is need to take category id instead of category name
-        // $data['profile']['status'] = $request['status'];
 
         if ($request->hasFile('file')) {
             $file = $request['file'];

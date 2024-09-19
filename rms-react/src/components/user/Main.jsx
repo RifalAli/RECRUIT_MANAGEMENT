@@ -57,20 +57,9 @@ import axios from 'axios';
         }, 4000)
     }, [])
 
-    // console.log(user.id)
-
     useEffect(() => {
         setTimeout(() => {
-            // const fetchData = async() => {
-            //     const response = await fetchApiData('home');
-            //     if (response && response.status && response.status === true) {
-            //         setData(response.data);
-            //     }else {
-            //         console.log(response);
-            //     }
-            //     setLoader(false);
-            // };
-            // fetchData();
+            
         }, 300);
     }, []);
     return (
@@ -88,7 +77,6 @@ import axios from 'axios';
                         <FeaturedJob featured={data.featured_job} similar='featured'/>
                     )
                 }
-                {/* <Jobs latest={data.latest}/> */}
                 <Footer/>
             </>
         )}

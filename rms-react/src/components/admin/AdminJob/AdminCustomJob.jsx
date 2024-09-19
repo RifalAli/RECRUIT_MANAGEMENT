@@ -149,9 +149,6 @@ const AdminCustomJob = () => {
                     <p className="pageMsg">Page {currentPage} of {totalPage} with total of {jobCount} jobs</p>
                     <div className="job__wrapper">
                         {
-                            // toLoadData && toLoadData.map((item, i) => (
-                            //     <AdminJobItem key={i} index={i} id={item.id} title={item.title} closeDate={item.closeDate} type={item.type} salary={item.salary} description={item.description} slug={item.slug} icon={item.icon} status={item.status} company={item.company[0]} cat_id={item.cat_id}/>
-                            // ))
                             allJobs && allJobs.map((item, i) => (
                                 <AdminJobItem key={i} index={i} id={item.id} title={item.title} closeDate={item.closeDate} type={item.type} salary={item.salary} description={item.description} slug={item.slug} icon={item.icon} status={item.status} company={item.company[0]} cat_id={item.cat_id}/>
                             ))

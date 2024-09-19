@@ -16,7 +16,6 @@ const LoginItem = () => {
     const [userData, setUserData] = useState('')
     const [loginResponse, setLoginResponse] = useState('')
 
-    // const [loginMsg, setLoginMsg] = useState('')
     const [emailMsg, setEmailMsg] = useState('')
     const [passwordMsg, setPasswordMsg] = useState('')
     const [captchaMsg, setCaptchaMsg] = useState('')
@@ -24,7 +23,6 @@ const LoginItem = () => {
     const [captchaStatus, setCaptchaStatus] = useState(false)
 
     const captchaChange = () => {
-        // console.log('Changed')
         setCaptchaStatus(true)
     }
 
@@ -89,7 +87,6 @@ const LoginItem = () => {
                 setCaptchaStatus(false)
                 setLoader(false)
                 setPasswordMsg('Cannot login because your account has been banned')
-                //Make proper modal for warning
                 return;
             }
 
@@ -135,86 +132,6 @@ const LoginItem = () => {
         }
     }
 
-    // const loginHandler = () => {
-    //     const validation = () => {
-    //         if (email === '' || password === '') {
-    //             setLoginMsg('All field must be filled first!')
-    //             return;
-    //         }
-
-    //         chainLoginCall()
-    //     }
-
-    //     function mockAPICall(id) {
-    //         return new Promise((resolve, reject) => {
-    //             setTimeout(() => {
-    //                 resolve(`Response from API with ID ${id}`);
-    //             }, 1000); // Simulate delay of 1 second
-    //         });
-    //     }
-
-    //     const getToken = async () => {
-    //         await storeApiData(`auth/login`, { email, password })
-    //         .then((response)=>{localStorage.setItem('token', response.data.token); setTokenData(response.data.token)})
-    //         .catch((response)=>console.log(response.data))
-    //     }
-
-    //     const checkProfile = async () => {
-    //         await axios.get('http://localhost:8000/auth/user-profile', {
-    //             headers: {
-    //                 Authorization: `Bearer ${localStorage.getItem('token')}`, 
-    //             //   Authorization: `Bearer ${tokenData.token}`, 
-    //             },
-    //         }).then((response)=>setUserData(response.data.data))
-    //         .catch((response)=>console.log(response.data))
-    //     }
-
-    //     const chainLoginCall = () => {
-    //         mockAPICall(1)
-    //         .then(response1 => {
-    //             return getToken()
-    //         })
-    //         .then(response2 => {
-    //             return checkProfile()
-    //         })
-    //         .catch(error => {
-    //             console.error('Error:', error);
-    //         });
-    //     }
-
-    //     // localStorage.clear()
-
-    //     // chainLoginCall()
-    //     setLoginMsg('')
-    //     validation()
-    // }
-
-    // const checkRole = () => {
-    //     let rolee = userData.role
-
-    //     if (rolee === 'admin') {
-    //         window.location = `/admin/${userData.slug}`
-    //     }else if (rolee === 'company') {
-    //         window.location = `/company/${userData.slug}`
-    //     }else if (rolee === 'job seeker') {
-    //         window.location = `/user/${userData.slug}`
-    //     }
-    // }
-
-    // // Change Page
-    // useEffect(() => {
-    //     localStorage.setItem('role', userData.role)
-    //     checkRole()
-    //     console.log(userData)
-    // }, [userData])
-    // const [loader, setLoader] = useState(false);
-
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         setLoader(false);
-    //     }, 300)
-    // }, []);
-
     return (
         <>
             {loader ? (
@@ -243,7 +160,6 @@ const LoginItem = () => {
                             <p className='auth-captcha-error'>{captchaMsg}</p>
                             <button type='button' className="button" onClick={loginHandler}>
                                 <div>
-                                    {/* <img src='' alt='' height='15px' width='15px'/> */}
                                     <span>Login</span>
                                 </div>
                             </button>
@@ -251,10 +167,6 @@ const LoginItem = () => {
                                 <Link to='/sign-up'>Don't have any account?</Link>
                                 <Link to='/forgot-password'>Forgot your password?</Link>
                             </div>
-                            {/* <div className="social">
-                                <img src={github} alt="github logo" />
-                                <img src={google} alt="google logo" />
-                            </div> */}
                         </div>
                     </form>
                 </div>

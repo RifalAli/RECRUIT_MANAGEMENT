@@ -56,8 +56,6 @@ const AdminJobItem = ({index, id, title, closeDate, type, salary, description, s
         let modal = document.getElementsByClassName('job-child-modal')[index];
         modal.style.display = 'none';
 
-        // setUsername('')
-        // setCompanyName('')
         setCompany_id('')
         setCategory_id('')
     }
@@ -90,8 +88,6 @@ const AdminJobItem = ({index, id, title, closeDate, type, salary, description, s
         insertCompanyName()
         showModal()
     }
-
-    // console.log(id, title)
 
     const applyJobChanges = (e) => {
         e.preventDefault();
@@ -136,22 +132,6 @@ const AdminJobItem = ({index, id, title, closeDate, type, salary, description, s
     }, [doRefresh])
 
     return (
-        // <div className="job__wrapper__card">
-        //     <div className="job__wrapper__card--left">
-        //         <img src={ icon } alt="icon" />
-        //     </div>
-        //     <div className="job__wrapper__card--line"></div>
-        //     <div className="job__wrapper__card--right">
-        //         <div className="job__wrapper__card--right__part-1">
-        //             <h1>{title}</h1>
-        //             <p>{job}</p>
-        //             <Link className={type === "full time" ? "full-time" : "half-time"} to={`/job-details/${slug}`}>{type}</Link>
-        //         </div>
-        //         <div className="job__wrapper__card--right__part-2">
-        //             <i className="fa fa-heart-o"></i>
-        //         </div>
-        //     </div>
-        // </div>
         <section>
         <div className="job__wrapper__card">
             <div className="job__wrapper__card--left">
@@ -204,18 +184,10 @@ const AdminJobItem = ({index, id, title, closeDate, type, salary, description, s
                                 <label htmlFor="salary">Salary: </label>
                                 <input type="text" value={jobSalary} onChange={(e)=>setJobSalary(e.target.value)} className='form-control' name="salary" placeholder='Job Salary'/>
                             </div>
-                            {/* <div className='form-row'>
-                                <label htmlFor="expire_at">Close Date: </label>
-                                <input type="date" value={jobCloseDate} onChange={(e)=>setJobCloseDate(e.target.value)} className='form-control' name="expire_at" placeholder='close date'/>
-                            </div> */}
                             <div className='form-row'>
                                 <label htmlFor="expire_at">Expire at: </label>
                                 <input type="datetime-local" value={jobCloseDate} onChange={(e)=>setJobCloseDate(e.target.value)} className='form-control' name="expire_at" placeholder='close date'/>
                             </div>
-                            {/* <div className='form-row'>
-                                <label htmlFor="description">Description: </label>
-                                <input type="text" value={jobDescription} onChange={(e)=>setJobDescription(e.target.value)} className='form-control' name="address" placeholder='Job Description'/>
-                            </div> */}
                             <div className='form-row'>
                                 <label htmlFor="description">Description: </label>
                                 <textarea className='form-control' name="description" id="text-area" cols="30" rows="20" placeholder='Job Description' value={jobDescription} onChange={(e) => setJobDescription(e.target.value)}></textarea>
@@ -249,13 +221,11 @@ const AdminJobItem = ({index, id, title, closeDate, type, salary, description, s
                             <div className='button-div'>
                                 <button type='button' onClick={applyJobChanges} className="button">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Save Changes</span>
                                     </div>
                                 </button>
                                 <button type='button' onClick={closeModal} className="button button-cancel">
                                     <div>
-                                        {/* <img src='' alt='' height='15px' width='15px'/> */}
                                         <span>Cancel</span>
                                     </div>
                                 </button>
