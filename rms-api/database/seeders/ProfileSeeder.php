@@ -58,7 +58,7 @@ class ProfileSeeder extends Seeder
             \n\nI am excited to explore new opportunities and partner with organizations that share my commitment to excellence. Together, I believe we can drive innovation and create meaningful impact for all.",
             'last_education'=>'S1',
             'document_url'=>'http://localhost:8000/files/users/cv/samplecvrifal.pdf',
-            'user_id'=>6,
+            'user_id'=>7,
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
