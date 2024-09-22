@@ -139,10 +139,10 @@ const AllJobs = () => {
                                 <></>
                             ) : (
                                 searchJobs && searchJobs.length > 0 ? (
-                                    <p className='filterPageMsg'>Page {currentFilterPage} of {totalPage} with total of {jobCount} jobs filter</p>
+                                    <p className='filterPageMsg'>Page {currentFilterPage} of {totalPage} with total of {jobCount} jobs</p>
                                 ) : (
                                     jobs && jobs !== 'Nothing' ? (
-                                        <p className='normalPageMsg'>Page {currentPage} of {totalPage} with total of {jobCount} jobs normal</p>
+                                        <p className='normalPageMsg'>Page {currentPage} of {totalPage} with total of {jobCount} jobs</p>
                                     ) : (
                                         <></>
                                     )
