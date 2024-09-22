@@ -59,7 +59,7 @@ const AdminCustomBan = () => {
                                         <p className="empty-msg">No banned user yet</p>
                                     ) : (
                                         bannedResponse && bannedResponse.map((item, i) => (
-                                            <AdminBanItem refresh_normal={getNormalUser} refresh_banned={getBannedUser} key={i} user_id={item.id} userDetail={item.userDetail} userRole={item.userRole} status='ban' />
+                                            <AdminBanItem index={i} refresh_normal={getNormalUser} refresh_banned={getBannedUser} image={item.image} key={i} user_id={item.id} userDetail={item.userDetail} userRole={item.userRole} status='ban' />
                                         ))
                                     )
                                 }
@@ -71,10 +71,10 @@ const AdminCustomBan = () => {
                             <div className="users-item-container">
                                 {
                                     normalResponse && normalResponse === 'Nothing' ? (
-                                        <p className="empty-msg">No users that can be blacklist anymore</p>
+                                        <p className="empty-msg">No user that can be ban anymore</p>
                                     ) : (
                                         normalResponse && normalResponse.map((item, i) => (
-                                            <AdminBanItem refresh_normal={getNormalUser} refresh_banned={getBannedUser} key={i} user_id={item.id} userDetail={item.userDetail} userRole={item.userRole} status='normal' />
+                                            <AdminBanItem index={i} refresh_normal={getNormalUser} refresh_banned={getBannedUser} image={item.image} key={i} user_id={item.id} userDetail={item.userDetail} userRole={item.userRole} status='normal' />
                                         ))
                                     )
                                 }

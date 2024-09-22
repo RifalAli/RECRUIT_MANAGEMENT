@@ -63,7 +63,7 @@ const CompanyBlacklist = ( { company_id, user_id } ) => {
                                         <p className="empty-msg">No blacklist user yet</p>
                                     ) : (
                                         blacklistResponse && blacklistResponse.blacklist.map((item, i) => (
-                                            <CompanyBlacklisItem refresh_normal={getNormalUser} refresh_blacklist={getBlacklistUser} key={i} blacklist_id={item.id} company_id={company_id} user_id={item.user_profile.id} profile={item.profile} status='blacklist' />
+                                            <CompanyBlacklisItem index={i} refresh_normal={getNormalUser} refresh_blacklist={getBlacklistUser} image={item.user_profile.image} key={i} blacklist_id={item.id} company_id={company_id} user_id={item.user_profile.id} profile={item.profile} status='blacklist' />
                                         ))
                                     )
                                 }
@@ -78,7 +78,7 @@ const CompanyBlacklist = ( { company_id, user_id } ) => {
                                         <p className="empty-msg">No users that can be blacklist anymore</p>
                                     ) : (
                                         normalResponse && normalResponse.map((item, i) => (
-                                            <CompanyBlacklisItem refresh_normal={getNormalUser} refresh_blacklist={getBlacklistUser} key={i} company_id={company_id} user_id={item.id}  profile={item.profile} status='normal' />
+                                            <CompanyBlacklisItem index={i} refresh_normal={getNormalUser} refresh_blacklist={getBlacklistUser} image={item.image} key={i} company_id={company_id} user_id={item.id}  profile={item.profile} status='normal' />
                                         ))
                                     )
                                 }

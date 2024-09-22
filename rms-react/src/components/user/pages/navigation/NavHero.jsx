@@ -25,7 +25,7 @@ const NavHero = ({ hero, job }) => {
                                 <div className="hero-data">
                                     <div className="left">
                                         <div className="icon">
-                                            <img src={job.icon} alt="icon" />
+                                            <img src={job.icon} style={{ borderRadius: "50%" }} alt="icon" />
                                         </div>
                                         <div className="details">
                                             <h1>{job.title}</h1>

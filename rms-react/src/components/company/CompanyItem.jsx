@@ -378,9 +378,6 @@ const CompanyItem = () => {
                         </div>
                     </form>
                 </div>
-                <div className='blacklist-company-div'>
-                    <CompanyBlacklist company_id={userData.id} user_id={userData.id} />
-                </div>
                 <div className='job-profile-div'>
                     <div className="info">
                         <h1>Job</h1>
@@ -413,7 +410,7 @@ const CompanyItem = () => {
                 <div className="job-applier-div">
                     <div className="info">
                         <h1>Job Applier</h1>
-                        <button type='button' onClick={archiveHandler} className="button">
+                        <button type='button' style={{ background: "#a9a9a9" }} onClick={archiveHandler} className="button">
                             <div>
                                 <span>Archive Applier</span>
                             </div>
@@ -423,7 +420,9 @@ const CompanyItem = () => {
                         <CompanyApplier applicationStatus='normal' allAppliers={allAppliers} fetchAllAppliers={fetchAllAppliers} fetchArchivedAppliers={fetchArchivedAppliers} />
                     </>
                 </div>
-
+                <div className='blacklist-company-div'>
+                    <CompanyBlacklist company_id={userData.id} user_id={userData.id} />
+                </div>
                 <button className='btn-logout button' type='button' onClick={showLogoutModal}>LOGOUT</button>
             </div>
 

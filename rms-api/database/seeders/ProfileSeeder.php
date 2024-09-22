@@ -17,7 +17,7 @@ class ProfileSeeder extends Seeder
     public function run(): void
     {
         DB::table('profiles')->insert([
-            'fullname'=>'Anwar Prasetya',
+            'fullname'=>'Gerard Gareth',
             'slug'=>Str::slug(Str::random(20)),
             'age'=>'20',
             'address'=>'Gedangan, Sidoarjo, Jawa Timur',

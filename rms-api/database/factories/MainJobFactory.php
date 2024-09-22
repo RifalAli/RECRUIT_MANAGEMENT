@@ -229,9 +229,9 @@ class MainJobFactory extends Factory
         $jobIconMap = [
             'Software Development' => [
                 'http://localhost:8000/files/jobs/seeder/software/OIP.jpeg', 
-                'http://localhost:8000/files/jobs/seeder/software/th1.jpeg', 
-                'http://localhost:8000/files/jobs/seeder/software/th2.jpeg', 
-                'http://localhost:8000/files/jobs/seeder/software/th.jpeg', ],
+                'http://localhost:8000/files/jobs/seeder/software/th.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/software/unduhan.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/software/softwaredev.jpeg', ],
             'Data Science' => [
                 'http://localhost:8000/files/jobs/seeder/data/OIP.jpeg', 
                 'http://localhost:8000/files/jobs/seeder/data/OIP2.jpeg', 
@@ -274,8 +274,8 @@ class MainJobFactory extends Factory
                 'http://localhost:8000/files/jobs/seeder/sales/unduhan1.jpeg', 
                 'http://localhost:8000/files/jobs/seeder/sales/unduhan2.jpeg', ],
             'Human Resource' => [
-                'http://localhost:8000/files/jobs/seeder/human/humanres1.jpeg', 
-                'http://localhost:8000/files/jobs/seeder/human/humanres2.jpeg', 
+                'http://localhost:8000/files/jobs/seeder/human/humanres1.jpg', 
+                'http://localhost:8000/files/jobs/seeder/human/humanres2.png', 
                 'http://localhost:8000/files/jobs/seeder/human/humanres3.jpeg', 
                 'http://localhost:8000/files/jobs/seeder/human/humanres4.jpeg', ],
             'Civil Engineering' => [

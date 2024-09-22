@@ -19,7 +19,7 @@ class CategorySeeder extends Seeder
             'name'=>'Software Development',
             'slug'=>Str::slug(Str::random(20)),
             'status'=>'active',
-            'icon'=>'http://localhost:8000/files/categories/seeder/softwaredev.jpeg',
+            'icon'=>'http://localhost:8000/files/categories/seeder/softwaredevelopment.jpeg',
             'created_at'=>now(),
             'updated_at'=>now()
         ]);

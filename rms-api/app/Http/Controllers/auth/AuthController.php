@@ -210,7 +210,7 @@ class AuthController extends Controller
         $data['token'] = $token;
         $data['token_type'] = 'bearer';
         // $data['expires_in'] = JWTAuth::factory()->getTTL() * 120;
-        $data['expires_in'] = JWTAuth::factory()->getTTL() * 360;
+        $data['expires_in'] = JWTAuth::factory()->getTTL() * 4320;
         $data['user'] = auth() -> user();
         return $this->apiResponse('success',$data,Response::HTTP_OK, true);
     }

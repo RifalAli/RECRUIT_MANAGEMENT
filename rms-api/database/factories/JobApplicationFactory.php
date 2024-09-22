@@ -17,13 +17,21 @@ class JobApplicationFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    
     public function definition(): array
     {
+        $jobs = MainJob::all();
+
+        $job = MainJob::where([['id', random_int(2, sizeof($jobs))]])->first();
+
+        $jobId = $job['id'];
+        $companyId = $job['company_id'];
+
         return [
             'status'=>fake()->randomElement(['pending', 'accepted', 'rejected']),
-            'profile_id'=>fake()->randomElement(Profile::where('id', random_int(1, 2))->pluck('id')->toArray()),
-            'company_id'=>fake()->randomElement(Company::where('id', random_int(1, 3))->pluck('id')->toArray()),
-            'job_id'=>fake()->randomElement(MainJob::where('id', 1)->pluck('id')->toArray()),
+            'profile_id'=>fake()->randomElement(Profile::where('id', random_int(1, 3))->pluck('id')->toArray()),
+            'company_id'=>$companyId,
+            'job_id'=>$jobId,
             'created_at'=>now(),
             'updated_at'=>now()
         ];

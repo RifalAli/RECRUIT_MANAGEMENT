@@ -66,6 +66,30 @@
                         font-weight: bold;
                         transition: all .3s ease-in-out;
                     }
+
+                    .mark {
+                        position: absolute;
+                        top: -8px;
+                        right: 4px;
+                        height: 29px;
+                        font-size: 0.85rem;
+                        // text-transform: capitalize;
+                    }
+
+                    .preview-description {
+                        position: relative;
+                        // background: red;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 2; /* Limits to 2 lines */
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        text-align: justify;
+                        width: 95%;
+                        left: 20px;
+                        top: 5px;
+                        color: #a9a9a9;
+                    }                      
                 }
                 &:hover {
                     box-shadow: $boxShadow-card-hover;

@@ -1,5 +1,6 @@
 import React from 'react';
 import FeaturedJobItem from './FeaturedJobItem';
+import RegularJobItem from '../regular-jobs/RegularJobItem';
 
 const FeaturedJob = ({featured, similar, name, count, pageObjects}) => {
     return (
@@ -15,7 +16,13 @@ const FeaturedJob = ({featured, similar, name, count, pageObjects}) => {
                             </>
                         ) : (
                             similar && similar==='similar' ? (
-                                <h1 className="featured_job-info__heading">Similar Job</h1>
+
+                                featured && featured ? (
+                                    <h1 className="featured_job-info__heading">Similar Job</h1>
+                                ) : (
+                                    <h1 className="featured_job-info__heading">There is no Similar Job</h1>
+                                )
+
                             ) : (
                                 similar && similar==='category' && count > 0 ? (
                                     <>
@@ -45,13 +52,14 @@ const FeaturedJob = ({featured, similar, name, count, pageObjects}) => {
                 <div className="featured_job--wrapper">
                     {
                         featured && featured.map((job, i) => (
-                            <FeaturedJobItem 
+                            <RegularJobItem 
                                 key={i}
                                 title={job.title}
                                 type={job.type}
                                 company={job.company[0].name}
                                 slug={job.slug}
                                 icon={job.icon}
+                                description={job.description}
                             />
                         ))
                     }

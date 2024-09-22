@@ -22,7 +22,7 @@ class UserTableSeeder extends Seeder
             'role' => 'admin',
             'verify' => 1,
             'otp' => null,
-            'image' => 'http://localhost:8000/files/users/profileGuest.png',
+            'image' => 'http://localhost:8000/files/users/photo/seeder/admin.png',
             'status' => 'active',
             'created_at' => now(),
             'updated_at' => now()
@@ -36,7 +36,7 @@ class UserTableSeeder extends Seeder
             'role' => 'company',
             'verify' => 1,
             'otp' => null,
-            'image' => 'http://localhost:8000/files/users/photo/companyGuest.png',
+            'image' => 'http://localhost:8000/files/users/photo/seeder/company.png',
             'status' => 'active',
             'created_at' => now(),
             'updated_at' => now()
@@ -50,7 +50,7 @@ class UserTableSeeder extends Seeder
             'role' => 'job seeker',
             'verify' => 1,
             'otp' => null,
-            'image' => 'http://localhost:8000/files/users/photo/profileGuest.png',
+            'image' => 'http://localhost:8000/files/users/photo/seeder/user.jpg',
             'status' => 'active',
             'created_at' => now(),
             'updated_at' => now()
@@ -64,7 +64,7 @@ class UserTableSeeder extends Seeder
             'role' => 'company',
             'verify' => 1,
             'otp' => null,
-            'image' => 'http://localhost:8000/files/users/photo/companyGuest.png',
+            'image' => 'http://localhost:8000/files/users/photo/seeder/lestari.jpg',
             'status' => 'active',
             'created_at' => now(),
             'updated_at' => now()
@@ -78,7 +78,7 @@ class UserTableSeeder extends Seeder
             'role' => 'company',
             'verify' => 1,
             'otp' => null,
-            'image' => 'http://localhost:8000/files/users/photo/companyGuest.png',
+            'image' => 'http://localhost:8000/files/users/photo/seeder/sinarmas.jpeg',
             'status' => 'active',
             'created_at' => now(),
             'updated_at' => now()
@@ -92,7 +92,7 @@ class UserTableSeeder extends Seeder
             'role' => 'job seeker',
             'verify' => 1,
             'otp' => null,
-            'image' => 'http://localhost:8000/files/users/photo/profileGuest.png',
+            'image' => 'http://localhost:8000/files/users/photo/seeder/raymond.jpg',
             'status' => 'active',
             'created_at' => now(),
             'updated_at' => now()
@@ -100,13 +100,13 @@ class UserTableSeeder extends Seeder
 
         DB::table('users')->insert([
             'slug' => Str::slug(Str::random(20)),
-            'name' => "john@gmail",
+            'name' => "John",
             'email' => "john@gmail.com",
             'password' => '$2y$12$7HONLX3t9c41J89GCJdoVOftMf5aE0pIr26weJL/q3wWOzvNGQA9e', //password: john123
             'role' => 'job seeker',
             'verify' => 1,
             'otp' => null,
-            'image' => 'http://localhost:8000/files/users/photo/profileGuest.png',
+            'image' => 'http://localhost:8000/files/users/photo/seeder/john.jpg',
             'status' => 'active',
             'created_at' => now(),
             'updated_at' => now()

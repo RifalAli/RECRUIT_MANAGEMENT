@@ -132,6 +132,7 @@ class HomeController extends Controller
             $data['featured_job'][$i]['type'] = $query['job'][$i]['type'];
             $data['featured_job'][$i]['slug'] = $query['job'][$i]['slug'];
             $data['featured_job'][$i]['icon'] = $query['job'][$i]['icon'];
+            $data['featured_job'][$i]['description'] = $query['job'][$i]['description'];
             $data['featured_job'][$i]['company'] = $query['company'][$i];
         }
 
@@ -241,6 +242,7 @@ class HomeController extends Controller
             $data['similar'][$i]['type'] = $query['similar'][$i]['type'];
             $data['similar'][$i]['slug'] = $query['similar'][$i]['slug'];
             $data['similar'][$i]['icon'] = $query['similar'][$i]['icon'];
+            $data['similar'][$i]['description'] = $query['similar'][$i]['description'];
             $data['similar'][$i]['company'] = $query['company'][$i];
         }
         return $this -> apiResponse('success', $data, Response::HTTP_OK, true);
@@ -257,6 +259,7 @@ class HomeController extends Controller
             $data['same'][$i]['type'] = $query['same'][$i]['type'];
             $data['same'][$i]['slug'] = $query['same'][$i]['slug'];
             $data['same'][$i]['icon'] = $query['same'][$i]['icon'];
+            $data['same'][$i]['description'] = $query['same'][$i]['description'];
             $data['same'][$i]['company'] = $query['company'][$i];
         }
         return $this->apiResponse('success', $data, Response::HTTP_OK, true);
@@ -308,6 +311,7 @@ class HomeController extends Controller
                 $data['same'][$num]['type'] = $query['same'][$i]['type'];
                 $data['same'][$num]['slug'] = $query['same'][$i]['slug'];
                 $data['same'][$num]['icon'] = $query['same'][$i]['icon'];
+                $data['same'][$num]['description'] = $query['same'][$i]['description'];
                 $data['same'][$num]['company'] = $query['company'][$i];
             } catch (Exception $err) {
                 // 

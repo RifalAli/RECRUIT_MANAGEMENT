@@ -1,5 +1,6 @@
 import React from 'react'
 import FeaturedJobItem from '../featured-jobs/FeaturedJobItem';
+import RegularJobItem from '../regular-jobs/RegularJobItem';
 
 const JobItemSection = ({jobs, condition}) => {
     return (
@@ -10,24 +11,26 @@ const JobItemSection = ({jobs, condition}) => {
                         condition && condition === 'search' ? 
                         
                         jobs && jobs.map((item, i) => (
-                            <FeaturedJobItem
+                            <RegularJobItem
                                 title={item.title}
                                 type={item.type}
                                 company={item.company.name}
                                 slug={item.slug}
                                 icon={item.icon}
+                                description={item.description}
                             />
                         ))
 
                         :
 
                         jobs && jobs.map((item, i) => (
-                            <FeaturedJobItem
+                            <RegularJobItem
                                 title={item.title}
                                 type={item.type}
                                 company={item.company[0].name}
                                 slug={item.slug}
                                 icon={item.icon}
+                                description={item.description}
                             />
                         ))
                     }

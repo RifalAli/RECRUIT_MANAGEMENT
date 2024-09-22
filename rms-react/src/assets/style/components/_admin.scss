@@ -593,6 +593,11 @@
 
                             p {
                                 padding-top: 4.5px;
+                                flex: 1;
+                            }
+
+                            .action-container {
+                                flex: 1;
                             }
 
                             button {
@@ -600,7 +605,12 @@
                                 padding: 7px;
                                 color: white;
                                 border-radius: 5px;
-                                width: 20%;
+                                width: 45%;
+                                margin-left: 3px;
+                            }
+
+                            .ban-button-detail {
+                                background: #a9a9a9;
                             }
 
                             .ban-button {
@@ -717,6 +727,188 @@
 
     .ban-modal {
         height: unset;
+    }
+
+    .normal-profile-detail, .ban-profile-detail {
+        z-index: 5;
+        margin: 0;
+        padding: 0;
+        background: white;
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        padding: 5px 10px 30px 10px;
+        border: 1px solid $form-control-color;
+        border-radius: 35px;
+
+        .applier-detail-hide {
+            position: relative;
+            top: 1.3rem;
+            left: 92%;
+            background-color: $color-white;
+            border: none;
+            font-size: 1.5rem;
+
+            i:hover {
+                color: red;
+            }
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .applier-photo {
+            width: 130px;
+            height: 105px;
+            border-radius: 50%;
+            border: 1px solid #e9e9e9;
+            margin-left: 40px;
+            margin-right: 20px;
+        }
+
+        .applier-detail-parent {
+            display: flex;
+        }
+
+        .applier-detail-container {
+            // @include flexVertical;
+            // padding: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            .applier-detail-row {
+                margin-left: 25px;
+                display: flex;
+
+                #text-area {
+                    width: 100%;
+                    height: 100px;
+                    resize: none;
+                    border: none;
+                    margin-top: -15px;
+                    position: relative;
+                    font-size: 1rem;
+                    padding-left: 3px;
+                    border-radius: 0px;
+                    margin-left: 5px;
+                }
+
+                :nth-child(1) {
+                    flex: 1;
+                    // background: red;
+                }
+
+                :nth-child(2) {
+                    flex: 4;
+                    // background: blue;
+                    // font-weight: bold;
+                }
+
+                p {
+                    margin-bottom: 5px;
+                    // font-size: 0.9rem;
+                }
+
+                .applier-detail-button {
+                    padding: 1px 10px;
+                    border-radius: 7px;
+                }
+
+                .applier-detail-button:hover {
+                    background-color: white;
+                }
+            }
+
+            &-button {
+                // margin-top: 100px;
+                margin-top: -10px;
+                display: flex;
+                // gap: 20px;
+                // justify-content: space-around;
+                justify-content: center;
+                gap: 10px;
+
+                button {
+                    width: 45%;
+                    height: 35px;
+                    border-radius: 20px;
+                    border: none;
+                    // background-color: white;
+                }
+
+                .btn-reject {
+                    // background-color: $color-secondary;
+                }
+
+                .btn-accept {
+                    // background-color: rgb(25, 255, 25);
+                }
+
+                .btn-reject:hover {
+                    border: 1px solid red;
+                }
+
+                .btn-accept:hover {
+                    border: 1px solid green;
+                }
+            }
+
+            .form {
+                display: flex;
+                flex-direction: column;
+                width: 50vw;
+                height: auto;
+                padding: 2rem;
+                font-size: 12px;
+                border-radius: 30px;
+                // border: 1px solid $form-control-color;
+                transform: all .3s;
+            }
+            
+            .form-row {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            .form-control {
+                @include formControl;
+
+                width: 70%;
+            }
+
+            label {
+                flex: 1;
+            }
+
+            input {
+                flex: 4;
+                // margin-left: 100px;
+            }
+
+            select {
+                flex: 4;
+            }
+
+            .button-div {
+                display: flex;
+                flex-direction: row-reverse;
+                column-gap: 10px;
+            }
+
+            .button {
+                width: 28%;
+            }
+
+            .button-cancel {
+                background: #a9a9a9;
+            }
+        }
     }
 }
 
