@@ -6,8 +6,8 @@ const Links = () => {
         <div className="footer__section__container__footer__links">
             <h1>Quick Links</h1>
             <div className="footer__section__container__footer__links--quick">
-                <Link to='/about'>About</Link>
-                <Link to='/support'>Support</Link>
+                <Link to='#'>About</Link>
+                <Link to='#'>Support</Link>
                 {/* <Link to='/'>Contact</Link> */}
             </div>
         </div>

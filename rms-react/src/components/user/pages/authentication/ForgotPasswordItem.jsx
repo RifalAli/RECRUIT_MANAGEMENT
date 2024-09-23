@@ -7,6 +7,8 @@ import { storeApiData } from '../../../../api/api'
 
 const ForgotPasswordItem = () => {
     const [loader, setLoader] = useState(true);
+    const [showPassword, setShowPassword] = useState(false);
+
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [errMsg, setErrMsg] = useState('');
@@ -25,9 +27,19 @@ const ForgotPasswordItem = () => {
                 return setErrMsg('All field must be filled first')
             }
             
-            if (password.length < 6) {
-                setLoader(false)
-                return setErrMsg('Password must be at least 6 character')
+            // if (password.length < 6) {
+            //     setLoader(false)
+            //     return setErrMsg('Password must be at least 6 character')
+            // }
+
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&(){};,.]).{6,}$/;
+
+            if (!passwordRegex.test(password)) {
+              setLoader(false);
+              setErrMsg(
+                "Password must contain uppercase, lowercase, number, symbol, and be at least 6 characters long"
+              );
+              return;
             }
             
             if (password !== confirmPassword) {
@@ -82,9 +94,12 @@ const ForgotPasswordItem = () => {
                                 <form>
                                     <div className="form">
                                         <div>
-                                            <input type="password" className='form-control' name="password" placeholder='New Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
-                                            <input type="password" className='form-control' name="confirmPassword" placeholder='Confirm Password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                                            <input type={showPassword ? "text" : "password"} className='form-control' name="password" placeholder='New Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+                                            <input type={showPassword ? "text" : "password"} className='form-control' name="confirmPassword" placeholder='Confirm Password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                                         </div>
+                                        <button style={{ position: "relative", left: "70%", width: "30%" }} type='button' onClick={() => setShowPassword(!showPassword)}>
+                                            {showPassword ? "Hide Password" : "Show Password"}
+                                        </button>
                                         <br />
                                         <p className='auth-error' style={{ margin: '-10px 0 -10px 0' }}>{errMsg}</p>
                                         <button type='button' className="button" onClick={submitHandler}>

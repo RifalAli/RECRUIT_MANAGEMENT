@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -18,10 +19,13 @@ class UserTableSeeder extends Seeder
             'slug' => Str::slug(Str::random(20)),
             'name' => "Admin",
             'email' => "admin@gmail.com",
-            'password' => '$2y$12$oJPfTnyfRh1qLKPIwbwmUuO1To1IQwucPPK0RY7s3RiBbe1Ruvo56', //password: admin123
+            'password' => bcrypt('aDm1n?'),
             'role' => 'admin',
             'verify' => 1,
             'otp' => null,
+            'nik'=>'0065123456789123',
+            'phone'=>'081234567891',
+            'birthdate'=>Carbon::createFromFormat('d/m/Y', '25/09/1993'),
             'image' => 'http://localhost:8000/files/users/photo/seeder/admin.png',
             'status' => 'active',
             'created_at' => now(),
@@ -32,10 +36,13 @@ class UserTableSeeder extends Seeder
             'slug' => Str::slug(Str::random(20)),
             'name' => "Company",
             'email' => "company@gmail.com",
-            'password' => '$2y$12$Eilaj1G04vWIhfw8PZwtDe4n6inJJ9MPkVw.Wimk5ZWEV9hOdxQRm', //password: company123
+            'password' => bcrypt('c0Mp4ny?'),
             'role' => 'company',
             'verify' => 1,
             'otp' => null,
+            'nik'=>'0065123456789123',
+            'phone'=>'081234567891',
+            'birthdate'=>Carbon::createFromFormat('d/m/Y', '25/09/1993'),
             'image' => 'http://localhost:8000/files/users/photo/seeder/company.png',
             'status' => 'active',
             'created_at' => now(),
@@ -46,10 +53,13 @@ class UserTableSeeder extends Seeder
             'slug' => Str::slug(Str::random(20)),
             'name' => "User",
             'email' => "user@gmail.com",
-            'password' => '$2y$12$6p8EEyTbhmafFN9YU5bkFOIFFe/IJ6/ziFcvJ1bcJwm./SOT5r7R6', //password: user123
+            'password' => bcrypt('uS3er?'),
             'role' => 'job seeker',
             'verify' => 1,
             'otp' => null,
+            'nik'=>'0065123456789123',
+            'phone'=>'081234567891',
+            'birthdate'=>Carbon::createFromFormat('d/m/Y', '25/09/2003'),
             'image' => 'http://localhost:8000/files/users/photo/seeder/user.jpg',
             'status' => 'active',
             'created_at' => now(),
@@ -60,10 +70,13 @@ class UserTableSeeder extends Seeder
             'slug' => Str::slug(Str::random(20)),
             'name' => "Lestari",
             'email' => "lestari@gmail.com",
-            'password' => '$2y$12$DlprnQyrfAkNFkV4A0KY7eLj3ZD0w4SIPzR/XsxMIA3TCWoAsK8/a', //password: lestari123
+            'password' => bcrypt('L3st4r1?'),
             'role' => 'company',
             'verify' => 1,
             'otp' => null,
+            'nik'=>'0065123456789123',
+            'phone'=>'081234567891',
+            'birthdate'=>Carbon::createFromFormat('d/m/Y', '25/09/1993'),
             'image' => 'http://localhost:8000/files/users/photo/seeder/lestari.jpg',
             'status' => 'active',
             'created_at' => now(),
@@ -74,10 +87,13 @@ class UserTableSeeder extends Seeder
             'slug' => Str::slug(Str::random(20)),
             'name' => "Sinarmas",
             'email' => "sinarmas@gmail.com",
-            'password' => '$2y$12$hAKQhH/In.1.5hdW6eUblO/GdvZU8tPSa01zPBZJO4viGGz0Zp7Ta', //password: sinarmas123
+            'password' => bcrypt('sin4Rm4s?'),
             'role' => 'company',
             'verify' => 1,
             'otp' => null,
+            'nik'=>'0065123456789123',
+            'phone'=>'081234567891',
+            'birthdate'=>Carbon::createFromFormat('d/m/Y', '25/09/1993'),
             'image' => 'http://localhost:8000/files/users/photo/seeder/sinarmas.jpeg',
             'status' => 'active',
             'created_at' => now(),
@@ -88,10 +104,13 @@ class UserTableSeeder extends Seeder
             'slug' => Str::slug(Str::random(20)),
             'name' => "Raymond",
             'email' => "raymond@gmail.com",
-            'password' => '$2y$12$cHvK2rxjGfiELKPMKh/jZOLmm0Jcufw/S4adS1LHUeJnpHRVdut0O', //password: sinarmas123
+            'password' => bcrypt('r4yMond?'),
             'role' => 'job seeker',
             'verify' => 1,
             'otp' => null,
+            'nik'=>'0065123456789123',
+            'phone'=>'081234567891',
+            'birthdate'=>Carbon::createFromFormat('d/m/Y', '25/09/2003'),
             'image' => 'http://localhost:8000/files/users/photo/seeder/raymond.jpg',
             'status' => 'active',
             'created_at' => now(),
@@ -102,10 +121,13 @@ class UserTableSeeder extends Seeder
             'slug' => Str::slug(Str::random(20)),
             'name' => "John",
             'email' => "john@gmail.com",
-            'password' => '$2y$12$7HONLX3t9c41J89GCJdoVOftMf5aE0pIr26weJL/q3wWOzvNGQA9e', //password: john123
+            'password' => bcrypt('j0HnD03?'),
             'role' => 'job seeker',
             'verify' => 1,
             'otp' => null,
+            'nik'=>'0065123456789123',
+            'phone'=>'081234567891',
+            'birthdate'=>Carbon::createFromFormat('d/m/Y', '25/09/2003'),
             'image' => 'http://localhost:8000/files/users/photo/seeder/john.jpg',
             'status' => 'active',
             'created_at' => now(),

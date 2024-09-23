@@ -30,6 +30,11 @@ const AdminCustomBan = () => {
         .catch((response) => { console.log(response) } )
     }
 
+    const logout = () => {
+        localStorage.clear();
+        window.location = '/login';
+    }
+
     useEffect(() => {
         getNormalUser();
         getBannedUser();
@@ -84,6 +89,7 @@ const AdminCustomBan = () => {
                 </div>
             </div>
         </div>
+            <button className='btn-logout button' type='button' onClick={logout}>LOGOUT</button>
             </div>
         </div>
         </>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 import { fetchApiData, storeApiData } from '../../../api/api'
 import ProfileApplied from './ProfileApplied'
@@ -20,6 +20,17 @@ const closeCVInput = () => {
 
     cvInput.style.display = 'none';
     btnChange.style.display = 'block';
+    btnCancel.style.display = 'none';
+}
+
+const openImageCancel = () => {
+    let btnCancel = document.getElementById('btnCancelImage')
+
+    btnCancel.style.display = 'block';
+}
+const closeImageCancel = () => {
+    let btnCancel = document.getElementById('btnCancelImage')
+
     btnCancel.style.display = 'none';
 }
 
@@ -52,11 +63,72 @@ const ProfileItem = () => {
     const [address, setAddress] = useState('')
     const [lastEducation, setLastEducation] = useState('')
     const [description, setDescription] = useState('')
+    const [nik, setNik] = useState('')
+    const [telepon, setTelepon] = useState('')
     const [documentUrl, setDocumentUrl] = useState('')
     const [imageUrl, setImageUrl] = useState('')
 
     const [document, setDocument] = useState(null)
+    const documentInputRef = useRef(null)
     const [image, setImage] = useState(null)
+    const imageInputRef = useRef(null)
+
+    const allowedFileTypes = [
+        "image/jpeg", "image/png", "application/pdf", "application/msword", 
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ];
+    const [fileWarn, setFileWarn] = useState("")
+
+    const allowedImageTypes = [
+        "image/jpeg", "image/png"
+    ]
+    const [imageWarn, setImageWarn] = useState("")
+
+    useEffect(() => {
+        setImageWarn("")
+        function checkImageChange() {
+            if (image) {
+                openImageCancel()
+                const imageType = image.type
+
+                if (!allowedImageTypes.includes(imageType)) {
+                    setImageWarn("Invalid image type")
+                }else {
+                    setErrMsg('')
+                }
+            }
+        }
+        checkImageChange()
+    }, [image])
+
+    const handleCancelImage = () => {
+        setImage(null)
+        imageInputRef.current.value = ""
+        closeImageCancel()
+    }
+
+    useEffect(() => {
+        setFileWarn("")
+        function checkFileChange() {
+            if (document) {
+                const fileType = document.type
+                
+                if (!allowedFileTypes.includes(fileType)) {
+                    setFileWarn("Invalid file type")
+                }else {
+                    setErrMsg('')
+                }
+            }
+        }
+        checkFileChange()
+    }, [document])
+
+    const handleCancelCV = () => {
+        setDocument(null)
+        documentInputRef.current.value = ""
+        setFileWarn('')
+        closeCVInput()
+    }
 
     const [errMsg, setErrMsg] = useState('');
 
@@ -98,6 +170,8 @@ const ProfileItem = () => {
             setAge(profileData.age)
             setAddress(profileData.address)
             setDescription(profileData.description)
+            setNik(userData.nik)
+            setTelepon(userData.phone)
             setLastEducation(profileData.last_education)
             setDocumentUrl(profileData.document_url)
             setImageUrl(userData.image)
@@ -146,6 +220,8 @@ const ProfileItem = () => {
         formData.append('age', age)
         formData.append('address', address)
         formData.append('description', description)
+        formData.append('nik', nik)
+        formData.append('phone', telepon)
         formData.append('lastEducation', lastEducation)
         formData.append('file', document)
         formData.append('image', image)
@@ -172,9 +248,28 @@ const ProfileItem = () => {
 
     const applyChangesHandler = (e) => {
         setErrMsg('')
-        if (!username || !fullname || !email || !age || !address || !description || !lastEducation) {
+        if (!username || !fullname || !email || !nik || !telepon || !age || !address || !description || !lastEducation) {
             return setErrMsg('Please fill all field to make any changes');
         }
+        
+        if(document) {
+            const fileType = document.type
+
+            if (!allowedFileTypes.includes(fileType)) {
+                setErrMsg("File type for CV is not valid")
+                return;
+            }
+        }
+        
+        if (image) {
+            const imageType = image.type
+
+            if (!allowedImageTypes.includes(imageType)) {
+                setErrMsg("Image type for photo profile is not valid")
+                return;
+            }
+        }
+
         if (email === userData.email) {
             requestChanges(e)
         }else {
@@ -229,7 +324,9 @@ const ProfileItem = () => {
                 <div className="configure-div">
                     <div className="photo">
                         <img src={imageUrl} alt="sample" />
-                        <input type='file' onChange={(e) => setImage(e.target.files[0])} className='btn-image-change'></input>
+                        <input type='file' onChange={(e) => setImage(e.target.files[0])} ref={imageInputRef} className='btn-image-change'></input>
+                        <button type='button' id='btnCancelImage' onClick={handleCancelImage} style={{ display: "none", marginTop: "5px" }}>Cancel</button>
+                        <p className='auth-error' style={{ left: "0", top: "2px" }}>{imageWarn}</p>
                     </div>
                     <form>
                         <div className="form">
@@ -244,6 +341,14 @@ const ProfileItem = () => {
                             <div className='form-row'>
                                 <label htmlFor="email">Email: </label>
                                 <input type="email" className='form-control' name="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/>
+                            </div>
+                            <div className='form-row'>
+                                <label htmlFor="nik">NIK: </label>
+                                <input type="text" className='form-control' name="nik" placeholder='NIK' value={nik} onChange={(e) => setNik(e.target.value)} />
+                            </div>
+                            <div className='form-row'>
+                                <label htmlFor="phone">Phone Number: </label>
+                                <input type="text" className='form-control' name="phone" placeholder='Phone Number' value={telepon} onChange={(e) => setTelepon(e.target.value)} />
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="age">Age: </label>
@@ -282,10 +387,11 @@ const ProfileItem = () => {
                                             <button type='button' id='btnChange' onClick={openCVInput}>Add CV</button>
                                         )
                                     }
-                                    <button type='button' id='btnCancel' onClick={closeCVInput}>Cancel</button>
-                                    <input id='changeCV' type='file' onChange={(e) => setDocument(e.target.files[0])} className='form-control' name='document' placeholder='Change CV'></input>
+                                    <button type='button' id='btnCancel' onClick={handleCancelCV}>Cancel</button>
+                                    <input id='changeCV' type='file' onChange={(e) => setDocument(e.target.files[0])} ref={documentInputRef} className='form-control' name='document' placeholder='Change CV'></input>
                                 </div>
                             </div>
+                            <p className='auth-error' style={{ left: "41%", top: "-5px" }}>{fileWarn}</p>
                             <p className='auth-error'>{errMsg}</p>
                             <div className='button-div'>
                                 <button type='button' className="button" onClick={applyChangesHandler}>

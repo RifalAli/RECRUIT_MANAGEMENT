@@ -19,7 +19,7 @@ class ProfileSeeder extends Seeder
         DB::table('profiles')->insert([
             'fullname'=>'Gerard Gareth',
             'slug'=>Str::slug(Str::random(20)),
-            'age'=>'20',
+            'age'=>'21',
             'address'=>'Gedangan, Sidoarjo, Jawa Timur',
             'description'=>"As a highly motivated and dedicated professional, I am committed to delivering exceptional results that exceed expectations. With a passion for innovation and a strong focus on achieving success, I continuously seek opportunities to grow and contribute meaningfully in any role I undertake.
             \n\nSince starting my career, I have developed a deep understanding of the industry and honed my skills in providing cutting-edge solutions that meet the diverse needs of clients. I take pride in my ability to adapt to changing demands, utilizing strategic insights and the latest technology to deliver reliable and effective results.
@@ -35,7 +35,7 @@ class ProfileSeeder extends Seeder
         DB::table('profiles')->insert([
             'fullname'=>'Raymond Arnold',
             'slug'=>Str::slug(Str::random(20)),
-            'age'=>'20',
+            'age'=>'21',
             'address'=>'Sukodono, Sidoarjo, Jawa Timur',
             'description'=>"As a highly motivated and dedicated professional, I am committed to delivering exceptional results that exceed expectations. With a passion for innovation and a strong focus on achieving success, I continuously seek opportunities to grow and contribute meaningfully in any role I undertake.
             \n\nSince starting my career, I have developed a deep understanding of the industry and honed my skills in providing cutting-edge solutions that meet the diverse needs of clients. I take pride in my ability to adapt to changing demands, utilizing strategic insights and the latest technology to deliver reliable and effective results.
@@ -50,7 +50,7 @@ class ProfileSeeder extends Seeder
         DB::table('profiles')->insert([
             'fullname'=>'John Doe',
             'slug'=>Str::slug(Str::random(20)),
-            'age'=>'20',
+            'age'=>'21',
             'address'=>'Buduran, Sidoarjo, Jawa Timur',
             'description'=>"As a highly motivated and dedicated professional, I am committed to delivering exceptional results that exceed expectations. With a passion for innovation and a strong focus on achieving success, I continuously seek opportunities to grow and contribute meaningfully in any role I undertake.
             \n\nSince starting my career, I have developed a deep understanding of the industry and honed my skills in providing cutting-edge solutions that meet the diverse needs of clients. I take pride in my ability to adapt to changing demands, utilizing strategic insights and the latest technology to deliver reliable and effective results.

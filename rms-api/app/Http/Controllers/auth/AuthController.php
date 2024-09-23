@@ -10,6 +10,7 @@ use App\Models\Company;
 use App\Models\Profile;
 use App\Models\User;
 use App\Traits\ApiResponseWithHttpStatus;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
@@ -96,6 +97,9 @@ class AuthController extends Controller
                     'token'=>Str::random(20),
                     'status'=>'active', 
                     'otp'=>random_int(100000, 999999),
+                    'nik'=>$request['nik'],
+                    'phone'=>$request['telepon'],
+                    'birthdate'=>Carbon::createFromFormat('Y-m-d', $request['tglLahir']),
                     'image'=>'http://localhost:8000/files/users/photo/profileGuest.png',
                     'role'=>$request['role']]
                 ));
@@ -107,8 +111,12 @@ class AuthController extends Controller
         $data['user'] = $user;
         
         if ($data['user']['role'] === 'job seeker') {
+            $currentdate = Carbon::now();
+            $age = $user['birthdate']->diffInYears($currentdate);
+
             $data['profile'] = Profile::create([
                 'slug'=>Str::random(15),
+                'age'=>$age,
                 'user_id' => $data['user']['id'],
             ]);
             

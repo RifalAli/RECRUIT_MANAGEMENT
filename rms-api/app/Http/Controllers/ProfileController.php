@@ -29,6 +29,8 @@ class ProfileController extends Controller
         
         $data['profile']['fullname'] = $request['fullname'];
         $data['user']['name'] = $request['name'];
+        $data['user']['nik'] = $request['nik'];
+        $data['user']['phone'] = $request['phone'];
         $data['profile']['age'] = $request['age'];
         $data['profile']['address'] = $request['address'];
         $data['profile']['description'] = $request['description'];

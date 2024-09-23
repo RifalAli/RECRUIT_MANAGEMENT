@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import sampleIcon from '../../assets/images/default.png'
 import CompanyJob from './CompanyJob';
 import axios from 'axios';
@@ -40,6 +40,17 @@ const closeArchiveModal = () => {
     let modal = document.getElementsByClassName('archive-modal')[0];
 
     modal.style.display = 'none';
+}
+
+const openImageCancel = () => {
+    let btnCancel = document.getElementById('btnCancelImage')
+
+    btnCancel.style.display = 'block';
+}
+const closeImageCancel = () => {
+    let btnCancel = document.getElementById('btnCancelImage')
+
+    btnCancel.style.display = 'none';
 }
 
 const CompanyItem = () => {
@@ -165,6 +176,15 @@ const CompanyItem = () => {
             return setErrMsg('Please fill all field to make any changes');
         }
 
+        if (image) {
+            const imageType = image.type
+
+            if (!allowedImageTypes.includes(imageType)) {
+                setErrMsg("Image type for photo profile is not valid")
+                return;
+            }
+        }
+
         requestChanges(e)
     }
 
@@ -193,9 +213,38 @@ const CompanyItem = () => {
     const [jobImageUrl, setJobImageUrl] = useState('');
 
     const [jobImage, setJobImage] = useState(null)
+    const imageInputRef = useRef(null)
 
     const [jobErrMsg, setJobErrMsg] = useState('')
     const [jobResponse, setJobResponse] = useState('');
+
+    const allowedImageTypes = [
+        "image/jpeg", "image/png"
+    ]
+    const [imageWarn, setImageWarn] = useState("")
+
+    useEffect(() => {
+        setImageWarn("")
+        function checkImageChange() {
+            if (image) {
+                openImageCancel()
+                const imageType = image.type
+
+                if (!allowedImageTypes.includes(imageType)) {
+                    setImageWarn("Invalid image type")
+                }else {
+                    setErrMsg('')
+                }
+            }
+        }
+        checkImageChange()
+    }, [image])
+
+    const handleCancelImage = () => {
+        setImage(null)
+        imageInputRef.current.value = ""
+        closeImageCancel()
+    }
 
     const postJob = (e) => {
         setJobErrMsg('')
@@ -343,7 +392,9 @@ const CompanyItem = () => {
                 <div className="configure-profile-div">
                     <div className="photo">
                         <img src={imageUrl} alt="sample" />
-                        <input type='file' onChange={(e) => setImage(e.target.files[0])} className='btn-image-change'></input>
+                        <input type='file' onChange={(e) => setImage(e.target.files[0])} ref={imageInputRef} className='btn-image-change'></input>
+                        <button type='button' id='btnCancelImage' onClick={handleCancelImage} style={{ display: "none", marginTop: "5px" }}>Cancel</button>
+                        <p className='auth-error' style={{ left: "0", top: "2px" }}>{imageWarn}</p>
                     </div>
                     <form>
                         <div className="form">

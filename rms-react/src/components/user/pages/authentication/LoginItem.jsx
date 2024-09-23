@@ -9,6 +9,7 @@ import ReCAPTCHA from 'react-google-recaptcha'
 
 const LoginItem = () => {
     const [loader, setLoader] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -37,12 +38,32 @@ const LoginItem = () => {
                 return;
             }
 
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!emailRegex.test(email)) {
+                setLoader(false)
+                setEmailMsg("Invalid email format")
+                return;
+            }
+
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&(){};,.]).{6,}$/;
+
+            if (!passwordRegex.test(password)) {
+              setLoader(false);
+              setPasswordMsg(
+                "Password must contain uppercase, lowercase, number, symbol, and be at least 6 characters long"
+              );
+              return;
+            }
+
             if (!captchaStatus) {
                 setCaptchaMsg('Please verify that you are not a robot!')
                 setCaptchaStatus(false)
                 setLoader(false)
                 return;
             }
+
+            // return;
 
             getTokenByInput()
         }
@@ -149,9 +170,12 @@ const LoginItem = () => {
                             <p className='auth-error'>{emailMsg}</p>
                             <div className='form-row'>
                                 <label htmlFor="password">Password: </label>
-                                <input type="password" className='form-control' name="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+                                <input type={showPassword ? "text" : "password"} className='form-control' name="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
                             </div>
-                            <p className='auth-error'>{passwordMsg}</p>
+                            <button style={{ position: "relative", left: "70%", width: "30%" }} type='button' onClick={() => setShowPassword(!showPassword)}>
+                                {showPassword ? "Hide Password" : "Show Password"}
+                            </button>
+                            <p className='auth-error' style={{ marginTop: "5px" }}>{passwordMsg}</p>
                             <ReCAPTCHA
                                 sitekey='6LcEOzsqAAAAAJsKqMe7Dj2cki4USMr5tbQlhKA3'
                                 onChange={captchaChange}

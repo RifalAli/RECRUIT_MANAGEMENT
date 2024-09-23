@@ -5,6 +5,7 @@ import Loader from '../../../../services/Loader';
 
 const SignUpItem = () => {
     const [loader, setLoader] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const [tokenData, setTokenData] = useState('')
     const [userData, setUserData] = useState('')
@@ -14,6 +15,16 @@ const SignUpItem = () => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [role, setRole] = useState('job seeker')
 
+    const [nik, setNik] = useState('')
+    const [telepon, setTelepon] = useState('')
+    const [tglLahir, setTglLahir] = useState('')
+
+    const forMinDate = new Date();
+    const forMaxDate = new Date();
+
+    const minDate = forMinDate.toISOString(forMinDate.setFullYear(forMinDate.getFullYear() - 60)).split('T')[0];
+    const maxDate = forMaxDate.toISOString(forMaxDate.setFullYear(forMaxDate.getFullYear() - 15)).split('T')[0];
+
     const [registerResponse, setRegisterResponse] = useState('')
     const [emailMsg, setEmailMsg] = useState('')
     const [passwordMsg, setPasswordMsg] = useState('')
@@ -21,10 +32,56 @@ const SignUpItem = () => {
     const registerHandler = () => {
         setLoader(true)
         const validation = () => {
-            if (name === '' || email === '' || password === '' || confirmPassword === '') {
+            if (name === '' || email === '' || nik === '' || telepon === '' || tglLahir === '' || password === '' || confirmPassword === '') {
                 setLoader(false)
                 setPasswordMsg("All field must be filled first!")
                 return;
+            }
+
+            if (name.trim() === '' || email.trim() === '' || password.trim() === '' || confirmPassword.trim() === '') {
+                setLoader(false)
+                setPasswordMsg("Field cannot only contain whitespace")
+                return;
+            }
+
+            const nameRegex = /^[a-zA-Z\s]+$/;
+
+            if (!nameRegex.test(name)) {
+                setLoader(false);
+                setPasswordMsg("Name cannot contain symbol")
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!emailRegex.test(email)) {
+                setLoader(false)
+                setPasswordMsg("Invalid email format")
+                return;
+            }
+
+            const numberRegex = /^\d*$/;
+
+            if (!numberRegex.test(nik) || nik.length !== 16) {
+                setLoader(false)
+                setPasswordMsg("NIK must be number and have 16 digits")
+                return;
+            }
+
+            if (!numberRegex.test(telepon) || telepon.length !== 12) {
+                setLoader(false)
+                setPasswordMsg("Phone Number must be number and have 12 digits")
+                return;
+            }
+
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&(){};,.]).{6,}$/;
+
+            if (!passwordRegex.test(password)) {
+              setLoader(false);
+              setPasswordMsg(
+                "Password must contain uppercase, lowercase, number, symbol, and be at least 6 characters long"
+              );
+              return;
             }
 
             if (password !== confirmPassword) {
@@ -33,11 +90,15 @@ const SignUpItem = () => {
                 return;
             }
 
+            // stop before actual register for test
+            // setLoader(false)
+            // return;
+
             register()
         }
 
         const register = async () => {
-            await storeApiData(`auth/register`, {name, email, password, confirmPassword, role})
+            await storeApiData(`auth/register`, {name, email, password, confirmPassword, role, nik, telepon, tglLahir})
             .then((response) => {setRegisterResponse(response); console.log(response); console.log(registerResponse)})
             .catch((response) => {console.log(response)})
         }
@@ -122,16 +183,31 @@ const SignUpItem = () => {
                                 <label htmlFor="email">Email: </label>
                                 <input type="email" className='form-control' name="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/>
                             </div>
+                            <div className='form-row'>
+                                <label htmlFor="nik">NIK: </label>
+                                <input type="tel" maxLength={16} className='form-control' name="nik" placeholder='NIK' value={nik} onChange={(e) => setNik(e.target.value)}/>
+                            </div>
+                            <div className='form-row'>
+                                <label htmlFor="telepon">Phone Num: </label>
+                                <input type="tel" maxLength={12} className='form-control' name="telepon" placeholder='081234567890' value={telepon} onChange={(e) => setTelepon(e.target.value)}/>
+                            </div>
+                            <div className='form-row'>
+                                <label htmlFor="tgllahir">Birthdate: </label>
+                                <input type="date" min={minDate} max={maxDate} className='form-control' name="tgllahir" value={tglLahir} onChange={(e) => setTglLahir(e.target.value)}/>
+                            </div>
                             <p className='auth-error email-msg'>{emailMsg}</p>
                             <div className='form-row'>
                                 <label htmlFor="password">Password: </label>
-                                <input type="password" className='form-control' name="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+                                <input type={showPassword ? "text" : "password"} className='form-control' name="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
                             </div>
                             <div className='form-row'>
                                 <label htmlFor="confirm_password">Confirm Password: </label>
-                                <input type="password" className='form-control' name="confirm_password" placeholder='Confirm Password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+                                <input type={showPassword ? "text" : "password"} className='form-control' name="confirm_password" placeholder='Confirm Password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
                             </div>
-                            <p className='auth-error password-msg'>{passwordMsg}</p>
+                            <button style={{ position: "relative", left: "70%", width: "30%" }} type='button' onClick={() => setShowPassword(!showPassword)}>
+                                {showPassword ? "Hide Password" : "Show Password"}
+                            </button>
+                            <p className='auth-error password-msg' style={{ marginTop: "5px" }}>{passwordMsg}</p>
                             <div className='form-row-radio'>
                                 <h3>Who you are?</h3>
                                 <div className="form-row">

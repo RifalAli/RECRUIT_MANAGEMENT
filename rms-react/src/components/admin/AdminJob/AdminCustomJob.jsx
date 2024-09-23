@@ -90,10 +90,10 @@ const AdminCustomJob = () => {
         .catch((response) => {})
     }
 
-    const logout = () => {
-        localStorage.clear();
-        window.location = '/login';
-    }
+    // const logout = () => {
+    //     localStorage.clear();
+    //     window.location = '/login';
+    // }
 
     useEffect(() => {
         const fillData = () => {
@@ -162,7 +162,7 @@ const AdminCustomJob = () => {
                         }
                     </div>
                 </div>
-            <button className='btn-logout button' type='button' onClick={logout}>LOGOUT</button>
+            {/* <button className='btn-logout button' type='button' onClick={logout}>LOGOUT</button> */}
             </div>
 
             <div className="modal modal-job">
