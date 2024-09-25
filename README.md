@@ -8,3 +8,5 @@ Stack Version:
 - php: 8.2.4
 - laravel: 10.47.0
 - postman: 10.24.2
+
+Carilah kerja di recruit management, dijamin anda akan dapat kerja?
