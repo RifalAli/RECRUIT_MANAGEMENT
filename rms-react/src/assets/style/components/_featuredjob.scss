@@ -1,0 +1,113 @@
+.featured_job {
+    padding: 2rem 0;
+
+    .container {
+        @include container;
+
+        .featured_job-info {
+            margin-top: 6rem;
+            text-align: center;
+            line-height: 2;
+
+            h1 {
+                font-size: 30px;
+            }
+        }
+
+        .featured_job--wrapper {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 1rem;
+
+            &__card {
+                transition: all .3s ease-in;
+                margin-top: -1px;
+                background: $color-white;
+                padding: 20px;
+                overflow: hidden;
+                @include flexCenter;
+                position: relative;
+                box-shadow: $box-shadow;
+                cursor: pointer;
+
+                &--left {
+                    width: 15%;
+                    padding: 10px;
+
+                    img {
+                        border-radius: 50%;
+                    }
+                }
+
+                &--right {
+                    width: 85%;
+                    height: auto;
+                    text-align: center;
+                    margin-left: 3rem;
+
+                    h1 {
+                        margin-top: 1.2rem;
+                        color: #6c757d;
+                        font-size: 20px;
+                    }
+
+                    &__status {
+                        margin-top: 1rem;
+                        text-decoration: none;
+                        font-size: 14px;
+                        display: inline-block;
+                        padding: 5px 15px;
+                        border-radius: 50px;
+                        cursor: pointer;
+                        text-transform: uppercase;
+                        background: $color-green;
+                        color: $color-white-light;
+                        font-weight: bold;
+                        transition: all .3s ease-in-out;
+                    }
+
+                    .mark {
+                        position: absolute;
+                        top: -8px;
+                        right: 4px;
+                        height: 29px;
+                        font-size: 0.85rem;
+                        // text-transform: capitalize;
+                    }
+
+                    .preview-description {
+                        position: relative;
+                        // background: red;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 2; /* Limits to 2 lines */
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        text-align: justify;
+                        width: 95%;
+                        left: 20px;
+                        top: 5px;
+                        color: #a9a9a9;
+                    }                      
+                }
+                &:hover {
+                    box-shadow: $boxShadow-card-hover;
+                    transition: box-shadow .6 linear;
+                    border-left: .3rem solid $color-green;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+p {
+    color: $color-dark;
+}
+
+.pageMsg {
+    position: absolute;
+    left: 70px;
+    margin-top: 15px;
+}

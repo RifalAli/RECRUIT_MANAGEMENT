@@ -1,0 +1,215 @@
+.login {
+    .container {
+        @include container;
+        .auth-div {
+            @include flexVertical;
+            padding: 3rem 0;
+            .form {
+                // width: 445px;
+                width: 500px;
+                height: auto;
+                display: grid;
+                grid-column: 1;
+                text-align: center;
+                padding: 2rem;
+                font-size: 12px;
+                border-radius: 30px;
+                border: 1px solid $form-control-color;
+                transform: all .3s;
+
+                .otp-input {
+                    // background-color: red;
+                    // margin-top: 100px;
+                    // background-color: red;
+                    // padding: 50px;
+                    // background-color: red;
+                    width: 100%;
+                    height: 120%;
+                    text-align: center;
+                    font-size: 1.8rem;
+                    font-weight: bold;
+                    border-radius: 10px;
+                    border: 1px solid black;
+                }
+
+                .otp-quest-msg {
+                    margin-bottom: 5px;
+                    .otp-resend {
+                        cursor: pointer;
+                        color: blue;
+                    }
+                }
+
+                .otp-error-msg {
+                    color: red;
+                }
+
+                .otp-submit {
+                    // margin-top: -2px;
+                    margin-top: 5px;
+                    margin-bottom: -10px;
+                }
+
+                .auth-error {
+                    color: red;
+                    text-align: start;
+                    margin-left: 5.3rem;
+                    margin-top: -5px;
+                    margin-bottom: -5px;
+                }
+
+                .auth-success {
+                    color: $color-green;
+                    text-align: start;
+                    margin-left: 5.3rem;
+                    margin-top: -5px;
+                    margin-bottom: -5px;
+                }
+
+                .auth-captcha-error {
+                    color: red;
+                    text-align: start;
+                    margin-left: 5.3rem;
+                    margin-top: 15px;
+                    margin-bottom: -20px;
+                }
+
+                .captcha {
+                    margin-top: 20px;
+                    display: flex;
+                    justify-content: center;
+                    margin-bottom: -10px;
+                }
+            }
+
+
+            .form-row-radio {
+                display: flex;
+                flex-direction: column;
+
+                // label input {
+                //     margin-right: 20px;
+                //     // margin-top: -10px;
+                //     border: 2px solid black;
+                // }
+                h3 {
+                    font-weight: normal;
+                    margin: 15px 5px 5px 5px;
+                    text-align: left;
+                }
+
+                .form-row {
+                    display: block;
+                    gap: 0;
+                    margin: 0;
+                    padding: 0;
+                    // align-items: start;
+                    text-align: left;
+                    left: 0;
+                    padding: 5px;
+
+                    input {
+                        margin: 0 10px;
+                    }
+
+                    label {
+                        position: relative;
+                        top: -2px;
+                    }
+
+                    .radio {
+                        cursor: pointer;
+                    }
+
+                }
+            }
+
+            .form-row {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            label {
+                margin-top: 15px;
+                text-align: left;
+                flex: 1;
+            }
+
+            input {
+                flex: 4;
+            }
+
+            .form-control {
+                @include formControl;
+            }
+
+            input {
+                margin-top: 1rem;
+            }
+
+            .forgot {
+                margin-top: 2rem;
+                color: $color-green;
+                @include flexAround;
+            }
+
+            .social {
+                img {
+                    width: 2.5rem;
+                    height: 2.5rem;
+                    margin-top: 1rem;
+                    cursor: pointer;
+                }
+
+                img+img {
+                    margin-left: 1.5rem;
+                }
+            }
+        }
+    }
+}
+
+.logout-modal {
+    z-index: 5;
+    margin: 0;
+    padding: 0;
+    background: white;
+    display: none;
+    position: fixed;
+    // top: 50%;
+    // left: 50%;
+    transform: translate(-50%, -50%);
+    // width: 65vw;
+    // height: 38vw;
+    width: 30%;
+    // text-align: center;
+    border: 1px solid $form-control-color;
+    border-radius: 35px;
+
+    .modal-container {
+        @include flexVertical;
+        padding: 20px;
+
+        h1 {
+            font-size: 1.4rem;
+        }
+
+        .button-div {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            column-gap: 10px;
+            // margin-left: 20px;
+        }
+
+        .button {
+            width: 40%;
+            text-align: center;
+        }
+
+        .button-cancel {
+            background: #a9a9a9;
+        }
+    }
+}
