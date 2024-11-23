@@ -1308,9 +1308,9 @@
             'dev_requirement' => false,
         ),
         'tymon/jwt-auth' => array(
-            'pretty_version' => '2.1.0',
-            'version' => '2.1.0.0',
-            'reference' => '9c82452d93986a877ea606153125304e1104c7f7',
+            'pretty_version' => '2.1.1',
+            'version' => '2.1.1.0',
+            'reference' => '51620ebd5b68bb3ce9e66ba86bda303ae5f10f7f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../tymon/jwt-auth',
             'aliases' => array(),
